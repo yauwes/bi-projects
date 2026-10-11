@@ -13,6 +13,7 @@ import SegmentedControl from "@/components/arc/segmented-control/segmented-contr
 import { Tooltip } from "@/components/arc/tooltip/tooltip";
 import { RibbonChart } from "./components/RibbonChart";
 import { DiagnosticDecompositionCard } from "./components/DiagnosticCharts";
+import { MarketBasketNetwork } from "./components/MarketBasketNetwork";
 import { analyze, BULAN, calendar, filterRows, firstMonths, type Analysis, type Dict, type Row, type TopRow } from "./analytics";
 import raw from "./data.json";
 import { int, jt, one, pct, rp } from "./format";
@@ -313,8 +314,6 @@ export function App() {
   }, [a]);
   const belanjaBars = useMemo(() => ms.map(m => ({ key: String(m.month), label: `${m.label}: ${int(m.pelanggan)} pelanggan`, axisLabel: m.short, value: m.pelanggan ? m.omzetJt / m.pelanggan : 0 })), [ms]);
   const bergantungBars = useMemo(() => a.bergantung.map(x => ({ key: x.id, label: `${x.nama} (${one(x.omzetJt)} jt): ${pct(x.pct)} dibeli ${x.pembeli}`, axisLabel: shortName(x.nama, 1), value: x.pct })), [a]);
-  const pasangan = a.pasangan.top.slice(0, 8);
-  const pasanganMax = Math.max(1, ...pasangan.map(x => x.n));
   const ragamBars = useMemo(() => a.ragam.map(x => ({ key: x.key, label: `${x.label}: ${int(x.n)} pelanggan, median ${one(x.medianJt)} jt`, axisLabel: x.key, value: x.medianJt })), [a]);
   const prodBars = useMemo(() => topBars(a.topProd, 1), [a]);
   const qtyDistBars = useMemo(() => {
@@ -529,24 +528,9 @@ export function App() {
                     averageLabel="Rata-rata" valueLabel="Median belanja" categoryLabel="Jenis produk" height={240} showAverage={false} formatValue={v => one(v)} />
                 </section>
 
-                <section className={`${styles.card} ${styles.span12}`} aria-label="Pasangan produk">
-                  <div className={styles.cardHead}>
-                    <CardTitle hint={hints.pasangan}>Asosiasi Produk (Market Basket)</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
-                  </div>
-                  <ol className={styles.pairs}>
-                    {pasangan.map(x => (
-                      <li key={x.id} className={styles.pair}>
-                        <span className={styles.pairName}>
-                          {x.a} + {x.b}
-                          <span className={styles.pairMeta}>{int(x.pelanggan)} pelanggan · {one(x.lift)}× lift</span>
-                        </span>
-                        <span className={styles.pairTrack} aria-hidden="true"><span className={styles.pairFill} style={{ width: `${(x.n / pasanganMax) * 100}%` }} /></span>
-                        <span className={styles.pairValue}>{int(x.n)} nota</span>
-                      </li>
-                    ))}
-                  </ol>
-                </section>
+                <div className={styles.span12}>
+                  <MarketBasketNetwork pasangan={a.pasangan} />
+                </div>
               </>
             )}
 

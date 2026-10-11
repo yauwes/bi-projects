@@ -84,7 +84,7 @@ Halaman web dashboard berfokus murni pada **pengalaman visual monitoring eksekut
 3. **Perspektif Monitoring (Segmented Control):**
    - `Semua Visualisasi`: Menampilkan seluruh analitik secara terpadu.
    - `📊 Monitoring Deskriptif`: Tren omzet bulanan & harian, Pareto top 10 pelanggan & produk, breakdown metrik, pola hari kerja, dan siklus tanggal.
-   - `🔍 Diagnostik & Anomali`: Dekomposisi visual lonjakan Agustus, histogram kuantitas pesanan (median vs outlier >100 dus), ribbon chart kohort pelanggan baru vs lama, belanja per pelanggan, konsentrasi single-buyer, keragaman produk, dan horizontal list market basket lift score.
+   - `🔍 Diagnostik & Anomali`: Dekomposisi visual lonjakan Agustus, histogram kuantitas pesanan (median vs outlier >100 dus), ribbon chart kohort pelanggan baru vs lama, belanja per pelanggan, konsentrasi single-buyer, keragaman produk, dan **Model Graf Jaringan Asosiasi Produk (Market Basket Network Graph)** interaktif yang memvisualisasikan klaster produk, ketebalan frekuensi nota, lift score (≥ 2.0× bundling), sinergi lintas merek, serta kartu wawasan BI mengambang.
 4. **Sistem Tooltip Kontekstual (`InfoHint`):**
    - Ikon peringatan interaktif (`!`) pada judul setiap kartu visualisasi yang menampilkan intisari temuan deskriptif/diagnostik saat di-hover tanpa mengotori ruang visual dashboard.
 

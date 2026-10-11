@@ -222,15 +222,6 @@
 .hintBody { display: grid; gap: 8px; font-size: var(--text-xs); }
 .hintItem strong { display: block; margin-bottom: 2px; font-weight: 600; }
 
-/* Product Pairs */
-.pairs { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
-.pair { display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 4fr) 72px; gap: 14px; align-items: center; font-size: var(--text-xs); }
-.pairName { display: grid; gap: 2px; min-width: 0; font-weight: 500; overflow-wrap: anywhere; }
-.pairMeta { color: var(--text-secondary); font-size: 11px; }
-.pairTrack { height: 8px; border-radius: var(--radius-pill); background: var(--surface-muted); overflow: hidden; }
-.pairFill { display: block; height: 100%; border-radius: var(--radius-pill); background: var(--series-1); }
-.pairValue { text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
-
 /* Minimalist Footer */
 .footer {
   display: flex;
