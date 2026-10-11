@@ -339,7 +339,7 @@ export function App() {
       <main className={styles.mainArea}>
         <header className={styles.topBar}>
           <div className={styles.topTitleGroup}>
-            <h1 className={styles.topTitle}>Dashboard Eksekutif Penjualan Frozen Food</h1>
+            <h1 className={styles.topTitle}>Dasbor Penjualan Toko Frozen Food</h1>
             <p className={styles.topSubtitle}>Periode: April – September 2020</p>
           </div>
 
@@ -375,7 +375,7 @@ export function App() {
                   <div className={styles.cardHead}>
                     <CardTitle hint={hints.harian}>Tren Omzet Harian</CardTitle>
                     <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span className={styles.badgeDesc}>Deskriptif</span>
+                      <span className={styles.badgeDesc}>Penjualan Harian</span>
                       <div className={styles.control}>
                         <SegmentedControl label="Rentang" options={spanOptions} value={span} onValueChange={v => setSpan(v as SpanKey)} />
                       </div>
@@ -383,7 +383,7 @@ export function App() {
                   </div>
                   <div className={styles.headline}>
                     <span className={styles.headlineLabel}>
-                      {span === "all" ? "Rata-rata harian (seluruh periode)" : `Rata-rata ${span} hari terakhir`}
+                      {span === "all" ? "Rata-rata pemasukan per hari (seluruh periode)" : `Rata-rata ${span} hari terakhir`}
                     </span>
                     <span className={styles.headlineValue}>{rp(daily.days ? daily.total / daily.days : 0)} / hari</span>
                     <span className={styles.headlineSub}>
@@ -405,14 +405,14 @@ export function App() {
                       <div className={`${styles.cardHead} ${styles.headStack}`}>
                         <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
                           <CardTitle hint={k === "omzet" ? hints.omzet : k === "baris" ? hints.baris : undefined}>{dailyHeading(k, win[k])}</CardTitle>
-                          <span className={styles.badgeDesc}>Deskriptif</span>
+                          <span className={styles.badgeDesc}>Rincian</span>
                         </div>
                         <div className={styles.control}>
                           <SegmentedControl label={`Rentang ${meta.label}`} options={windowOptions} value={win[k]}
                             onValueChange={v => setWin(w => ({ ...w, [k]: v as Win }))} />
                         </div>
                       </div>
-                      <BarChart data={b.data} label={meta.label} period={win[k] === "bulan" ? "Agregat bulanan" : "Frekuensi harian"} unit={meta.unit} averageLabel={b.avgLabel} valueLabel={meta.label}
+                      <BarChart data={b.data} label={meta.label} period={win[k] === "bulan" ? "Total per bulan" : "Harian"} unit={meta.unit} averageLabel={b.avgLabel} valueLabel={meta.label}
                         categoryLabel="Tanggal" height={200} formatValue={v => int(v)} />
                     </section>
                   );
@@ -420,20 +420,20 @@ export function App() {
 
                 <section className={`${styles.card} ${styles.span6}`} aria-label="Pola hari">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.hari}>Pola Hari Kerja</CardTitle>
-                    <span className={styles.badgeDesc}>Deskriptif</span>
+                    <CardTitle hint={hints.hari}>Hari Paling Ramai vs Paling Sepi</CardTitle>
+                    <span className={styles.badgeDesc}>Pola Mingguan</span>
                   </div>
-                  <BarChart data={weekdayData} label="Omzet" period="Senin – Sabtu (Minggu tutup)" unit="jt" averageLabel="Rata-rata"
+                  <BarChart data={weekdayData} label="Omzet" period="Senin – Sabtu (Minggu toko libur)" unit="jt" averageLabel="Rata-rata"
                     valueLabel="Omzet" categoryLabel="Hari" height={220} showAverage={false} formatValue={v => int(v)} />
                 </section>
 
                 <section className={`${styles.card} ${styles.span6}`} aria-label="Fase bulan">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.fase}>Siklus Tanggal (Fase Bulan)</CardTitle>
-                    <span className={styles.badgeDesc}>Deskriptif</span>
+                    <CardTitle hint={hints.fase}>Kapan Pembeli Paling Banyak Belanja?</CardTitle>
+                    <span className={styles.badgeDesc}>Pola Tanggal</span>
                   </div>
-                  <BarChart data={faseData} label="Omzet" period="Awal (1-10), Tengah (11-20), Akhir (21-31)" unit="jt" averageLabel="Rata-rata"
-                    valueLabel="Omzet" categoryLabel="Bagian bulan" height={220} showAverage={false} formatValue={v => int(v)} />
+                  <BarChart data={faseData} label="Omzet" period="Awal Bulan (1-10), Tengah Bulan (11-20), Akhir Bulan (21-31)" unit="jt" averageLabel="Rata-rata"
+                    valueLabel="Omzet" categoryLabel="Waktu Belanja" height={220} showAverage={false} formatValue={v => int(v)} />
                 </section>
               </div>
             )}
@@ -451,8 +451,8 @@ export function App() {
 
                 <section className={`${styles.card} ${styles.span12}`} aria-label="Produk teratas">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.topProduk}>Top 10 Produk Terlaris (Pareto)</CardTitle>
-                    <span className={styles.badgeDesc}>Deskriptif</span>
+                    <CardTitle hint={hints.topProduk}>10 Produk Paling Laris di Toko</CardTitle>
+                    <span className={styles.badgeDesc}>Produk Unggulan</span>
                   </div>
                   <BarChart data={prodBars} label="Omzet" period="Juta rupiah per produk" unit="jt"
                     averageLabel="Rata-rata" valueLabel="Penjualan" categoryLabel="Produk" height={280} showAverage={false} formatValue={v => int(v)} />
@@ -469,20 +469,20 @@ export function App() {
 
                 <section className={`${styles.card} ${styles.span6}`} aria-label="Ketergantungan produk">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.bergantung}>Konsentrasi Pembeli per Produk</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
+                    <CardTitle hint={hints.bergantung}>Ketergantungan Produk pada 1 Pembeli Terbesar</CardTitle>
+                    <span className={styles.badgeDiag}>Peringatan Toko</span>
                   </div>
-                  <BarChart data={bergantungBars} label="Porsi pembeli terbesar" period="% omzet produk dari pembeli terbesar" unit="%"
-                    averageLabel="Rata-rata" valueLabel="Dari satu pembeli" categoryLabel="Produk" height={260} showAverage={false} formatValue={v => int(v)} />
+                  <BarChart data={bergantungBars} label="Porsi pembeli terbesar" period="% penjualan produk yang dibeli oleh 1 orang saja" unit="%"
+                    averageLabel="Rata-rata" valueLabel="Dibeli 1 Langganan" categoryLabel="Produk" height={260} showAverage={false} formatValue={v => int(v)} />
                 </section>
 
                 <section className={`${styles.card} ${styles.span6}`} aria-label="Ragam produk per pelanggan">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.ragam}>Keragaman Varian SKU per Pelanggan</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
+                    <CardTitle hint={hints.ragam}>Pelanggan Beli Eceran vs Beli Banyak Macam Barang</CardTitle>
+                    <span className={styles.badgeDiag}>Pola Belanja</span>
                   </div>
-                  <BarChart data={ragamBars} label="Median belanja" period="Median total belanja per tier varian SKU" unit="jt"
-                    averageLabel="Rata-rata" valueLabel="Median belanja" categoryLabel="Jenis produk" height={260} showAverage={false} formatValue={v => one(v)} />
+                  <BarChart data={ragamBars} label="Rata-rata Belanja" period="Makin banyak macam barang yang dibeli, makin besar belanjaannya" unit="jt"
+                    averageLabel="Rata-rata" valueLabel="Nilai Belanja" categoryLabel="Macam Produk" height={260} showAverage={false} formatValue={v => one(v)} />
                 </section>
               </div>
             )}
@@ -492,8 +492,8 @@ export function App() {
               <div className={styles.grid}>
                 <section className={`${styles.card} ${styles.span6}`} aria-label="Pelanggan teratas">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.topPelanggan}>Top 10 Pelanggan Utama (Nama Asli)</CardTitle>
-                    <span className={styles.badgeDesc}>Deskriptif</span>
+                    <CardTitle hint={hints.topPelanggan}>10 Pelanggan Paling Setia & Belanja Terbesar</CardTitle>
+                    <span className={styles.badgeDesc}>Langganan VIP</span>
                   </div>
                   <BarChart data={custBars} label="Omzet" period="Juta rupiah per pembeli" unit="jt"
                     averageLabel="Rata-rata" valueLabel="Pembelian" categoryLabel="Pelanggan" height={280} showAverage={false} formatValue={v => int(v)} />
@@ -501,8 +501,8 @@ export function App() {
 
                 <section className={`${styles.card} ${styles.span6}`} aria-label="Belanja per pelanggan">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.belanja}>Belanja Rata-rata per Pelanggan Bulanan</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
+                    <CardTitle hint={hints.belanja}>Rata-rata Pengeluaran Belanja per Pelanggan Tiap Bulan</CardTitle>
+                    <span className={styles.badgeDiag}>Kekuatan Belanja</span>
                   </div>
                   <BarChart data={belanjaBars} label="Belanja per pelanggan" period="Juta rupiah" unit="jt" averageLabel="Rata-rata"
                     valueLabel="Per pelanggan" categoryLabel="Bulan" height={280} formatValue={v => one(v)} />
@@ -511,11 +511,11 @@ export function App() {
                 {kohort.data.length > 0 && (
                   <section className={`${styles.card} ${styles.span12}`} aria-label="Pelanggan baru dan lama">
                     <div className={styles.cardHead}>
-                      <CardTitle hint={hints.kohort}>Kohort Pelanggan (Pelanggan Baru vs Pelanggan Lama)</CardTitle>
-                      <span className={styles.badgeDiag}>Diagnostik</span>
+                      <CardTitle hint={hints.kohort}>Perbandingan Langganan Baru vs Langganan Setia (Lama)</CardTitle>
+                      <span className={styles.badgeDiag}>Pertumbuhan Pelanggan</span>
                     </div>
-                    <RibbonChart data={kohort.data} series={[{ key: "lama", label: "Pelanggan lama" }, { key: "baru", label: "Pelanggan baru" }]}
-                      colors={KOHORT_COLORS} monthTotals={kohort.totals} mode="tumpuk" ranked={false} label="Omzet pelanggan lama dan baru" unit="jt" height={280} formatValue={v => int(v)} />
+                    <RibbonChart data={kohort.data} series={[{ key: "lama", label: "Langganan lama" }, { key: "baru", label: "Langganan baru" }]}
+                      colors={KOHORT_COLORS} monthTotals={kohort.totals} mode="tumpuk" ranked={false} label="Pemasukan dari langganan lama vs baru" unit="jt" height={280} formatValue={v => int(v)} />
                   </section>
                 )}
               </div>
@@ -538,19 +538,19 @@ export function App() {
                   <DiagnosticDecompositionCard analysis={a} />
                 </div>
 
-                <section className={`${styles.card} ${styles.span5}`} aria-label="Distribusi Kuantitas Pesanan">
+                <section className={`${styles.card} ${styles.span5}`} aria-label="Ukuran Pesanan Pembeli">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.baris}>Distribusi Kuantitas (DUS)</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
+                    <CardTitle hint={hints.baris}>Ukuran Pesanan: Eceran vs Borongan Dus</CardTitle>
+                    <span className={styles.badgeDiag}>Pola Pesanan</span>
                   </div>
                   <BarChart
                     data={qtyDistBars}
-                    label="Transaksi"
-                    period="Frekuensi pesanan per tier (Median = 3 DUS, Outlier >100)"
-                    unit="pesanan"
+                    label="Pesanan"
+                    period="Sebagian besar pembeli pesan 1–5 dus, pesanan >100 dus sangat langka tapi nilainya besar"
+                    unit="nota"
                     averageLabel="Rata-rata"
-                    valueLabel="Pesanan"
-                    categoryLabel="Kuantitas DUS"
+                    valueLabel="Jumlah Nota"
+                    categoryLabel="Banyaknya Dus"
                     height={260}
                     showAverage={false}
                     formatValue={v => int(v)}
@@ -564,18 +564,18 @@ export function App() {
               <div className={styles.grid}>
                 <section className={`${styles.card} ${styles.span12}`} aria-label="Ringkasan Eksekutif">
                   <div className={styles.cardHead}>
-                    <h3 className={styles.h3}>Laporan Eksekutif Business Intelligence</h3>
-                    <span className={styles.badgeDesc}>Ringkasan Eksekutif</span>
+                    <h3 className={styles.h3}>Rangkuman Inti untuk Pemilik Bisnis</h3>
+                    <span className={styles.badgeDesc}>Ringkasan Toko</span>
                   </div>
                   <div style={{ display: "grid", gap: "14px", lineHeight: "1.6", fontSize: "14px", color: "var(--text-secondary)" }}>
                     <p>
-                      <strong>Temuan Deskriptif:</strong> Total omzet penjualan periode April–September 2020 mencapai <strong>Rp 4,53 Miliar</strong> dari <strong>6.778 transaksi</strong> yang dilayani kepada <strong>229 pelanggan</strong>. Puncak penjualan terjadi pada bulan Agustus dengan omzet Rp 883,3 Juta (+44,9% dibandingkan April).
+                      <strong>1. Fakta Penjualan Toko:</strong> Total penjualan periode April–September 2020 mencapai <strong>Rp 4,53 Miliar</strong> dari <strong>6.778 transaksi</strong> yang dilayani kepada <strong>229 pelanggan</strong>. Bulan dengan penjualan tertinggi adalah Agustus dengan total Rp 883,3 Juta (+44,9% dibandingkan April).
                     </p>
                     <p>
-                      <strong>Temuan Diagnostik:</strong> Lonjakan bulan Agustus didorong oleh anomali pesanan volume super-jumbo dari pelanggan utama <em>Toko Cita Rasa Baru</em> dan <em>Graha Sandeni</em> (&gt;100 DUS), bukan karena peningkatan merata jumlah pembeli retail harian.
+                      <strong>2. Mengapa Bulan Agustus Melonjak?</strong> Lonjakan bulan Agustus bukan karena ada serbuan pelanggan baru, melainkan karena ada <strong>3 pesanan borongan super besar</strong> dari 2 langganan utama (<em>Pak Sutarmuji</em> dan <em>Mas Rohmat</em>) yang membeli hingga 200 dus sekaligus senilai Rp 172 Juta.
                     </p>
                     <p>
-                      <strong>Rekomendasi Bundling (Market Basket):</strong> Pasangan <em>Belfoods Sosis</em> dan <em>Jofrans Nugget</em> menghasilkan Lift Score tertinggi sebesar <strong>4,3×</strong>, menjadikannya kandidat emas untuk program diskon paket bundling komplementer.
+                      <strong>3. Ide Paket Hemat Promo (Bundling):</strong> Produk <em>Sosis</em> dan <em>Nugget</em> dibeli barengan <strong>4,3× lipat</strong> lebih sering dibandingkan peluang acak. Sangat menguntungkan bagi toko jika membuat paket promo bundling hemat (misalnya: "Beli Sosis + Nugget Diskon Khusus") untuk menaikkan nilai belanja pembeli.
                     </p>
                   </div>
                 </section>

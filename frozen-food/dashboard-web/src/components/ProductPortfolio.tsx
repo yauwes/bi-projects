@@ -28,12 +28,12 @@ const CATEGORIES: CategoryCardData[] = [
     topItem: "Minaku Otak-Otak 500g X 10",
     omzetLabel: "Rp 962 Jt",
     shareLabel: "21.2% Total",
-    buyersLabel: "552 Pelanggan",
-    strategicRole: "Anchor SKU & Market Leader",
+    buyersLabel: "552 Langganan",
+    strategicRole: "Juara Omzet & Paling Laris",
     badgeType: "anchor",
     image: seafoodImg,
     imageAlt: "Kemasan Olahan Hasil Laut & Bakso Ikan Beku",
-    description: "Produk dengan omzet tertinggi dan jangkauan penetrasi warung paling luas di seluruh katalog.",
+    description: "Penyumbang uang kas terbesar dan paling banyak dibeli oleh warung-warung dan pedagang.",
   },
   {
     id: "sosis",
@@ -42,12 +42,12 @@ const CATEGORIES: CategoryCardData[] = [
     topItem: "Okey Sosis 500g X 20",
     omzetLabel: "Rp 520 Jt",
     shareLabel: "Tulang Punggung",
-    buyersLabel: "380+ Pelanggan",
-    strategicRole: "Volume Backbone & Fast Mover",
+    buyersLabel: "380+ Langganan",
+    strategicRole: "Paling Cepat Laku Setiap Hari",
     badgeType: "volume",
     image: sosisImg,
     imageAlt: "Kemasan Sosis Beku Retail & Grosir",
-    description: "Pesanan kartonan berulang dengan frekuensi harian stabil untuk pasokan pedagang dan gerai mitra.",
+    description: "Selalu dicari setiap hari dalam jumlah kartonan untuk pasokan pedagang sosis bakar dan toko mitra.",
   },
   {
     id: "nugget",
@@ -55,27 +55,27 @@ const CATEGORIES: CategoryCardData[] = [
     brand: "Jofrans & Belfoods",
     topItem: "Jofrans Nugget Ayam Hati",
     omzetLabel: "Rp 310 Jt",
-    shareLabel: "Lift Max 4.3×",
-    buyersLabel: "240+ Pelanggan",
-    strategicRole: "High Affinity Bundling Engine",
+    shareLabel: "Cocok Dibundling",
+    buyersLabel: "240+ Langganan",
+    strategicRole: "Pasangan Paket Paling Pas",
     badgeType: "bundling",
     image: nuggetImg,
     imageAlt: "Nugget Ayam Goreng & Kemasan Retail 500g",
-    description: "Katalis komplementer terkuat: pembelian bersama sosis meningkat 4,3× lipat di atas peluang acak.",
+    description: "Pelengkap paling mantap: jika digabung promo bareng sosis, penjualannya naik lebih dari 4 kali lipat!",
   },
 ];
 
 export function ProductPortfolio() {
   return (
-    <section className={styles.section} aria-label="Portofolio Kategori Produk Utama">
+    <section className={styles.section} aria-label="Kategori Produk Utama">
       <div className={styles.header}>
         <div className={styles.titleCol}>
           <div className={styles.titleRow}>
-            <h3 className={styles.title}>Pilar Kategori & Portofolio Produk Representatif</h3>
-            <span className={styles.badge}>Visual Representasi Data</span>
+            <h3 className={styles.title}>3 Kategori Produk yang Jadi Tulang Punggung Toko</h3>
+            <span className={styles.badge}>Koleksi Terlaris</span>
           </div>
           <p className={styles.subtitle}>
-            Tiga klaster produk utama yang mendominasi lebih dari 70% perputaran omzet distribusi
+            Tiga kelompok barang ini menyumbang lebih dari 70% perputaran uang di bisnis Anda
           </p>
         </div>
       </div>
@@ -105,11 +105,11 @@ export function ProductPortfolio() {
 
               <div className={styles.statsBar}>
                 <div className={styles.statMini}>
-                  <span className={styles.statLabel}>Estimasi Omzet</span>
+                  <span className={styles.statLabel}>Total Penjualan</span>
                   <strong className={styles.statValue}>{cat.omzetLabel}</strong>
                 </div>
                 <div className={styles.statMini}>
-                  <span className={styles.statLabel}>Penetrasi</span>
+                  <span className={styles.statLabel}>Banyak Pembeli</span>
                   <strong className={styles.statValue}>{cat.buyersLabel}</strong>
                 </div>
               </div>

@@ -243,22 +243,22 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
       <header className={styles.header}>
         <div className={styles.titleGroup}>
           <div className={styles.titleRow}>
-            <h3 className={styles.title}>Model Graf Asosiasi Produk (Market Basket Network)</h3>
-            <span className={styles.badgeDiag}>Diagnostik BI</span>
+            <h3 className={styles.title}>Peta Barang yang Sering Dibeli Bersamaan</h3>
+            <span className={styles.badgeDiag}>Ide Paket Hemat</span>
           </div>
           <p className={styles.subtitle}>
-            Analisis keterikatan item dalam satu nota belanja (Support, Confidence, & Lift Score) untuk mendeteksi peluang bundling promo
+            Cari tahu barang apa saja yang sering dibeli barengan dalam 1 nota untuk membuat <strong>paket promo hemat (bundling)</strong> yang memikat pelanggan.
           </p>
         </div>
 
         {/* Filter Perspective Pills */}
-        <div className={styles.filterPills} role="group" aria-label="Filter Graf Asosiasi">
+        <div className={styles.filterPills} role="group" aria-label="Pilihan Pasangan Produk">
           <button
             type="button"
             className={`${styles.filterBtn} ${filterMode === "all" ? styles.filterBtnActive : ""}`}
             onClick={() => setFilterMode("all")}
           >
-            Semua Relasi
+            Semua Pasangan
           </button>
           <button
             type="button"
@@ -266,7 +266,7 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
             onClick={() => setFilterMode("high_lift")}
           >
             <Flame size={14} className={styles.iconFlame} />
-            <span>High Lift (≥ 2.0× Bundling)</span>
+            <span>Paling Cocok Dibundling (≥ 2×)</span>
           </button>
           <button
             type="button"
@@ -274,7 +274,7 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
             onClick={() => setFilterMode("top_volume")}
           >
             <Layers size={14} />
-            <span>Top Volume Transaksi</span>
+            <span>Paling Sering Dibeli Bareng</span>
           </button>
           <button
             type="button"
@@ -282,7 +282,7 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
             onClick={() => setFilterMode("cross_brand")}
           >
             <Shuffle size={14} />
-            <span>Lintas Merek</span>
+            <span>Beda Pabrik / Merek</span>
           </button>
         </div>
       </header>
@@ -290,17 +290,17 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
       {/* 3 Executive BI Metric Highlights */}
       <div className={styles.kpiRow}>
         <div className={styles.kpiBox}>
-          <span className={styles.kpiLabel}>Nota Multi-Item</span>
+          <span className={styles.kpiLabel}>Nota Belanja &gt;1 Macam Barang</span>
           <span className={styles.kpiVal}>{int(pasangan.notaMulti)} Nota</span>
           <span className={styles.kpiSub}>
-            {((pasangan.notaMulti / (pasangan.nota || 1)) * 100).toFixed(1)}% dari seluruh transaksi membeli &gt;1 produk
+            {((pasangan.notaMulti / (pasangan.nota || 1)) * 100).toFixed(1)}% pembeli belanja lebih dari satu jenis barang
           </span>
         </div>
 
         <div className={styles.kpiBox}>
-          <span className={styles.kpiLabel}>Korelasi Terkuat (Max Lift)</span>
+          <span className={styles.kpiLabel}>Pasangan Paling Menempel</span>
           <span className={`${styles.kpiVal} ${styles.colorSuccess}`}>
-            {highestLiftPair ? `${one(highestLiftPair.lift)}× Lift` : "—"}
+            {highestLiftPair ? `${one(highestLiftPair.lift)}× Lipat` : "—"}
           </span>
           <span className={styles.kpiSub}>
             {highestLiftPair ? `${cleanShortName(highestLiftPair.a)} + ${cleanShortName(highestLiftPair.b)}` : ""}
@@ -308,7 +308,7 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
         </div>
 
         <div className={styles.kpiBox}>
-          <span className={styles.kpiLabel}>Volume Pasangan Tertinggi</span>
+          <span className={styles.kpiLabel}>Pasangan Paling Laris Dibeli Bareng</span>
           <span className={styles.kpiVal}>
             {pasangan.top[0] ? `${int(pasangan.top[0].n)} Nota` : "—"}
           </span>
@@ -502,7 +502,7 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
               />
               <div>
                 <span className={styles.cardTagSmall}>
-                  {activePair.lift >= 2.0 ? "🔥 Peluang Bundling Kuat" : "🛒 Pasangan Sering Dibeli"}
+                  {activePair.lift >= 2.0 ? "🔥 Sangat Cocok Dibikin Paket Bundling" : "🛒 Pasangan Sering Dibeli Bareng"}
                 </span>
                 <strong className={styles.cardTitleSmall}>
                   {cleanShortName(activePair.a)} + {cleanShortName(activePair.b)}
@@ -512,32 +512,32 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
 
             <div className={styles.metricGridSmall}>
               <div className={styles.metricMini}>
-                <span>Lift Score</span>
+                <span>Kekuatan Pasangan</span>
                 <strong style={{ color: activePair.lift >= 2.0 ? "var(--success)" : "var(--accent)" }}>
-                  {one(activePair.lift)}×
+                  {one(activePair.lift)}× Lipat
                 </strong>
               </div>
               <div className={styles.metricMini}>
-                <span>Frekuensi</span>
+                <span>Berapa Kali Dibeli</span>
                 <strong>{int(activePair.n)} Nota</strong>
               </div>
               <div className={styles.metricMini}>
-                <span>Pelanggan</span>
-                <strong>{int(activePair.pelanggan)} Akun</strong>
+                <span>Jumlah Pelanggan</span>
+                <strong>{int(activePair.pelanggan)} Orang/Toko</strong>
               </div>
               <div className={styles.metricMini}>
-                <span>Sinergi</span>
-                <strong>{activePair.bedaMerek ? "Lintas Merek" : "Satu Merek"}</strong>
+                <span>Asal Pabrik</span>
+                <strong>{activePair.bedaMerek ? "Beda Merek" : "Satu Merek"}</strong>
               </div>
             </div>
 
             <div className={styles.confidenceBarGroup}>
               <div className={styles.confRow}>
-                <span>{cleanShortName(activePair.a)} &rarr; {cleanShortName(activePair.b)}</span>
+                <span>Beli {cleanShortName(activePair.a)} &rarr; ikut beli {cleanShortName(activePair.b)}:</span>
                 <strong>{activePair.pctA}%</strong>
               </div>
               <div className={styles.confRow}>
-                <span>{cleanShortName(activePair.b)} &rarr; {cleanShortName(activePair.a)}</span>
+                <span>Beli {cleanShortName(activePair.b)} &rarr; ikut beli {cleanShortName(activePair.a)}:</span>
                 <strong>{activePair.pctB}%</strong>
               </div>
             </div>
@@ -545,11 +545,11 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
             <p className={styles.biTakeaway}>
               {activePair.lift >= 2.0 ? (
                 <>
-                  <strong>Implikasi Bisnis:</strong> Produk ini dibeli bersama <strong>{one(activePair.lift)} kali</strong> lebih sering dari peluang acak. Sangat ideal dikemas sebagai paket diskon bundling atau ditempatkan bersebelahan di rak display.
+                  <strong>Saran Penjualan:</strong> Pelanggan membeli kedua barang ini <strong>{one(activePair.lift)} kali lipat</strong> lebih sering dibandingkan barang lain. Sangat menguntungkan jika dijadikan <strong>Paket Hemat Promo</strong> atau diletakkan berdampingan di etalase pendingin.
                 </>
               ) : (
                 <>
-                  <strong>Implikasi Bisnis:</strong> Sering muncul bersama ({int(activePair.n)} nota) terutama karena kedua item memiliki volume penjualan tinggi independen.
+                  <strong>Saran Penjualan:</strong> Sering dibeli bersamaan ({int(activePair.n)} nota) karena kedua barang ini memang termasuk barang yang paling laris dan dicari pembeli.
                 </>
               )}
             </p>
@@ -560,18 +560,18 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
       {/* Legend & Guide Bar */}
       <footer className={styles.legendBar}>
         <div className={styles.legendGroup}>
-          <span className={styles.legendTitle}>Kekuatan Relasi:</span>
+          <span className={styles.legendTitle}>Kekuatan Pasangan:</span>
           <span className={styles.legendPill}>
             <span className={styles.dotHigh} />
-            <span>High Lift (&ge; 2.0×) - Bundling</span>
+            <span>Sangat Cocok Bundling (&ge; 2.0×)</span>
           </span>
           <span className={styles.legendPill}>
             <span className={styles.dotMed} />
-            <span>Moderate Lift (1.5× - 2.0×)</span>
+            <span>Sering Dibeli Bareng (1.5× – 2.0×)</span>
           </span>
           <span className={styles.legendPill}>
             <span className={styles.dotLow} />
-            <span>Baseline (&lt; 1.5×)</span>
+            <span>Normal (&lt; 1.5×)</span>
           </span>
         </div>
 
@@ -590,7 +590,7 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
           className={styles.toggleTableBtn}
           onClick={() => setShowTable(v => !v)}
         >
-          <span>{showTable ? "Sembunyikan Tabel" : "Lihat Tabel Metrik Lengkap"}</span>
+          <span>{showTable ? "Sembunyikan Tabel" : "Lihat Daftar Lengkap Pasangan Barang"}</span>
           {showTable ? <ChevronUp size={14} /> : <ChevronDown size={14} />}
         </button>
       </footer>
@@ -602,14 +602,14 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
             <thead>
               <tr>
                 <th>No</th>
-                <th>Pasangan Produk (A + B)</th>
-                <th>Frekuensi</th>
-                <th>Pelanggan</th>
-                <th>Confidence A&rarr;B</th>
-                <th>Confidence B&rarr;A</th>
-                <th>Lift Score</th>
-                <th>Tipe Merek</th>
-                <th>Rekomendasi Aksi BI</th>
+                <th>Pasangan Barang (A + B)</th>
+                <th>Jumlah Nota</th>
+                <th>Banyak Pembeli</th>
+                <th>Beli A &rarr; Ikut Beli B</th>
+                <th>Beli B &rarr; Ikut Beli A</th>
+                <th>Kekuatan Pasangan</th>
+                <th>Merek</th>
+                <th>Saran Aksi untuk Toko</th>
               </tr>
             </thead>
             <tbody>
@@ -625,7 +625,7 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
                     <div style={{ color: "var(--text-secondary)", fontSize: "11px" }}>+ {p.b}</div>
                   </td>
                   <td><strong>{int(p.n)}</strong> nota</td>
-                  <td>{int(p.pelanggan)} pembeli</td>
+                  <td>{int(p.pelanggan)} langganan</td>
                   <td>{p.pctA}%</td>
                   <td>{p.pctB}%</td>
                   <td>
@@ -635,14 +635,14 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
                   </td>
                   <td>
                     <span className={p.bedaMerek ? styles.tagCross : styles.tagSame}>
-                      {p.bedaMerek ? "Lintas Merek" : "Satu Merek"}
+                      {p.bedaMerek ? "Beda Merek" : "Satu Merek"}
                     </span>
                   </td>
                   <td>
                     {p.lift >= 2.0 ? (
-                      <span className={styles.actionRec}>🔥 Paket Promo Bundling</span>
+                      <span className={styles.actionRec}>🔥 Bikin Paket Bundling Promo</span>
                     ) : (
-                      <span className={styles.actionNormal}>Pengaturan Tata Letak</span>
+                      <span className={styles.actionNormal}>Pajang Berdampingan</span>
                     )}
                   </td>
                 </tr>

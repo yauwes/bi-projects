@@ -82,21 +82,23 @@ Halaman web dashboard berfokus murni pada **pengalaman visual monitoring eksekut
    - Pelanggan Aktif.
    - Produk Aktif.
 3. **Navigasi Sidebar Terpadu & Layout Eksekutif:**
-   - **Sidebar Navigasi:** Mengadopsi arsitektur sidebar navy gelap (`#0b132b`) dengan logo Snowflake, tab menu cepat (`Ringkasan`, `Target 3D`, `Penjualan`, `Produk`, `Kategori`, `Pelanggan`, `Diagnostik`, `Laporan`), serta grafis karya beku *"Frozen Food Freshness for Better Life"*.
+   - **Sidebar Navigasi:** Mengadopsi arsitektur sidebar navy gelap (`#0b132b`) dengan logo Snowflake, tab menu cepat (`Ringkasan`, `Target 3D`, `Penjualan`, `Produk`, `Kategori`, `Pelanggan`, `Analisis Toko`, `Laporan`), serta grafis karya beku *"Frozen Food Freshness for Better Life"*.
    - **Tampilan Ringkasan Utama:** Merefleksikan tata letak referensi UI/UX eksekutif: 4 kartu metrik utama (Total Pendapatan, Volume Penjualan, Rata-rata Transaksi, Pelanggan Aktif), tren pendapatan bulanan area chart, top 5 produk horizontal bars, serta dua donut chart proporsi pelanggan dan kategori produk.
 4. **Kustomisasi Tema & Palet Warna (`ThemeCustomizer`):**
    - **Mode Gelap / Terang (Light & Dark):** Tombol alih tema instan yang mengubah skema warna antarmuka (latar belakang, kartu, kontras teks, dan chart).
    - **Palet Warna Aksen:** Pilihan 5 aksen warna visual (*Ocean Blue*, *Emerald Green*, *Royal Violet*, *Amber Gold*, dan *Coral Flame*) yang tersimpan otomatis di *localStorage*.
 5. **Dashboard 3 Dimensi Target Penjualan (`Target3DDashboard`):**
    - **Data 3 Sumbu:** Menggabungkan dimensi **Waktu (Bulan)** pada sumbu X, **Kategori Produk** pada sumbu Y, dan **% Pencapaian Target** pada elevasi sumbu Z.
-   - **Representasi Visual Intuitif:** Visualisasi matriks balok 3D isometrik dengan kode warna kinerja (🟢 *Surplus ≥100%*, 🟡 *Waspada 85-99%*, 🔴 *Defisit <85%*).
-   - **Kontrol Perspektif Multi-Sudut:** Beralih mulus antara *Isometrik 3D*, *Heatmap Matriks 2D*, dan *Elevasi Kategori*.
-   - **Simulator Target Interaktif:** Slider kuota dinamis (Rp 500 Jt – Rp 1,1 Miliar/bulan) untuk mengevaluasi skenario *What-If*.
+   - **Representasi Visual Intuitif:** Visualisasi matriks balok 3D isometrik dengan kode warna kinerja (🟢 *Tembus Target ≥100%*, 🟡 *Hampir Capai 85-99%*, 🔴 *Masih Kurang <85%*).
+   - **Kontrol Perspektif Multi-Sudut:** Beralih mulus antara *Tampilan Balok 3D*, *Tabel Warna (Heatmap)*, dan *Performa Kategori*.
+   - **Simulator Target Interaktif:** Slider target dinamis (Rp 500 Jt – Rp 1,1 Miliar/bulan) untuk mengevaluasi apakah hasil penjualan toko mampu mengejar target.
 6. **Aset Visual & Representasi Data Nyata:**
-   - **Executive Hero Showcase:** Banner fasilitas pergudangan *cold storage* (-18.5°C), armada logistik, dan kemasan produk beku.
+   - **Executive Hero Showcase:** Banner fasilitas pergudangan *cold storage* (-18°C), armada logistik, dan kemasan produk beku.
    - **Pilar Kategori & Portofolio Produk:** Tiga kartu visual interaktif (*Olahan Hasil Laut Minaku*, *Olahan Sosis Okey*, dan *Nugget Ayam Jofrans/Belfoods*).
    - **Thumbnail Kontekstual Market Basket:** Kartu wawasan analitik mengambang pada graf asosiasi secara otomatis menampilkan pratinjau visual kemasan produk terkait.
-7. **Sistem Tooltip Kontekstual (`InfoHint`):**
+7. **Bahasa Ramah Pemilik Bisnis (Non-Teknis):**
+   - Seluruh teks dan istilah statistik/data science telah disederhanakan ke bahasa operasional toko yang mudah dipahami pemilik bisnis: *Lift Score* menjadi *Kekuatan Pasangan / Beli Barengan*, *Single-Buyer Concentration* menjadi *Ketergantungan pada 1 Pembeli Terbesar*, *Outlier* menjadi *Pesanan Borongan Partai Besar*, dan *Kohort* menjadi *Langganan Baru vs Langganan Setia*.
+8. **Sistem Tooltip Kontekstual (`InfoHint`):**
    - Ikon peringatan interaktif (`!`) pada judul setiap kartu visualisasi yang menampilkan intisari temuan deskriptif/diagnostik saat di-hover tanpa mengotori ruang visual dashboard.
 
 ---

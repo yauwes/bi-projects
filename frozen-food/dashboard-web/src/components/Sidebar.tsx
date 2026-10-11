@@ -34,7 +34,7 @@ const NAV_ITEMS: { id: NavTabId; label: string; icon: React.ReactNode }[] = [
   { id: "produk", label: "Produk", icon: <Package size={18} /> },
   { id: "kategori", label: "Kategori", icon: <LayoutGrid size={18} /> },
   { id: "pelanggan", label: "Pelanggan", icon: <Users size={18} /> },
-  { id: "diagnostik", label: "Diagnostik", icon: <Activity size={18} /> },
+  { id: "diagnostik", label: "Analisis Toko", icon: <Activity size={18} /> },
   { id: "laporan", label: "Laporan", icon: <FileText size={18} /> },
 ];
 

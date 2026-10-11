@@ -130,7 +130,7 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
   };
 
   return (
-    <article className={styles.container} aria-label="Dashboard 3 Dimensi Target Penjualan">
+    <article className={styles.container} aria-label="Pencapaian Target Penjualan">
       {/* Header & Controls */}
       <header className={styles.header}>
         <div className={styles.titleCol}>
@@ -138,24 +138,24 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
             <div className={styles.iconBadge}>
               <Box size={18} />
             </div>
-            <h3 className={styles.title}>Model 3 Dimensi: Realisasi vs Target Penjualan</h3>
-            <span className={styles.badge3D}>3D Target Matrix</span>
+            <h3 className={styles.title}>Pencapaian Target Penjualan per Kategori Produk</h3>
+            <span className={styles.badge3D}>Target vs Hasil Jual</span>
           </div>
           <p className={styles.subtitle}>
-            Analisis simultan 3 sumbu data: <strong>Waktu (Bulan)</strong> × <strong>Entitas Produk (Kategori)</strong> × <strong>Tingkat Ketercapaian Target (% Z-Height)</strong>
+            Pantau kategori mana yang <strong>sudah tembus target</strong> dan mana yang <strong>masih kurang</strong> di setiap bulan (April – September 2020).
           </p>
         </div>
 
         {/* View Perspective Controls */}
         <div className={styles.controlsRow}>
-          <div className={styles.viewTabs} role="group" aria-label="Perspektif Visual 3D">
+          <div className={styles.viewTabs} role="group" aria-label="Pilihan Tampilan">
             <button
               type="button"
               className={`${styles.viewBtn} ${viewMode === "isometric" ? styles.viewBtnActive : ""}`}
               onClick={() => setViewMode("isometric")}
             >
               <Box size={14} />
-              <span>Isometrik 3D</span>
+              <span>Tampilan Balok 3D</span>
             </button>
             <button
               type="button"
@@ -163,7 +163,7 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
               onClick={() => setViewMode("heatmap")}
             >
               <Grid3X3 size={14} />
-              <span>Heatmap 2D</span>
+              <span>Tabel Warna (Heatmap)</span>
             </button>
             <button
               type="button"
@@ -171,7 +171,7 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
               onClick={() => setViewMode("category_bars")}
             >
               <Layers size={14} />
-              <span>Elevasi Kategori</span>
+              <span>Performa Kategori</span>
             </button>
           </div>
         </div>
@@ -182,8 +182,8 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
         <div className={styles.simLabelGroup}>
           <Sliders size={16} className={styles.iconSlider} />
           <div>
-            <strong className={styles.simLabel}>Simulator Target Omzet Bulanan:</strong>
-            <span className={styles.simSub}>Eksplorasi skenario target penjualan dinamis</span>
+            <strong className={styles.simLabel}>Pasang Target Penjualan Bulanan:</strong>
+            <span className={styles.simSub}>Geser untuk melihat apakah hasil penjualan mampu mengejar target Anda</span>
           </div>
         </div>
 
@@ -198,7 +198,7 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
             className={styles.rangeInput}
           />
           <span className={styles.targetBadge}>
-            Rp {monthlyTargetJt} Jt / Bulan
+            Target: Rp {monthlyTargetJt} Jt / Bulan
           </span>
         </div>
       </div>
@@ -208,32 +208,32 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
         <div className={styles.kpiCard}>
           <span className={styles.kpiLabel}>Total Target (6 Bulan)</span>
           <strong className={styles.kpiVal}>Rp {(summary.totalTarget / 1000).toFixed(2)} M</strong>
-          <span className={styles.kpiContext}>Kuota dasar kuartal</span>
+          <span className={styles.kpiContext}>Target yang dipatok</span>
         </div>
 
         <div className={styles.kpiCard}>
-          <span className={styles.kpiLabel}>Total Realisasi Aktual</span>
+          <span className={styles.kpiLabel}>Hasil Penjualan yang Didapat</span>
           <strong className={styles.kpiVal}>Rp {(summary.totalActual / 1000).toFixed(2)} M</strong>
-          <span className={styles.kpiContext}>Omzet riil tercatat</span>
+          <span className={styles.kpiContext}>Pemasukan riil masuk</span>
         </div>
 
         <div className={styles.kpiCard}>
-          <span className={styles.kpiLabel}>Pencapaian Agregat (Z)</span>
+          <span className={styles.kpiLabel}>Tingkat Keberhasilan Target</span>
           <strong className={`${styles.kpiVal} ${summary.aggregatePct >= 100 ? styles.colorGreen : styles.colorOrange}`}>
             {summary.aggregatePct}%
           </strong>
           <span className={styles.kpiContext}>
-            {summary.aggregatePct >= 100 ? "Surplus kuota target" : "Defisit dari target"}
+            {summary.aggregatePct >= 100 ? "🎉 Tembus Melebihi Target!" : "⚠️ Belum Capai Target"}
           </span>
         </div>
 
         <div className={styles.kpiCard}>
-          <span className={styles.kpiLabel}>Rasio Sel Tercapai</span>
+          <span className={styles.kpiLabel}>Kategori yang Sukses Tembus</span>
           <strong className={styles.kpiVal}>
             {summary.cellsAchieved} / {summary.totalCells}
           </strong>
           <span className={styles.kpiContext}>
-            {Math.round((summary.cellsAchieved / summary.totalCells) * 100)}% segmen memenuhi target
+            {Math.round((summary.cellsAchieved / summary.totalCells) * 100)}% target berhasil dicapai
           </span>
         </div>
       </div>
@@ -475,7 +475,7 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
                   <div className={styles.catBarHead}>
                     <div>
                       <strong className={styles.catBarTitle}>{cat.label}</strong>
-                      <span className={styles.catBarSub}>Realisasi: Rp {totalCatActual.toFixed(1)} Jt (Target: Rp {totalCatTarget.toFixed(1)} Jt)</span>
+                      <span className={styles.catBarSub}>Hasil Jual: Rp {totalCatActual.toFixed(1)} Jt (Target: Rp {totalCatTarget.toFixed(1)} Jt)</span>
                     </div>
                     <span className={`${styles.catBarBadge} ${catAvgPct >= 100 ? styles.colorGreen : styles.colorOrange}`}>
                       {catAvgPct}% Tercapai
@@ -523,29 +523,29 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
                   active.status === "surplus" ? styles.bgSurplus : active.status === "warning" ? styles.bgWarning : styles.bgDeficit
                 }`}
               >
-                {active.status === "surplus" && "🟢 Target Terlampaui"}
-                {active.status === "warning" && "🟡 Mendekati Target"}
-                {active.status === "deficit" && "🔴 Perlu Akselerasi"}
+                {active.status === "surplus" && "🟢 Tembus Target"}
+                {active.status === "warning" && "🟡 Hampir Capai Target"}
+                {active.status === "deficit" && "🔴 Belum Capai Target"}
               </span>
             </div>
 
             <div className={styles.hudMetrics}>
               <div className={styles.hudMini}>
-                <span>Realisasi Aktual</span>
+                <span>Hasil Penjualan</span>
                 <strong>Rp {active.actualJt} Jt</strong>
               </div>
               <div className={styles.hudMini}>
-                <span>Target Ditetapkan</span>
+                <span>Target yang Dipasang</span>
                 <strong>Rp {active.targetJt} Jt</strong>
               </div>
               <div className={styles.hudMini}>
-                <span>Varian Selisih (GAP)</span>
+                <span>Selisih (Lebih/Kurang)</span>
                 <strong className={active.gapJt >= 0 ? styles.colorGreen : styles.colorRed}>
                   {active.gapJt >= 0 ? `+Rp ${active.gapJt} Jt` : `-Rp ${Math.abs(active.gapJt)} Jt`}
                 </strong>
               </div>
               <div className={styles.hudMini}>
-                <span>% Pencapaian (Z)</span>
+                <span>% Hasil vs Target</span>
                 <strong className={active.achievementPct >= 100 ? styles.colorGreen : styles.colorOrange}>
                   {active.achievementPct}%
                 </strong>
@@ -555,11 +555,11 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
             <p className={styles.hudInsight}>
               {active.status === "surplus" ? (
                 <>
-                  Segmen <strong>{active.category}</strong> berhasil melampaui kuota dengan surplus <strong>Rp {active.gapJt} Jt</strong> (+{active.achievementPct - 100}%). Pasokan rantai dingin dan stok gudang berjalan optimal.
+                  Kategori <strong>{active.category}</strong> berhasil melampaui target dengan keuntungan ekstra <strong>Rp {active.gapJt} Jt</strong> (+{active.achievementPct - 100}%). Pasokan stok aman dan perputaran barang sangat lancar.
                 </>
               ) : (
                 <>
-                  Segmen <strong>{active.category}</strong> mencatat defisit <strong>Rp {Math.abs(active.gapJt)} Jt</strong> dari kuota target. Direkomendasikan evaluasi program diskon kuantitas atau aktivasi bundling.
+                  Kategori <strong>{active.category}</strong> masih kurang <strong>Rp {Math.abs(active.gapJt)} Jt</strong> untuk mengejar target. Cobalah buat paket promo hemat atau tawarkan ke pelanggan borongan.
                 </>
               )}
             </p>
@@ -571,15 +571,15 @@ export function Target3DDashboard({ analysis }: Target3DDashboardProps) {
       <footer className={styles.legendBar}>
         <div className={styles.legendItem}>
           <span className={styles.legDot} style={{ background: "#10b981" }} />
-          <span>Surplus (≥ 100% Target Tercapai)</span>
+          <span>Tembus Target (≥ 100%)</span>
         </div>
         <div className={styles.legendItem}>
           <span className={styles.legDot} style={{ background: "#f59e0b" }} />
-          <span>On-Track / Waspada (85% – 99%)</span>
+          <span>Hampir Capai (85% – 99%)</span>
         </div>
         <div className={styles.legendItem}>
           <span className={styles.legDot} style={{ background: "#f43f5e" }} />
-          <span>Defisit (&lt; 85% dari Target)</span>
+          <span>Masih Kurang (&lt; 85%)</span>
         </div>
       </footer>
     </article>

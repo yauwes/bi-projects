@@ -23,41 +23,41 @@ export function DiagnosticDecompositionCard({ analysis }: DiagnosticChartsProps)
     <article className={styles.decompCard}>
       <header className={styles.cardHead}>
         <div className={styles.titleGroup}>
-          <h3 className={styles.title}>Dekomposisi Kenaikan Agustus</h3>
-          <p className={styles.subtitle}>Omzet resmi vs kontribusi 3 transaksi outlier jumbo</p>
+          <h3 className={styles.title}>Mengapa Penjualan Melonjak Tajam di Bulan Agustus?</h3>
+          <p className={styles.subtitle}>Penjualan melonjak bukan karena banyak pelanggan baru, melainkan ada 2 pelanggan borongan yang membeli ratusan dus sekaligus.</p>
         </div>
-        <span className={styles.badgeDiag}>Diagnostik</span>
+        <span className={styles.badgeDiag}>Fakta Penjualan</span>
       </header>
 
       {/* 3 Metric Mini-Cards */}
       <div className={styles.kpiRow}>
         <div className={styles.kpiItem}>
           <div className={styles.kpiLabel}>
-            <span>Omzet Dilaporkan</span>
+            <span>Total Penjualan Agustus</span>
             <span>100%</span>
           </div>
           <span className={styles.kpiValue}>Rp {jt(augOmzetJt)} Jt</span>
           <div className={styles.kpiTrack}>
             <div className={styles.kpiFillMain} style={{ width: "100%" }} />
           </div>
-          <span className={styles.kpiSub}>+8,9% MoM (Puncak 2020)</span>
+          <span className={styles.kpiSub}>Bulan Penjualan Tertinggi di 2020</span>
         </div>
 
         <div className={styles.kpiItem}>
           <div className={styles.kpiLabel}>
-            <span>3 Order Jumbo</span>
+            <span>3 Pesanan Partai Besar</span>
             <span style={{ color: "var(--danger)" }}>19,5%</span>
           </div>
           <span className={styles.kpiValue} style={{ color: "var(--danger)" }}>Rp 172,15 Jt</span>
           <div className={styles.kpiTrack}>
             <div className={styles.kpiFillOutlier} style={{ width: "19.5%" }} />
           </div>
-          <span className={styles.kpiSub}>Hanya 3 dari 1.068 baris</span>
+          <span className={styles.kpiSub}>Hanya dari 3 nota saja!</span>
         </div>
 
         <div className={styles.kpiItem}>
           <div className={styles.kpiLabel}>
-            <span>Omzet Tanpa Outlier</span>
+            <span>Penjualan Toko Biasa (Tanpa Borongan)</span>
             <span style={{ color: "var(--success)" }}>80,5%</span>
           </div>
           <span className={styles.kpiValue}>Rp {jt(withoutTop3Jt)} Jt</span>
@@ -65,7 +65,7 @@ export function DiagnosticDecompositionCard({ analysis }: DiagnosticChartsProps)
             <div className={styles.kpiFillBaseline} style={{ width: "80.5%" }} />
           </div>
           <span className={styles.kpiSub} style={{ color: "var(--danger)" }}>
-            {diffJulPct}% di bawah Juli (Rp {jt(julOmzetJt)} Jt)
+            Tanpa 3 nota ini, omzet riil turun {Math.abs(Number(diffJulPct))}% dari Juli
           </span>
         </div>
       </div>
@@ -76,12 +76,12 @@ export function DiagnosticDecompositionCard({ analysis }: DiagnosticChartsProps)
           <thead>
             <tr>
               <th>Tanggal</th>
-              <th>Pembeli</th>
+              <th>Nama Pembeli Borongan</th>
               <th>Produk</th>
-              <th>Kuantitas</th>
-              <th>Nilai</th>
-              <th>Porsi Agt</th>
-              <th>Deviasi</th>
+              <th>Banyaknya</th>
+              <th>Total Belanja</th>
+              <th>Porsi Omzet</th>
+              <th>Catatan Khusus</th>
             </tr>
           </thead>
           <tbody>
@@ -92,7 +92,7 @@ export function DiagnosticDecompositionCard({ analysis }: DiagnosticChartsProps)
               <td><strong>200 DUS</strong></td>
               <td>Rp 63.200.000</td>
               <td>7,2%</td>
-              <td><span className={styles.badgeOutlier}>67× Median</span></td>
+              <td><span className={styles.badgeOutlier}>67× Lipat dari Order Biasa</span></td>
             </tr>
             <tr>
               <td>13/08/2020</td>
@@ -101,7 +101,7 @@ export function DiagnosticDecompositionCard({ analysis }: DiagnosticChartsProps)
               <td><strong>200 DUS</strong></td>
               <td>Rp 63.200.000</td>
               <td>7,2%</td>
-              <td><span className={styles.badgeOutlier}>67× Median</span></td>
+              <td><span className={styles.badgeOutlier}>67× Lipat dari Order Biasa</span></td>
             </tr>
             <tr>
               <td>03/08/2020</td>
@@ -110,7 +110,7 @@ export function DiagnosticDecompositionCard({ analysis }: DiagnosticChartsProps)
               <td><strong>150 DUS</strong></td>
               <td>Rp 45.750.000</td>
               <td>5,2%</td>
-              <td><span className={styles.badgeOutlier}>50× Median</span></td>
+              <td><span className={styles.badgeOutlier}>50× Lipat dari Order Biasa</span></td>
             </tr>
           </tbody>
         </table>

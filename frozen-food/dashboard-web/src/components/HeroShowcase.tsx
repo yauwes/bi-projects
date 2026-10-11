@@ -36,21 +36,20 @@ export function HeroShowcase({
         <div className={styles.badgeRow}>
           <span className={styles.badgeCold}>
             <ThermometerSnowflake size={14} className={styles.iconSnow} />
-            <span>Cold Chain Standard (-18.5°C)</span>
+            <span>Standar Freezer Beku (-18°C)</span>
           </span>
           <span className={styles.badgeSub}>
             <Snowflake size={13} />
-            <span>Rantai Distribusi Produk Beku B2B</span>
+            <span>Grosir & Distribusi Makanan Beku</span>
           </span>
         </div>
 
         <div className={styles.mainInfo}>
           <h2 className={styles.title}>
-            Executive Intelligence & Distribusi Frozen Food
+            Dasbor Penjualan Toko & Grosir Frozen Food
           </h2>
           <p className={styles.description}>
-            Pemantauan performa penjualan, dekomposisi lonjakan musiman, dan pola asosiasi keranjang belanja
-            pada <strong>{totalTrx.toLocaleString("id-ID")}</strong> transaksi bernilai <strong>Rp {totalOmzetM.toFixed(2)} Miliar</strong> periode April – September 2020.
+            Pantau omzet penjualan, barang paling laris, dan ide paket promo hemat dari total <strong>{totalTrx.toLocaleString("id-ID")}</strong> nota transaksi senilai <strong>Rp {totalOmzetM.toFixed(2)} Miliar</strong> (April – September 2020).
           </p>
         </div>
 
@@ -59,7 +58,7 @@ export function HeroShowcase({
           <div className={styles.pillItem}>
             <Store size={15} className={styles.pillIcon} />
             <div className={styles.pillText}>
-              <span className={styles.pillLabel}>Mitra Terlayani</span>
+              <span className={styles.pillLabel}>Pelanggan Aktif</span>
               <span className={styles.pillVal}>{totalPelanggan} Toko & Agen</span>
             </div>
           </div>
@@ -67,7 +66,7 @@ export function HeroShowcase({
           <div className={styles.pillItem}>
             <PackageCheck size={15} className={styles.pillIcon} />
             <div className={styles.pillText}>
-              <span className={styles.pillLabel}>Volume Transaksi</span>
+              <span className={styles.pillLabel}>Total Nota Terjual</span>
               <span className={styles.pillVal}>{totalTrx.toLocaleString("id-ID")} Nota</span>
             </div>
           </div>
@@ -75,7 +74,7 @@ export function HeroShowcase({
           <div className={styles.pillItem}>
             <Award size={15} className={styles.pillIcon} />
             <div className={styles.pillText}>
-              <span className={styles.pillLabel}>Anchor SKU Terlaris</span>
+              <span className={styles.pillLabel}>Produk Paling Laris</span>
               <span className={styles.pillVal}>{topProdukNama} (Rp {topProdukOmzetM.toFixed(1)}M)</span>
             </div>
           </div>
