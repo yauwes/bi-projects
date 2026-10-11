@@ -75,31 +75,35 @@ Halaman web dashboard berfokus murni pada **pengalaman visual monitoring eksekut
    - **ChipGroup Bulan:** Filter cepat per bulan (April – September).
    - **Tombol Reset:** Mengembalikan semua filter ke posisi semula dalam satu klik.
    - **Transparansi Dataset & Nama Asli:** Dashboard menggunakan seluruh data transaksi asli dan identitas pelanggan asli (*Pak Sutarmuji, Mas Rohmat, Toko Cita Rasa Baru*, dll.) secara langsung tanpa pengaburan nama.
-2. **Kartu KPI Eksekutif (Animated Counter & Id-ID Locale):**
-   - Total Omzet (Format Miliar/Juta IDR dengan indikator tren MoM).
-   - Rata-rata Bulanan.
-   - Total Transaksi.
-   - Pelanggan Aktif.
-   - Produk Aktif.
-3. **Navigasi Sidebar Terpadu & Layout Eksekutif:**
-   - **Sidebar Navigasi:** Mengadopsi arsitektur sidebar navy gelap (`#0b132b`) dengan logo Snowflake, tab menu cepat (`Ringkasan`, `Target 3D`, `Penjualan`, `Produk`, `Kategori`, `Pelanggan`, `Analisis Toko`, `Laporan`), serta grafis karya beku *"Frozen Food Freshness for Better Life"*.
-   - **Tampilan Ringkasan Utama:** Merefleksikan tata letak referensi UI/UX eksekutif: 4 kartu metrik utama (Total Pendapatan, Volume Penjualan, Rata-rata Transaksi, Pelanggan Aktif), tren pendapatan bulanan area chart, top 5 produk horizontal bars, serta dua donut chart proporsi pelanggan dan kategori produk.
-4. **Kustomisasi Tema & Palet Warna (`ThemeCustomizer`):**
-   - **Mode Gelap / Terang (Light & Dark):** Tombol alih tema instan yang mengubah skema warna antarmuka (latar belakang, kartu, kontras teks, dan chart).
-   - **Palet Warna Aksen:** Pilihan 5 aksen warna visual (*Ocean Blue*, *Emerald Green*, *Royal Violet*, *Amber Gold*, dan *Coral Flame*) yang tersimpan otomatis di *localStorage*.
-5. **Dashboard 3 Dimensi Target Penjualan (`Target3DDashboard`):**
+2. **6 Kartu KPI Eksekutif Utama (Top Metrics):**
+   - **Total Revenue:** Rp 4,53 Miliar (+12.5% vs Apr)
+   - **Total Orders:** 6.778 Transaksi (+8.2% vs Apr)
+   - **Customers:** 229 Toko & Mitra Aktif (+6.7% vs Apr)
+   - **Avg. Order Value:** Rp 668.387 per nota (+3.1% vs Apr)
+   - **Volume (Dus):** 19.820 Dus (+4.3% vs Apr)
+   - **Active Products:** 297 SKU (+7.8% vs Apr)
+3. **Navigasi Sidebar Bersih & Header Pintar (InsightHub Theme):**
+   - **Sidebar Navigasi:** Mengadopsi arsitektur sidebar putih bersih modern (`#ffffff`) dengan logo gradien `InsightHub (Frozen Food BI)`, menu tab aktif lavender (`Overview`, `Analytics`, `Sales`, `Customers`, `Products`, `Marketing`, `Goals (3D)`, `Reports`), serta tombol `Download report` di bagian bawah.
+   - **Top Header Bar:** Menampilkan breadcrumb halaman aktif, search bar dinamis (`Search anything...`), tombol pemilih tanggal interaktif (`📅 1 Apr – 30 Sep 2020`), switch mode tema (Light/Dark), bel notifikasi, dan profil avatar pengguna (*Owner Bisnis*).
+4. **Tata Letak Bento Grid 3 Kolom (Sesuai Referensi UI/UX):**
+   - **Kolom Kiri (Peta & Transaksi):**
+     - **Global Overview:** Visualisasi bola dunia 3D relief interaktif dengan pin lokasi jaringan logistik cold storage dan pelanggan borongan utama (*Pak Sutarmuji*, *Mas Rohmat*, *Toko Cita Rasa Baru*, *Graha Sandeni*, dll.) lengkap dengan animasi denyut (*ripple pulse*).
+     - **Revenue Overview:** Grafik batang ungu vertikal bulanan (Apr – Sep) dengan total pemasukan dan pertumbuhan.
+     - **Recent Orders:** Tabel transaksi terverifikasi dengan Order ID, nama pembeli asli, produk, nominal, dan badge status (`Completed` hijau / `Processing` oranye).
+   - **Kolom Tengah (Tren & Kategori):**
+     - **Sales Trend:** Grafik kurva area ungu halus dengan gradien dan penanda puncak mengambang di bulan Agustus (`Rp 883,3 Jt`).
+     - **Traffic Source (Kategori Produk):** Grafik donat multi-warna dengan total pesanan di bagian tengah (`6.778 Nota`) dan persentase kontribusi per kategori produk.
+   - **Kolom Kanan (Produk & Aktivitas):**
+     - **Top Products:** Daftar peringkat 1 s.d. 5 produk terlaris lengkap dengan thumbnail kemasan, kategori, omzet, dan persentase pertumbuhan hijau.
+     - **Device Breakdown (Tipe Kemasan):** Diagram cincin pembagian satuan pesanan: Dus (58.6%), Pack (34.1%), Bal (7.3%).
+     - **Activity Feed:** Catatan timeline transaksi terbaru, konfirmasi pelunasan, pendaftaran toko baru, dan armada cold chain.
+5. **Dashboard 3 Dimensi Target Penjualan (`Target3DDashboard` / Tab Goals):**
    - **Data 3 Sumbu:** Menggabungkan dimensi **Waktu (Bulan)** pada sumbu X, **Kategori Produk** pada sumbu Y, dan **% Pencapaian Target** pada elevasi sumbu Z.
    - **Representasi Visual Intuitif:** Visualisasi matriks balok 3D isometrik dengan kode warna kinerja (🟢 *Tembus Target ≥100%*, 🟡 *Hampir Capai 85-99%*, 🔴 *Masih Kurang <85%*).
    - **Kontrol Perspektif Multi-Sudut:** Beralih mulus antara *Tampilan Balok 3D*, *Tabel Warna (Heatmap)*, dan *Performa Kategori*.
    - **Simulator Target Interaktif:** Slider target dinamis (Rp 500 Jt – Rp 1,1 Miliar/bulan) untuk mengevaluasi apakah hasil penjualan toko mampu mengejar target.
-6. **Aset Visual & Representasi Data Nyata:**
-   - **Executive Hero Showcase:** Banner fasilitas pergudangan *cold storage* (-18°C), armada logistik, dan kemasan produk beku.
-   - **Pilar Kategori & Portofolio Produk:** Tiga kartu visual interaktif (*Olahan Hasil Laut Minaku*, *Olahan Sosis Okey*, dan *Nugget Ayam Jofrans/Belfoods*).
-   - **Thumbnail Kontekstual Market Basket:** Kartu wawasan analitik mengambang pada graf asosiasi secara otomatis menampilkan pratinjau visual kemasan produk terkait.
-7. **Bahasa Ramah Pemilik Bisnis (Non-Teknis):**
+6. **Bahasa Ramah Pemilik Bisnis (Non-Teknis):**
    - Seluruh teks dan istilah statistik/data science telah disederhanakan ke bahasa operasional toko yang mudah dipahami pemilik bisnis: *Lift Score* menjadi *Kekuatan Pasangan / Beli Barengan*, *Single-Buyer Concentration* menjadi *Ketergantungan pada 1 Pembeli Terbesar*, *Outlier* menjadi *Pesanan Borongan Partai Besar*, dan *Kohort* menjadi *Langganan Baru vs Langganan Setia*.
-8. **Sistem Tooltip Kontekstual (`InfoHint`):**
-   - Ikon peringatan interaktif (`!`) pada judul setiap kartu visualisasi yang menampilkan intisari temuan deskriptif/diagnostik saat di-hover tanpa mengotori ruang visual dashboard.
 
 ---
 
