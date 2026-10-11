@@ -1,4 +1,4 @@
-import { CircleAlert } from "lucide-react";
+import { AlertTriangle, CircleAlert, Mic } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Alert } from "@/components/arc/alert/alert";
 import { AnimatedCounter } from "@/components/arc/animated-counter/animated-counter";
@@ -13,6 +13,9 @@ import SegmentedControl from "@/components/arc/segmented-control/segmented-contr
 import { Tooltip } from "@/components/arc/tooltip/tooltip";
 import { RibbonChart } from "./components/RibbonChart";
 import { DiagnosticDecompositionCard } from "./components/DiagnosticCharts";
+import { ExecutiveFindings } from "./components/ExecutiveFindings";
+import { DataQualityAudit } from "./components/DataQualityAudit";
+import { PresentationModal } from "./components/PresentationModal";
 import { analyze, BULAN, calendar, filterRows, firstMonths, type Analysis, type Dict, type Row, type TopRow } from "./analytics";
 import raw from "./data.json";
 import { int, jt, one, pct, rp } from "./format";
@@ -211,11 +214,13 @@ function Kpi({ label, value, decimals = 0, suffix, context, change }: KpiProps) 
   );
 }
 
-type ViewMode = "semua" | "deskriptif" | "diagnostik";
+type ViewMode = "semua" | "temuan" | "deskriptif" | "diagnostik" | "kualitas";
 const viewOptions = [
-  { value: "semua", label: "Semua Visualisasi" },
-  { value: "deskriptif", label: "📊 Monitoring Deskriptif" },
-  { value: "diagnostik", label: "🔍 Diagnostik & Anomali" },
+  { value: "semua", label: "🌐 Semua Visualisasi" },
+  { value: "temuan", label: "⭐ Temuan & Presentasi" },
+  { value: "deskriptif", label: "📊 Descriptive Analytics" },
+  { value: "diagnostik", label: "🔍 Diagnostic Analytics" },
+  { value: "kualitas", label: "📋 Audit Kualitas Data (EDA)" },
 ];
 
 export function App() {
@@ -225,6 +230,8 @@ export function App() {
   const [span, setSpan] = useState<SpanKey>("all");
   const [useMaskedNames, setUseMaskedNames] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("semua");
+  const [excludeOutliers, setExcludeOutliers] = useState(false);
+  const [showPresentationModal, setShowPresentationModal] = useState(false);
 
   const activeDict = useMemo(() => {
     if (useMaskedNames && DICT.pelangganAnon?.length) {
@@ -236,8 +243,8 @@ export function App() {
   const from = Math.max(0, dayOf(range.start));
   const to = Math.min(DICT.hari, dayOf(range.end));
   const months = useMemo(() => chips.map(Number), [chips]);
-  const active = from !== 0 || to !== DICT.hari || months.length > 0;
-  const reset = () => { setRange(FULL); setChips([]); };
+  const active = from !== 0 || to !== DICT.hari || months.length > 0 || excludeOutliers;
+  const reset = () => { setRange(FULL); setChips([]); setExcludeOutliers(false); };
   const dayText = (d: Date) => new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short" }).format(d);
   const monthNames = months.map(m => BULAN[m]);
   const scopeText = months.length
@@ -245,9 +252,9 @@ export function App() {
     : active ? `${dayText(range.start)} sampai ${dayText(range.end)}` : "April sampai September";
 
   const a = useMemo(() => {
-    const f = { from, to, months };
+    const f = { from, to, months, excludeOutliers };
     return analyze(filterRows(ROWS, f, CAL), activeDict, CAL, f, FIRST);
-  }, [from, to, months, activeDict]);
+  }, [from, to, months, excludeOutliers, activeDict]);
   const hints = useMemo(() => (a.n ? hintsOf(a) : {}), [a]);
 
   const weekdayData = useMemo(() => a.weekday.map(w => ({ key: w.key, label: w.label, axisLabel: w.short, value: w.omzetJt })), [a]);
@@ -347,12 +354,28 @@ export function App() {
           <ChipGroup label="Bulan" options={monthOptions} value={chips} onValueChange={setChips} />
           <Button variant="secondary" size="sm" onClick={reset} disabled={!active}>Reset</Button>
           <Button 
+            variant={excludeOutliers ? "primary" : "secondary"} 
+            size="sm" 
+            onClick={() => setExcludeOutliers(v => !v)}
+            title="Simulasi normalisasi pasar dengan mengecualikan 3 transaksi outlier jumbo"
+          >
+            {excludeOutliers ? "🔵 Mode: Simulasi Normal" : "🟢 Mode: Data Asli"}
+          </Button>
+          <Button 
             variant={useMaskedNames ? "secondary" : "primary"} 
             size="sm" 
             onClick={() => setUseMaskedNames(v => !v)}
             title="Beralih antara nama asli dari dataset dan nama disamarkan"
           >
             {useMaskedNames ? "👤 Disamarkan" : "👤 Nama Asli"}
+          </Button>
+          <Button
+            variant="primary"
+            size="sm"
+            onClick={() => setShowPresentationModal(true)}
+            title="Buka naskah presentasi perwakilan kelompok siap pakai"
+          >
+            🎙️ Naskah Presentasi
           </Button>
         </div>
       </header>
@@ -387,7 +410,30 @@ export function App() {
             />
           </div>
 
+          {excludeOutliers && (
+            <div className={styles.simBanner} role="status">
+              <AlertTriangle size={18} className={styles.simBannerIcon} />
+              <div className={styles.simBannerText}>
+                <strong>Mode Simulasi Normal Aktif:</strong> 3 transaksi jumbo MIN-001 oleh {useMaskedNames ? "Pelanggan 002 & Pelanggan 004" : "Pak Sutarmuji & Mas Rohmat"} senilai Rp 172,15 Juta dikecualikan dari perhitungan. Terlihat omzet Agustus turun dari Rp 883,31 Jt menjadi Rp 711,16 Jt (-12,3% vs Juli), membuktikan secara visual bahwa pasar reguler sebenarnya sedang kontraksi.
+              </div>
+              <Button variant="secondary" size="sm" onClick={() => setExcludeOutliers(false)}>Kembalikan Data Asli</Button>
+            </div>
+          )}
+
           <div className={styles.grid}>
+            {/* Ringkasan Temuan Eksekutif & Presentasi */}
+            {(viewMode === "semua" || viewMode === "temuan") && (
+              <div className={styles.span12}>
+                <ExecutiveFindings
+                  analysis={a}
+                  isMasked={useMaskedNames}
+                  excludeOutliers={excludeOutliers}
+                  onToggleOutliers={() => setExcludeOutliers(v => !v)}
+                  onOpenPresentation={() => setShowPresentationModal(true)}
+                />
+              </div>
+            )}
+
             {/* Visualisasi Diagnostik: Dekomposisi Lonjakan & Distribusi Kuantitas Outlier */}
             {(viewMode === "semua" || viewMode === "diagnostik") && (
               <>
@@ -565,6 +611,17 @@ export function App() {
                 </section>
               </>
             )}
+
+            {/* Audit Kualitas Data & EDA */}
+            {(viewMode === "semua" || viewMode === "kualitas") && (
+              <div className={styles.span12}>
+                <DataQualityAudit
+                  analysis={a}
+                  dict={activeDict}
+                  kualitas={KUALITAS}
+                />
+              </div>
+            )}
           </div>
         </>
       )}
@@ -576,6 +633,12 @@ export function App() {
         <span>•</span>
         <span>Periode: April – September 2020</span>
       </footer>
+
+      <PresentationModal
+        isOpen={showPresentationModal}
+        onClose={() => setShowPresentationModal(false)}
+        isMasked={useMaskedNames}
+      />
     </main>
   );
 }

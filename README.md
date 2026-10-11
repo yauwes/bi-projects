@@ -49,22 +49,29 @@ Bagian ini disediakan secara terpisah di README sebagai panduan berbicara bagi p
 
 ---
 
-## 📊 Fitur Visualisasi Dashboard Monitoring
+## 📊 Fitur Visualisasi Dashboard Business Intelligence & EDA
 
-Dashboard dirancang murni fokus pada visualisasi interaktif untuk kebutuhan monitoring eksekutif:
+Dashboard dirancang sebagai solusi Business Intelligence eksekutif dan Exploratory Data Analysis (EDA) yang komprehensif, interaktif, dan responsif:
 
-1. **Perspektif Monitoring Interaktif:**
-   - `Semua Visualisasi`: Menampilkan seluruh analitik secara menyeluruh.
-   - `📊 Monitoring Deskriptif`: Memfokuskan grafik pada tren omzet bulanan & harian, Pareto pelanggan & produk teratas, serta pola waktu transaksi.
-   - `🔍 Diagnostik & Anomali`: Memfokuskan grafik pada dekomposisi lonjakan Agustus, deteksi outlier kuantitas pesanan, analisis ketergantungan pembeli tunggal, dan kohort loyalitas pelanggan.
-2. **Visual Dekomposisi Penjualan Agustus:**
+1. **Perspektif Monitoring Interaktif (5 Tab Navigasi):**
+   - `🌐 Semua Visualisasi`: Menampilkan seluruh analitik secara menyeluruh dan terpadu.
+   - `⭐ Temuan & Presentasi`: Kartu ringkasan eksekutif temuan Descriptive & Diagnostic Analytics, rekomendasi bisnis, dan tombol pembuka naskah presentasi.
+   - `📊 Monitoring Deskriptif`: Memfokuskan grafik pada tren omzet bulanan & harian, Pareto pelanggan & produk teratas, pola hari kerja, dan siklus tanggal.
+   - `🔍 Diagnostik & Anomali`: Memfokuskan grafik pada dekomposisi lonjakan Agustus, deteksi outlier kuantitas pesanan, analisis ketergantungan single-buyer, kohort pelanggan, dan market basket lift score.
+   - `📋 Audit Kualitas Data (EDA)`: Analisis integritas dataset (77 baris anomali diskon Rp 4,44 Jt, 58 baris transaksi Rp 0, 73 baris duplikat, variasi penamaan pelanggan, dan heterogenitas satuan).
+2. **Interactive Outlier Simulator (Simulasi Skenario Normal):**
+   - Tombol toggle instan di header: beralih antara `🟢 Mode: Data Asli` dan `🔵 Mode: Simulasi Normal`.
+   - Ketika simulasi aktif, 3 order jumbo MIN-001 (Rp 172,15 Jt) dikecualikan secara reaktif, membuktikan secara visual bahwa omzet Agustus terkontraksi menjadi Rp 711,16 Jt (-12,3% vs Juli).
+3. **Visual Dekomposisi Penjualan Agustus:**
    - Membandingkan bar visual omzet tercatat (Rp 883,31 Jt), kontribusi 3 transaksi jumbo (Rp 172,15 Jt / 19,5%), dan omzet riil tanpa outlier (Rp 711,16 Jt).
-   - Tabel visual 3 transaksi outlier dengan indikator rasio terhadap median (50×–67× median).
-3. **Visual Histogram Distribusi Kuantitas & Deteksi Outlier:**
+   - Tabel interaktif 3 transaksi outlier dengan indikator rasio terhadap median (50×–67× median).
+4. **Visual Histogram Distribusi Kuantitas & Deteksi Outlier:**
    - Grafik batang yang memvisualisasikan persebaran ukuran pesanan (median 3 DUS) dan lonjakan bar outlier ekstrem pada kelompok `>100 DUS`.
-4. **Interactive Filters:**
+5. **Modal Naskah Presentasi Siap Pakai:**
+   - Tombol `🎙️ Naskah Presentasi` membuka dialog terformat rapi dengan tombol salin (1-click copy to clipboard) untuk perwakilan kelompok.
+6. **Interactive Filters:**
    - Filter rentang tanggal fleksibel (DateRangePicker) dan quick-filter per bulan (ChipGroup).
-   - Toggle nama pelanggan: beralih instan antara **Nama Asli Dataset** (*Pak Sutarmuji, Mas Rohmat*) dan **Nama Disamarkan** (*Pelanggan 001, Pelanggan 002*).
+   - Toggle nama pelanggan: beralih instan antara **Nama Asli Dataset** (*Pak Sutarmuji, Mas Rohmat*) dan **Nama Disamarkan** (*Pelanggan 002, Pelanggan 004*).
 
 ---
 
