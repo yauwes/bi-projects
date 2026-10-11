@@ -42,10 +42,10 @@ const MIN = dateOf(0);
 const MAX = dateOf(DICT.hari);
 const FULL: DateRange = { start: MIN, end: MAX };
 const presets = [
-  { label: "Seluruh periode", range: () => FULL },
-  { label: "Kuartal 2 (April sampai Juni)", range: () => ({ start: new Date(2020, 3, 1), end: new Date(2020, 5, 30) }) },
-  { label: "Kuartal 3 (Juli sampai September)", range: () => ({ start: new Date(2020, 6, 1), end: new Date(2020, 8, 30) }) },
-  { label: "30 hari terakhir", range: () => ({ start: new Date(2020, 8, 1), end: MAX }) },
+  { label: "Seluruh Periode", range: () => FULL },
+  { label: "Kuartal 2 (Apr – Jun)", range: () => ({ start: new Date(2020, 3, 1), end: new Date(2020, 5, 30) }) },
+  { label: "Kuartal 3 (Jul – Sep)", range: () => ({ start: new Date(2020, 6, 1), end: new Date(2020, 8, 30) }) },
+  { label: "30 Hari Terakhir", range: () => ({ start: new Date(2020, 8, 1), end: MAX }) },
 ];
 const monthOptions = Object.entries(BULAN).map(([value, label]) => ({ value, label }));
 
