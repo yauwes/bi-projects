@@ -5,10 +5,9 @@ import styles from "./DiagnosticCharts.module.css";
 
 interface DiagnosticChartsProps {
   analysis: Analysis;
-  isMasked: boolean;
 }
 
-export function DiagnosticDecompositionCard({ analysis, isMasked }: DiagnosticChartsProps) {
+export function DiagnosticDecompositionCard({ analysis }: DiagnosticChartsProps) {
   const augPeak = analysis.months.find(m => m.month === 8);
   const julMonth = analysis.months.find(m => m.month === 7);
 
@@ -17,8 +16,8 @@ export function DiagnosticDecompositionCard({ analysis, isMasked }: DiagnosticCh
   const julOmzetJt = julMonth ? julMonth.omzetJt : 811.36;
   const diffJulPct = (((withoutTop3Jt / julOmzetJt) - 1) * 100).toFixed(1);
 
-  const buyerSutarmuji = isMasked ? "Pelanggan 002" : "Pak Sutarmuji";
-  const buyerRohmat = isMasked ? "Pelanggan 004" : "Mas Rohmat";
+  const buyerSutarmuji = "Pak Sutarmuji";
+  const buyerRohmat = "Mas Rohmat";
 
   return (
     <article className={styles.decompCard}>

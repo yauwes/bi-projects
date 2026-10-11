@@ -1,4 +1,4 @@
-import { AlertTriangle, CircleAlert } from "lucide-react";
+import { CircleAlert } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Alert } from "@/components/arc/alert/alert";
 import { AnimatedCounter } from "@/components/arc/animated-counter/animated-counter";
@@ -223,22 +223,13 @@ export function App() {
   const [chips, setChips] = useState<string[]>([]);
   const [win, setWin] = useState<Record<DailyKey, Win>>({ omzet: "bulan", baris: "bulan", pelanggan: "bulan" });
   const [span, setSpan] = useState<SpanKey>("all");
-  const [useMaskedNames, setUseMaskedNames] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("semua");
-  const [excludeOutliers, setExcludeOutliers] = useState(false);
-
-  const activeDict = useMemo(() => {
-    if (useMaskedNames && DICT.pelangganAnon?.length) {
-      return { ...DICT, pelanggan: DICT.pelangganAnon };
-    }
-    return DICT;
-  }, [useMaskedNames]);
 
   const from = Math.max(0, dayOf(range.start));
   const to = Math.min(DICT.hari, dayOf(range.end));
   const months = useMemo(() => chips.map(Number), [chips]);
-  const active = from !== 0 || to !== DICT.hari || months.length > 0 || excludeOutliers;
-  const reset = () => { setRange(FULL); setChips([]); setExcludeOutliers(false); };
+  const active = from !== 0 || to !== DICT.hari || months.length > 0;
+  const reset = () => { setRange(FULL); setChips([]); };
   const dayText = (d: Date) => new Intl.DateTimeFormat("id-ID", { day: "numeric", month: "short" }).format(d);
   const monthNames = months.map(m => BULAN[m]);
   const scopeText = months.length
@@ -246,9 +237,9 @@ export function App() {
     : active ? `${dayText(range.start)} sampai ${dayText(range.end)}` : "April sampai September";
 
   const a = useMemo(() => {
-    const f = { from, to, months, excludeOutliers };
-    return analyze(filterRows(ROWS, f, CAL), activeDict, CAL, f, FIRST);
-  }, [from, to, months, excludeOutliers, activeDict]);
+    const f = { from, to, months };
+    return analyze(filterRows(ROWS, f, CAL), DICT, CAL, f, FIRST);
+  }, [from, to, months]);
   const hints = useMemo(() => (a.n ? hintsOf(a) : {}), [a]);
 
   const weekdayData = useMemo(() => a.weekday.map(w => ({ key: w.key, label: w.label, axisLabel: w.short, value: w.omzetJt })), [a]);
@@ -347,22 +338,6 @@ export function App() {
           <DateRangePicker label="Rentang tanggal" value={range} onChange={setRange} minDate={MIN} maxDate={MAX} weekStartsOn={1} locale="id-ID" presets={presets} />
           <ChipGroup label="Bulan" options={monthOptions} value={chips} onValueChange={setChips} />
           <Button variant="secondary" size="sm" onClick={reset} disabled={!active}>Reset</Button>
-          <Button 
-            variant={excludeOutliers ? "primary" : "secondary"} 
-            size="sm" 
-            onClick={() => setExcludeOutliers(v => !v)}
-            title="Simulasi normalisasi pasar dengan mengecualikan 3 transaksi outlier jumbo"
-          >
-            {excludeOutliers ? "🔵 Mode: Simulasi Normal" : "🟢 Mode: Data Asli"}
-          </Button>
-          <Button 
-            variant={useMaskedNames ? "secondary" : "primary"} 
-            size="sm" 
-            onClick={() => setUseMaskedNames(v => !v)}
-            title="Beralih antara nama asli dari dataset dan nama disamarkan"
-          >
-            {useMaskedNames ? "👤 Disamarkan" : "👤 Nama Asli"}
-          </Button>
         </div>
       </header>
 
@@ -396,22 +371,12 @@ export function App() {
             />
           </div>
 
-          {excludeOutliers && (
-            <div className={styles.simBanner} role="status">
-              <AlertTriangle size={18} className={styles.simBannerIcon} />
-              <div className={styles.simBannerText}>
-                <strong>Mode Simulasi Normal Aktif:</strong> 3 transaksi jumbo MIN-001 oleh {useMaskedNames ? "Pelanggan 002 & Pelanggan 004" : "Pak Sutarmuji & Mas Rohmat"} senilai Rp 172,15 Juta dikecualikan dari perhitungan. Terlihat omzet Agustus turun dari Rp 883,31 Jt menjadi Rp 711,16 Jt (-12,3% vs Juli), membuktikan secara visual bahwa pasar reguler sebenarnya sedang kontraksi.
-              </div>
-              <Button variant="secondary" size="sm" onClick={() => setExcludeOutliers(false)}>Kembalikan Data Asli</Button>
-            </div>
-          )}
-
           <div className={styles.grid}>
             {/* Visualisasi Diagnostik: Dekomposisi Lonjakan & Distribusi Kuantitas Outlier */}
             {(viewMode === "semua" || viewMode === "diagnostik") && (
               <>
                 <div className={styles.span7}>
-                  <DiagnosticDecompositionCard analysis={a} isMasked={useMaskedNames} />
+                  <DiagnosticDecompositionCard analysis={a} />
                 </div>
 
                 <section className={`${styles.card} ${styles.span5}`} aria-label="Distribusi Kuantitas Pesanan">

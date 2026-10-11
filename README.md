@@ -70,12 +70,11 @@ Evaluasi reliabilitas teknis dataset dari 6 workbook Excel (`april 2020.xlsx` s.
 
 Halaman web dashboard berfokus murni pada **pengalaman visual monitoring eksekutif yang bersih, elegan, dan interaktif**:
 
-1. **Header & Kontrol Interaktif:**
+1. **Header & Kontrol Interaktif Ringkas:**
    - **DateRangePicker:** Fleksibilitas memilih rentang tanggal kustom atau preset periode.
    - **ChipGroup Bulan:** Filter cepat per bulan (April – September).
    - **Tombol Reset:** Mengembalikan semua filter ke posisi semula dalam satu klik.
-   - **Mode Simulasi Normal (Outlier Simulator):** Toggle instan antara `🟢 Mode: Data Asli` dan `🔵 Mode: Simulasi Normal`. Ketika aktif, 3 order jumbo MIN-001 (Rp 172,15 Jt) dikecualikan secara reaktif untuk membuktikan kontraksi pasar riil.
-   - **Toggle Privasi Nama Pelanggan:** Beralih instan antara **Nama Asli Dataset** (*Pak Sutarmuji, Mas Rohmat*) dan **Nama Disamarkan** (*Pelanggan 002, Pelanggan 004*).
+   - **Transparansi Dataset & Nama Asli:** Dashboard menggunakan seluruh data transaksi asli dan identitas pelanggan asli (*Pak Sutarmuji, Mas Rohmat, Toko Cita Rasa Baru*, dll.) secara langsung tanpa pengaburan nama.
 2. **Kartu KPI Eksekutif (Animated Counter & Id-ID Locale):**
    - Total Omzet (Format Miliar/Juta IDR dengan indikator tren MoM).
    - Rata-rata Bulanan.

@@ -129,28 +129,6 @@
   color: var(--foreground);
 }
 
-.simBanner {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 18px;
-  background: color-mix(in oklab, var(--warning) 12%, transparent);
-  border: 1px solid var(--warning);
-  border-radius: var(--radius-surface);
-  color: var(--foreground);
-  font-size: var(--text-xs);
-  line-height: 1.5;
-}
-
-.simBannerIcon {
-  color: var(--warning);
-  flex-shrink: 0;
-}
-
-.simBannerText {
-  flex: 1;
-}
-
 /* Grid & Cards */
 .grid {
   display: grid;
