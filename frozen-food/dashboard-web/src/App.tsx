@@ -12,6 +12,7 @@ import { LineChart, type LineChartDatum } from "@/components/arc/line-chart/line
 import SegmentedControl from "@/components/arc/segmented-control/segmented-control";
 import { Tooltip } from "@/components/arc/tooltip/tooltip";
 import { RibbonChart } from "./components/RibbonChart";
+import { ExecutiveInsights } from "./components/ExecutiveInsights";
 import { analyze, BULAN, calendar, filterRows, firstMonths, type Analysis, type Dict, type Row, type TopRow } from "./analytics";
 import raw from "./data.json";
 import { int, jt, one, pct, rp } from "./format";
@@ -215,6 +216,14 @@ export function App() {
   const [chips, setChips] = useState<string[]>([]);
   const [win, setWin] = useState<Record<DailyKey, Win>>({ omzet: "bulan", baris: "bulan", pelanggan: "bulan" });
   const [span, setSpan] = useState<SpanKey>("all");
+  const [useMaskedNames, setUseMaskedNames] = useState(false);
+
+  const activeDict = useMemo(() => {
+    if (useMaskedNames && DICT.pelangganAnon?.length) {
+      return { ...DICT, pelanggan: DICT.pelangganAnon };
+    }
+    return DICT;
+  }, [useMaskedNames]);
 
   const from = Math.max(0, dayOf(range.start));
   const to = Math.min(DICT.hari, dayOf(range.end));
@@ -229,8 +238,8 @@ export function App() {
 
   const a = useMemo(() => {
     const f = { from, to, months };
-    return analyze(filterRows(ROWS, f, CAL), DICT, CAL, f, FIRST);
-  }, [from, to, months]);
+    return analyze(filterRows(ROWS, f, CAL), activeDict, CAL, f, FIRST);
+  }, [from, to, months, activeDict]);
   const hints = useMemo(() => (a.n ? hintsOf(a) : {}), [a]);
 
   const weekdayData = useMemo(() => a.weekday.map(w => ({ key: w.key, label: w.label, axisLabel: w.short, value: w.omzetJt })), [a]);
@@ -318,6 +327,14 @@ export function App() {
           <DateRangePicker label="Rentang tanggal" value={range} onChange={setRange} minDate={MIN} maxDate={MAX} weekStartsOn={1} locale="id-ID" presets={presets} />
           <ChipGroup label="Bulan" options={monthOptions} value={chips} onValueChange={setChips} />
           <Button variant="secondary" size="sm" onClick={reset} disabled={!active}>Atur ulang filter</Button>
+          <Button 
+            variant={useMaskedNames ? "secondary" : "primary"} 
+            size="sm" 
+            onClick={() => setUseMaskedNames(v => !v)}
+            title="Beralih antara nama asli dari dataset dan nama disamarkan (Pelanggan 001, dst)"
+          >
+            {useMaskedNames ? "👤 Nama: Disamarkan" : "👤 Nama: Asli (Dataset)"}
+          </Button>
         </div>
       </header>
 
@@ -328,6 +345,17 @@ export function App() {
         </section>
       ) : (
         <>
+          <ExecutiveInsights
+            analysis={a}
+            dict={activeDict}
+            isMasked={useMaskedNames}
+            onFilterMonth={m => {
+              setChips([String(m)]);
+              setRange(FULL);
+            }}
+            onResetFilter={reset}
+          />
+
           <section className={styles.kpis} aria-label="Angka utama">
             <Kpi label="Total omzet" value={a.totalJt >= 1000 ? a.totalJt / 1000 : a.totalJt} decimals={a.totalJt >= 1000 ? 2 : 1}
               suffix={a.totalJt >= 1000 ? " miliar" : " jt"}
