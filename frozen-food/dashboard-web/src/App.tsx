@@ -14,6 +14,8 @@ import { Tooltip } from "@/components/arc/tooltip/tooltip";
 import { RibbonChart } from "./components/RibbonChart";
 import { DiagnosticDecompositionCard } from "./components/DiagnosticCharts";
 import { MarketBasketNetwork } from "./components/MarketBasketNetwork";
+import { HeroShowcase } from "./components/HeroShowcase";
+import { ProductPortfolio } from "./components/ProductPortfolio";
 import { analyze, BULAN, calendar, filterRows, firstMonths, type Analysis, type Dict, type Row, type TopRow } from "./analytics";
 import raw from "./data.json";
 import { int, jt, one, pct, rp } from "./format";
@@ -347,6 +349,14 @@ export function App() {
         </section>
       ) : (
         <>
+          <HeroShowcase
+            totalOmzetM={a.totalJt >= 1000 ? a.totalJt / 1000 : a.totalJt / 1000}
+            totalTrx={a.n}
+            totalPelanggan={a.customers}
+            topProdukNama={a.topProd[0]?.nama ? shortName(a.topProd[0].nama, 1) : "Minaku Otak-Otak"}
+            topProdukOmzetM={(a.topProd[0]?.omzetJt ?? 0) / 1000}
+          />
+
           <section className={styles.kpis} aria-label="Angka utama">
             <Kpi label="Total omzet" value={a.totalJt >= 1000 ? a.totalJt / 1000 : a.totalJt} decimals={a.totalJt >= 1000 ? 2 : 1}
               suffix={a.totalJt >= 1000 ? " miliar" : " jt"}
@@ -402,6 +412,10 @@ export function App() {
             {/* Visualisasi Deskriptif: Pelanggan & Produk Teratas */}
             {(viewMode === "semua" || viewMode === "deskriptif") && (
               <>
+                <div className={styles.span12}>
+                  <ProductPortfolio />
+                </div>
+
                 <section className={`${styles.card} ${styles.span6}`} aria-label="Pelanggan teratas">
                   <div className={styles.cardHead}>
                     <CardTitle hint={hints.topPelanggan}>Top 10 Pelanggan</CardTitle>

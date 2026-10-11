@@ -12,6 +12,9 @@ import {
 } from "lucide-react";
 import type { Pair } from "../analytics";
 import { int, one } from "../format";
+import seafoodImg from "../assets/category-seafood.jpg";
+import sosisImg from "../assets/category-sosis.jpg";
+import nuggetImg from "../assets/product-nugget.jpg";
 import styles from "./MarketBasketNetwork.module.css";
 
 interface MarketBasketNetworkProps {
@@ -70,6 +73,13 @@ function cleanShortName(name: string): string {
     .replace(/\s+500\s*gr.*$/i, " 500g")
     .replace(/\s+1000\s*gr.*$/i, " 1kg")
     .replace(/\s+225\s*gr.*$/i, " 225g");
+}
+
+function getPairThumbnail(pair: Pair): string {
+  const combined = (pair.a + " " + pair.b).toLowerCase();
+  if (combined.includes("nugget")) return nuggetImg;
+  if (combined.includes("otak") || combined.includes("ikan") || combined.includes("tempura") || combined.includes("minaku")) return seafoodImg;
+  return sosisImg;
 }
 
 export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
@@ -485,9 +495,11 @@ export function MarketBasketNetwork({ pasangan }: MarketBasketNetworkProps) {
         {activePair && (
           <div className={styles.insightFloatingCard}>
             <div className={styles.cardHeaderSmall}>
-              <div className={styles.cardIconSmall}>
-                <Sparkles size={16} />
-              </div>
+              <img
+                src={getPairThumbnail(activePair)}
+                alt="Thumbnail Produk"
+                className={styles.cardThumbSmall}
+              />
               <div>
                 <span className={styles.cardTagSmall}>
                   {activePair.lift >= 2.0 ? "🔥 Peluang Bundling Kuat" : "🛒 Pasangan Sering Dibeli"}
