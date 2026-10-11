@@ -81,15 +81,22 @@ Halaman web dashboard berfokus murni pada **pengalaman visual monitoring eksekut
    - Total Transaksi.
    - Pelanggan Aktif.
    - Produk Aktif.
-3. **Perspektif Monitoring (Segmented Control):**
-   - `Semua Visualisasi`: Menampilkan seluruh analitik secara terpadu.
-   - `📊 Monitoring Deskriptif`: Tren omzet bulanan & harian, Pareto top 10 pelanggan & produk, breakdown metrik, pola hari kerja, dan siklus tanggal.
-   - `🔍 Diagnostik & Anomali`: Dekomposisi visual lonjakan Agustus, histogram kuantitas pesanan (median vs outlier >100 dus), ribbon chart kohort pelanggan baru vs lama, belanja per pelanggan, konsentrasi single-buyer, keragaman produk, dan **Model Graf Jaringan Asosiasi Produk (Market Basket Network Graph)** interaktif yang memvisualisasikan klaster produk, ketebalan frekuensi nota, lift score (≥ 2.0× bundling), sinergi lintas merek, serta kartu wawasan BI mengambang.
-4. **Aset Visual & Representasi Data Nyata:**
-   - **Executive Hero Showcase:** Banner visual sinematik fasilitas pergudangan *cold storage* bersuhu terkontrol (-18.5°C), armada logistik, dan kemasan produk beku yang memberikan konteks nyata atas skala transaksi grosir.
-   - **Pilar Kategori & Portofolio Produk:** Tiga kartu visual interaktif yang merepresentasikan pilar produk utama (*Olahan Hasil Laut Minaku* sebagai anchor SKU, *Olahan Sosis Okey* sebagai tulang punggung volume, dan *Nugget Ayam Jofrans/Belfoods* sebagai motor bundling berkorelasi tinggi).
+3. **Navigasi Sidebar Terpadu & Layout Eksekutif:**
+   - **Sidebar Navigasi:** Mengadopsi arsitektur sidebar navy gelap (`#0b132b`) dengan logo Snowflake, tab menu cepat (`Ringkasan`, `Target 3D`, `Penjualan`, `Produk`, `Kategori`, `Pelanggan`, `Diagnostik`, `Laporan`), serta grafis karya beku *"Frozen Food Freshness for Better Life"*.
+   - **Tampilan Ringkasan Utama:** Merefleksikan tata letak referensi UI/UX eksekutif: 4 kartu metrik utama (Total Pendapatan, Volume Penjualan, Rata-rata Transaksi, Pelanggan Aktif), tren pendapatan bulanan area chart, top 5 produk horizontal bars, serta dua donut chart proporsi pelanggan dan kategori produk.
+4. **Kustomisasi Tema & Palet Warna (`ThemeCustomizer`):**
+   - **Mode Gelap / Terang (Light & Dark):** Tombol alih tema instan yang mengubah skema warna antarmuka (latar belakang, kartu, kontras teks, dan chart).
+   - **Palet Warna Aksen:** Pilihan 5 aksen warna visual (*Ocean Blue*, *Emerald Green*, *Royal Violet*, *Amber Gold*, dan *Coral Flame*) yang tersimpan otomatis di *localStorage*.
+5. **Dashboard 3 Dimensi Target Penjualan (`Target3DDashboard`):**
+   - **Data 3 Sumbu:** Menggabungkan dimensi **Waktu (Bulan)** pada sumbu X, **Kategori Produk** pada sumbu Y, dan **% Pencapaian Target** pada elevasi sumbu Z.
+   - **Representasi Visual Intuitif:** Visualisasi matriks balok 3D isometrik dengan kode warna kinerja (🟢 *Surplus ≥100%*, 🟡 *Waspada 85-99%*, 🔴 *Defisit <85%*).
+   - **Kontrol Perspektif Multi-Sudut:** Beralih mulus antara *Isometrik 3D*, *Heatmap Matriks 2D*, dan *Elevasi Kategori*.
+   - **Simulator Target Interaktif:** Slider kuota dinamis (Rp 500 Jt – Rp 1,1 Miliar/bulan) untuk mengevaluasi skenario *What-If*.
+6. **Aset Visual & Representasi Data Nyata:**
+   - **Executive Hero Showcase:** Banner fasilitas pergudangan *cold storage* (-18.5°C), armada logistik, dan kemasan produk beku.
+   - **Pilar Kategori & Portofolio Produk:** Tiga kartu visual interaktif (*Olahan Hasil Laut Minaku*, *Olahan Sosis Okey*, dan *Nugget Ayam Jofrans/Belfoods*).
    - **Thumbnail Kontekstual Market Basket:** Kartu wawasan analitik mengambang pada graf asosiasi secara otomatis menampilkan pratinjau visual kemasan produk terkait.
-5. **Sistem Tooltip Kontekstual (`InfoHint`):**
+7. **Sistem Tooltip Kontekstual (`InfoHint`):**
    - Ikon peringatan interaktif (`!`) pada judul setiap kartu visualisasi yang menampilkan intisari temuan deskriptif/diagnostik saat di-hover tanpa mengotori ruang visual dashboard.
 
 ---

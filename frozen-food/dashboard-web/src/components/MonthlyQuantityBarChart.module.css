@@ -1,0 +1,39 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.yTickText {
+  font-size: 9.5px;
+  fill: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono, monospace);
+}
+
+.xTickText {
+  font-size: 11px;
+  fill: var(--foreground);
+  font-weight: 500;
+}
+
+.barValueText {
+  font-size: 10px;
+  font-weight: 700;
+  fill: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.barRect {
+  transition: fill 0.2s ease, opacity 0.2s ease;
+}
+
+.barGroup:hover .barRect {
+  fill: #14b8a6;
+}

@@ -1,0 +1,73 @@
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+}
+
+.svg {
+  width: 100%;
+  height: auto;
+  overflow: visible;
+}
+
+.yTickText {
+  font-size: 10px;
+  fill: var(--text-muted);
+  font-variant-numeric: tabular-nums;
+  font-family: var(--font-mono, monospace);
+}
+
+.xTickText {
+  font-size: 11px;
+  fill: var(--foreground);
+  font-weight: 500;
+}
+
+.pointValue {
+  font-size: 11px;
+  font-weight: 700;
+  fill: var(--foreground);
+  font-variant-numeric: tabular-nums;
+}
+
+.pointDot {
+  filter: drop-shadow(0 1px 3px rgba(37, 99, 235, 0.35));
+  transition: r 0.2s ease;
+}
+
+.pointDot:hover {
+  r: 7;
+}
+
+.legend {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding-top: 8px;
+  border-top: 1px solid var(--border-subtle);
+  margin-top: 4px;
+}
+
+.legendLine {
+  width: 18px;
+  height: 2px;
+  background: #2563eb;
+  border-radius: 1px;
+}
+
+.legendDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: #2563eb;
+  border: 1.5px solid #ffffff;
+  margin-left: -13px;
+  box-shadow: 0 0 0 1px #2563eb;
+}
+
+.legendText {
+  font-size: 11px;
+  color: var(--text-secondary);
+  font-weight: 500;
+}

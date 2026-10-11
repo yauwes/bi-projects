@@ -16,6 +16,10 @@ import { DiagnosticDecompositionCard } from "./components/DiagnosticCharts";
 import { MarketBasketNetwork } from "./components/MarketBasketNetwork";
 import { HeroShowcase } from "./components/HeroShowcase";
 import { ProductPortfolio } from "./components/ProductPortfolio";
+import { Sidebar, type NavTabId } from "./components/Sidebar";
+import { RingkasanView } from "./components/RingkasanView";
+import { ThemeCustomizer } from "./components/ThemeCustomizer";
+import { Target3DDashboard } from "./components/Target3DDashboard";
 import { analyze, BULAN, calendar, filterRows, firstMonths, type Analysis, type Dict, type Row, type TopRow } from "./analytics";
 import raw from "./data.json";
 import { int, jt, one, pct, rp } from "./format";
@@ -227,6 +231,7 @@ export function App() {
   const [win, setWin] = useState<Record<DailyKey, Win>>({ omzet: "bulan", baris: "bulan", pelanggan: "bulan" });
   const [span, setSpan] = useState<SpanKey>("all");
   const [viewMode, setViewMode] = useState<ViewMode>("semua");
+  const [activeTab, setActiveTab] = useState<NavTabId>("ringkasan");
 
   const from = Math.max(0, dayOf(range.start));
   const to = Math.min(DICT.hari, dayOf(range.end));
@@ -328,110 +333,68 @@ export function App() {
   }, [a]);
 
   return (
-    <main className={styles.page}>
-      <header className={styles.top}>
-        <div className={styles.brand}>
-          <span className={styles.logo}>❄️</span>
-          <h1 className={styles.title}>Frozen Food BI Monitoring</h1>
-        </div>
-        <div className={styles.filters} role="group" aria-label="Filter halaman">
-          <span className={styles.scope}>Filter:</span>
-          <DateRangePicker label="Rentang tanggal" value={range} onChange={setRange} minDate={MIN} maxDate={MAX} weekStartsOn={1} locale="id-ID" presets={presets} />
-          <ChipGroup label="Bulan" options={monthOptions} value={chips} onValueChange={setChips} />
-          <Button variant="secondary" size="sm" onClick={reset} disabled={!active}>Reset</Button>
-        </div>
-      </header>
+    <div className={styles.shell}>
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} />
 
-      {a.n === 0 ? (
-        <section className={styles.card} aria-label="Tidak ada data">
-          <EmptyState title="Tidak ada transaksi" description="Rentang tanggal dan bulan yang dipilih tidak beririsan. Ubah rentang atau atur ulang filter."
-            action={<Button variant="secondary" onClick={reset}>Atur ulang filter</Button>} />
-        </section>
-      ) : (
-        <>
-          <HeroShowcase
-            totalOmzetM={a.totalJt >= 1000 ? a.totalJt / 1000 : a.totalJt / 1000}
-            totalTrx={a.n}
-            totalPelanggan={a.customers}
-            topProdukNama={a.topProd[0]?.nama ? shortName(a.topProd[0].nama, 1) : "Minaku Otak-Otak"}
-            topProdukOmzetM={(a.topProd[0]?.omzetJt ?? 0) / 1000}
-          />
-
-          <section className={styles.kpis} aria-label="Angka utama">
-            <Kpi label="Total omzet" value={a.totalJt >= 1000 ? a.totalJt / 1000 : a.totalJt} decimals={a.totalJt >= 1000 ? 2 : 1}
-              suffix={a.totalJt >= 1000 ? " miliar" : " jt"}
-              context={ms.length >= 2 ? `${first.label} – ${last.label}` : `Bulan ${first.label}`}
-              change={ms.length >= 2 ? signed((last.omzetJt / first.omzetJt - 1) * 100) : undefined} />
-            <Kpi label="Rata-rata bulanan" value={Math.round(rata)} suffix=" jt" context={peak ? `Puncak: ${peak.label}` : ""} />
-            <Kpi label="Total transaksi" value={a.n} context="6.720 baris reguler" />
-            <Kpi label="Pelanggan aktif" value={a.customers} context="Top 10 = 53% omzet" />
-            <Kpi label="Produk aktif" value={a.products} context="Top 40 = 80% omzet" />
-          </section>
-
-          <div className={styles.viewModeBar} role="region" aria-label="Mode Monitoring">
-            <div className={styles.viewModeLabel}>
-              <span>Monitoring Kecerdasan Bisnis:</span>
-            </div>
-            <SegmentedControl
-              label="Fokus Monitoring"
-              options={viewOptions}
-              value={viewMode}
-              onValueChange={v => setViewMode(v as ViewMode)}
-            />
+      <main className={styles.mainArea}>
+        <header className={styles.topBar}>
+          <div className={styles.topTitleGroup}>
+            <h1 className={styles.topTitle}>Dashboard Eksekutif Penjualan Frozen Food</h1>
+            <p className={styles.topSubtitle}>Periode: April – September 2020</p>
           </div>
 
-          <div className={styles.grid}>
-            {/* Visualisasi Diagnostik: Dekomposisi Lonjakan & Distribusi Kuantitas Outlier */}
-            {(viewMode === "semua" || viewMode === "diagnostik") && (
-              <>
-                <div className={styles.span7}>
-                  <DiagnosticDecompositionCard analysis={a} />
-                </div>
+          <div className={styles.filters} role="group" aria-label="Filter halaman">
+            <ThemeCustomizer />
+            <DateRangePicker label="Rentang tanggal" value={range} onChange={setRange} minDate={MIN} maxDate={MAX} weekStartsOn={1} locale="id-ID" presets={presets} />
+            <ChipGroup label="Bulan" options={monthOptions} value={chips} onValueChange={setChips} />
+            <Button variant="secondary" size="sm" onClick={reset} disabled={!active}>Reset</Button>
+          </div>
+        </header>
 
-                <section className={`${styles.card} ${styles.span5}`} aria-label="Distribusi Kuantitas Pesanan">
-                  <div className={styles.cardHead}>
-                    <CardTitle hint={hints.baris}>Distribusi Kuantitas (DUS)</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
-                  </div>
-                  <BarChart
-                    data={qtyDistBars}
-                    label="Transaksi"
-                    period="Frekuensi pesanan per tier (Median = 3 DUS, Outlier >100)"
-                    unit="pesanan"
-                    averageLabel="Rata-rata"
-                    valueLabel="Pesanan"
-                    categoryLabel="Kuantitas DUS"
-                    height={260}
-                    showAverage={false}
-                    formatValue={v => int(v)}
-                  />
-                </section>
-              </>
+        {a.n === 0 ? (
+          <section className={styles.card} aria-label="Tidak ada data">
+            <EmptyState title="Tidak ada transaksi" description="Rentang tanggal dan bulan yang dipilih tidak beririsan. Ubah rentang atau atur ulang filter."
+              action={<Button variant="secondary" onClick={reset}>Atur ulang filter</Button>} />
+          </section>
+        ) : (
+          <>
+            {/* 1. TAB RINGKASAN (Sesuai Referensi UI/UX Pengguna) */}
+            {activeTab === "ringkasan" && (
+              <RingkasanView analysis={a} />
             )}
 
-            {/* Visualisasi Deskriptif: Pelanggan & Produk Teratas */}
-            {(viewMode === "semua" || viewMode === "deskriptif") && (
-              <>
-                <div className={styles.span12}>
-                  <ProductPortfolio />
-                </div>
+            {/* 2. TAB TARGET 3D (Model 3 Dimensi: Realisasi vs Target Penjualan) */}
+            {activeTab === "target3d" && (
+              <Target3DDashboard analysis={a} />
+            )}
 
-                <section className={`${styles.card} ${styles.span6}`} aria-label="Pelanggan teratas">
+            {/* 3. TAB PENJUALAN */}
+            {activeTab === "penjualan" && (
+              <div className={styles.grid}>
+                <section className={`${styles.card} ${styles.span12}`} aria-label="Omzet harian">
                   <div className={styles.cardHead}>
-                    <CardTitle hint={hints.topPelanggan}>Top 10 Pelanggan</CardTitle>
-                    <span className={styles.badgeDesc}>Deskriptif</span>
+                    <CardTitle hint={hints.harian}>Tren Omzet Harian</CardTitle>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <span className={styles.badgeDesc}>Deskriptif</span>
+                      <div className={styles.control}>
+                        <SegmentedControl label="Rentang" options={spanOptions} value={span} onValueChange={v => setSpan(v as SpanKey)} />
+                      </div>
+                    </div>
                   </div>
-                  <BarChart data={custBars} label="Omzet" period="Juta rupiah per pembeli" unit="jt"
-                    averageLabel="Rata-rata" valueLabel="Pembelian" categoryLabel="Pelanggan" height={260} showAverage={false} formatValue={v => int(v)} />
-                </section>
-
-                <section className={`${styles.card} ${styles.span6}`} aria-label="Produk teratas">
-                  <div className={styles.cardHead}>
-                    <CardTitle hint={hints.topProduk}>Top 10 Produk</CardTitle>
-                    <span className={styles.badgeDesc}>Deskriptif</span>
+                  <div className={styles.headline}>
+                    <span className={styles.headlineLabel}>
+                      {span === "all" ? "Rata-rata harian (seluruh periode)" : `Rata-rata ${span} hari terakhir`}
+                    </span>
+                    <span className={styles.headlineValue}>{rp(daily.days ? daily.total / daily.days : 0)} / hari</span>
+                    <span className={styles.headlineSub}>
+                      Total {int(daily.days)} hari: {rp(daily.total)}
+                      {daily.change !== null && (
+                        <span className={daily.change >= 0 ? styles.up : styles.down}> · {signed(daily.change)} vs periode sebelumnya</span>
+                      )}
+                    </span>
                   </div>
-                  <BarChart data={prodBars} label="Omzet" period="Juta rupiah per produk" unit="jt"
-                    averageLabel="Rata-rata" valueLabel="Penjualan" categoryLabel="Produk" height={260} showAverage={false} formatValue={v => int(v)} />
+                  <LineChart label="Omzet harian" data={daily.data} unit="jt" height={260} categoryLabel="Tanggal"
+                    series={daily.series} formatValue={v => one(v)} formatTick={v => int(v)} />
                 </section>
 
                 {(Object.keys(dailyMeta) as DailyKey[]).map(k => {
@@ -455,32 +418,6 @@ export function App() {
                   );
                 })}
 
-                <section className={`${styles.card} ${styles.span12}`} aria-label="Omzet harian">
-                  <div className={styles.cardHead}>
-                    <CardTitle hint={hints.harian}>Tren Omzet Harian</CardTitle>
-                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
-                      <span className={styles.badgeDesc}>Deskriptif</span>
-                      <div className={styles.control}>
-                        <SegmentedControl label="Rentang" options={spanOptions} value={span} onValueChange={v => setSpan(v as SpanKey)} />
-                      </div>
-                    </div>
-                  </div>
-                  <div className={styles.headline}>
-                    <span className={styles.headlineLabel}>
-                      {span === "all" ? "Rata-rata harian (seluruh periode)" : `Rata-rata ${span} hari terakhir`}
-                    </span>
-                    <span className={styles.headlineValue}>{rp(daily.days ? daily.total / daily.days : 0)} / hari</span>
-                    <span className={styles.headlineSub}>
-                      Total {int(daily.days)} hari: {rp(daily.total)}
-                      {daily.change !== null && (
-                        <span className={daily.change >= 0 ? styles.up : styles.down}> · {signed(daily.change)} vs periode sebelumnya</span>
-                      )}
-                    </span>
-                  </div>
-                  <LineChart label="Omzet harian" data={daily.data} unit="jt" height={240} categoryLabel="Tanggal"
-                    series={daily.series} formatValue={v => one(v)} formatTick={v => int(v)} />
-                </section>
-
                 <section className={`${styles.card} ${styles.span6}`} aria-label="Pola hari">
                   <div className={styles.cardHead}>
                     <CardTitle hint={hints.hari}>Pola Hari Kerja</CardTitle>
@@ -498,67 +435,163 @@ export function App() {
                   <BarChart data={faseData} label="Omzet" period="Awal (1-10), Tengah (11-20), Akhir (21-31)" unit="jt" averageLabel="Rata-rata"
                     valueLabel="Omzet" categoryLabel="Bagian bulan" height={220} showAverage={false} formatValue={v => int(v)} />
                 </section>
-              </>
+              </div>
             )}
 
-            {/* Visualisasi Diagnostik: Kohort, Ketergantungan, Pasangan */}
-            {(viewMode === "semua" || viewMode === "diagnostik") && (
-              <>
-                {kohort.data.length > 0 && (
-                  <section className={`${styles.card} ${styles.span8}`} aria-label="Pelanggan baru dan lama">
-                    <div className={styles.cardHead}>
-                      <CardTitle hint={hints.kohort}>Kohort Pelanggan (Baru vs Lama)</CardTitle>
-                      <span className={styles.badgeDiag}>Diagnostik</span>
-                    </div>
-                    <RibbonChart data={kohort.data} series={[{ key: "lama", label: "Pelanggan lama" }, { key: "baru", label: "Pelanggan baru" }]}
-                      colors={KOHORT_COLORS} monthTotals={kohort.totals} mode="tumpuk" ranked={false} label="Omzet pelanggan lama dan baru" unit="jt" height={260} formatValue={v => int(v)} />
-                  </section>
-                )}
-
-                <section className={`${styles.card} ${kohort.data.length ? styles.span4 : styles.span12}`} aria-label="Belanja per pelanggan">
-                  <div className={styles.cardHead}>
-                    <CardTitle hint={hints.belanja}>Belanja Rata-rata per Pelanggan</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
-                  </div>
-                  <BarChart data={belanjaBars} label="Belanja per pelanggan" period="Juta rupiah" unit="jt" averageLabel="Rata-rata"
-                    valueLabel="Per pelanggan" categoryLabel="Bulan" height={240} formatValue={v => one(v)} />
-                </section>
-
-                <section className={`${styles.card} ${styles.span6}`} aria-label="Ketergantungan produk">
-                  <div className={styles.cardHead}>
-                    <CardTitle hint={hints.bergantung}>Konsentrasi Single Buyer</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
-                  </div>
-                  <BarChart data={bergantungBars} label="Porsi pembeli terbesar" period="% omzet produk dari pembeli terbesar" unit="%"
-                    averageLabel="Rata-rata" valueLabel="Dari satu pembeli" categoryLabel="Produk" height={240} showAverage={false} formatValue={v => int(v)} />
-                </section>
-
-                <section className={`${styles.card} ${styles.span6}`} aria-label="Ragam produk per pelanggan">
-                  <div className={styles.cardHead}>
-                    <CardTitle hint={hints.ragam}>Keragaman Produk per Pelanggan</CardTitle>
-                    <span className={styles.badgeDiag}>Diagnostik</span>
-                  </div>
-                  <BarChart data={ragamBars} label="Median belanja" period="Median total belanja per tier varian SKU" unit="jt"
-                    averageLabel="Rata-rata" valueLabel="Median belanja" categoryLabel="Jenis produk" height={240} showAverage={false} formatValue={v => one(v)} />
-                </section>
+            {/* 4. TAB PRODUK & MARKET BASKET */}
+            {activeTab === "produk" && (
+              <div className={styles.grid}>
+                <div className={styles.span12}>
+                  <ProductPortfolio />
+                </div>
 
                 <div className={styles.span12}>
                   <MarketBasketNetwork pasangan={a.pasangan} />
                 </div>
-              </>
+
+                <section className={`${styles.card} ${styles.span12}`} aria-label="Produk teratas">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.topProduk}>Top 10 Produk Terlaris (Pareto)</CardTitle>
+                    <span className={styles.badgeDesc}>Deskriptif</span>
+                  </div>
+                  <BarChart data={prodBars} label="Omzet" period="Juta rupiah per produk" unit="jt"
+                    averageLabel="Rata-rata" valueLabel="Penjualan" categoryLabel="Produk" height={280} showAverage={false} formatValue={v => int(v)} />
+                </section>
+              </div>
             )}
 
-          </div>
-        </>
-      )}
+            {/* 5. TAB KATEGORI */}
+            {activeTab === "kategori" && (
+              <div className={styles.grid}>
+                <div className={styles.span12}>
+                  <ProductPortfolio />
+                </div>
 
-      <footer className={styles.footer}>
-        <span>6.778 transaksi tercatat</span>
-        <span>•</span>
-        <span>Total Rp 4,53 Miliar</span>
-        <span>•</span>
-        <span>Periode: April – September 2020</span>
-      </footer>
-    </main>
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Ketergantungan produk">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.bergantung}>Konsentrasi Pembeli per Produk</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
+                  </div>
+                  <BarChart data={bergantungBars} label="Porsi pembeli terbesar" period="% omzet produk dari pembeli terbesar" unit="%"
+                    averageLabel="Rata-rata" valueLabel="Dari satu pembeli" categoryLabel="Produk" height={260} showAverage={false} formatValue={v => int(v)} />
+                </section>
+
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Ragam produk per pelanggan">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.ragam}>Keragaman Varian SKU per Pelanggan</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
+                  </div>
+                  <BarChart data={ragamBars} label="Median belanja" period="Median total belanja per tier varian SKU" unit="jt"
+                    averageLabel="Rata-rata" valueLabel="Median belanja" categoryLabel="Jenis produk" height={260} showAverage={false} formatValue={v => one(v)} />
+                </section>
+              </div>
+            )}
+
+            {/* 6. TAB PELANGGAN */}
+            {activeTab === "pelanggan" && (
+              <div className={styles.grid}>
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Pelanggan teratas">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.topPelanggan}>Top 10 Pelanggan Utama (Nama Asli)</CardTitle>
+                    <span className={styles.badgeDesc}>Deskriptif</span>
+                  </div>
+                  <BarChart data={custBars} label="Omzet" period="Juta rupiah per pembeli" unit="jt"
+                    averageLabel="Rata-rata" valueLabel="Pembelian" categoryLabel="Pelanggan" height={280} showAverage={false} formatValue={v => int(v)} />
+                </section>
+
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Belanja per pelanggan">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.belanja}>Belanja Rata-rata per Pelanggan Bulanan</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
+                  </div>
+                  <BarChart data={belanjaBars} label="Belanja per pelanggan" period="Juta rupiah" unit="jt" averageLabel="Rata-rata"
+                    valueLabel="Per pelanggan" categoryLabel="Bulan" height={280} formatValue={v => one(v)} />
+                </section>
+
+                {kohort.data.length > 0 && (
+                  <section className={`${styles.card} ${styles.span12}`} aria-label="Pelanggan baru dan lama">
+                    <div className={styles.cardHead}>
+                      <CardTitle hint={hints.kohort}>Kohort Pelanggan (Pelanggan Baru vs Pelanggan Lama)</CardTitle>
+                      <span className={styles.badgeDiag}>Diagnostik</span>
+                    </div>
+                    <RibbonChart data={kohort.data} series={[{ key: "lama", label: "Pelanggan lama" }, { key: "baru", label: "Pelanggan baru" }]}
+                      colors={KOHORT_COLORS} monthTotals={kohort.totals} mode="tumpuk" ranked={false} label="Omzet pelanggan lama dan baru" unit="jt" height={280} formatValue={v => int(v)} />
+                  </section>
+                )}
+              </div>
+            )}
+
+            {/* 7. TAB DIAGNOSTIK & ANOMALI */}
+            {activeTab === "diagnostik" && (
+              <div className={styles.grid}>
+                <div className={styles.span12}>
+                  <HeroShowcase
+                    totalOmzetM={a.totalJt >= 1000 ? a.totalJt / 1000 : a.totalJt / 1000}
+                    totalTrx={a.n}
+                    totalPelanggan={a.customers}
+                    topProdukNama={a.topProd[0]?.nama ? shortName(a.topProd[0].nama, 1) : "Minaku Otak-Otak"}
+                    topProdukOmzetM={(a.topProd[0]?.omzetJt ?? 0) / 1000}
+                  />
+                </div>
+
+                <div className={styles.span7}>
+                  <DiagnosticDecompositionCard analysis={a} />
+                </div>
+
+                <section className={`${styles.card} ${styles.span5}`} aria-label="Distribusi Kuantitas Pesanan">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.baris}>Distribusi Kuantitas (DUS)</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
+                  </div>
+                  <BarChart
+                    data={qtyDistBars}
+                    label="Transaksi"
+                    period="Frekuensi pesanan per tier (Median = 3 DUS, Outlier >100)"
+                    unit="pesanan"
+                    averageLabel="Rata-rata"
+                    valueLabel="Pesanan"
+                    categoryLabel="Kuantitas DUS"
+                    height={260}
+                    showAverage={false}
+                    formatValue={v => int(v)}
+                  />
+                </section>
+              </div>
+            )}
+
+            {/* 8. TAB LAPORAN */}
+            {activeTab === "laporan" && (
+              <div className={styles.grid}>
+                <section className={`${styles.card} ${styles.span12}`} aria-label="Ringkasan Eksekutif">
+                  <div className={styles.cardHead}>
+                    <h3 className={styles.h3}>Laporan Eksekutif Business Intelligence</h3>
+                    <span className={styles.badgeDesc}>Ringkasan Eksekutif</span>
+                  </div>
+                  <div style={{ display: "grid", gap: "14px", lineHeight: "1.6", fontSize: "14px", color: "var(--text-secondary)" }}>
+                    <p>
+                      <strong>Temuan Deskriptif:</strong> Total omzet penjualan periode April–September 2020 mencapai <strong>Rp 4,53 Miliar</strong> dari <strong>6.778 transaksi</strong> yang dilayani kepada <strong>229 pelanggan</strong>. Puncak penjualan terjadi pada bulan Agustus dengan omzet Rp 883,3 Juta (+44,9% dibandingkan April).
+                    </p>
+                    <p>
+                      <strong>Temuan Diagnostik:</strong> Lonjakan bulan Agustus didorong oleh anomali pesanan volume super-jumbo dari pelanggan utama <em>Toko Cita Rasa Baru</em> dan <em>Graha Sandeni</em> (&gt;100 DUS), bukan karena peningkatan merata jumlah pembeli retail harian.
+                    </p>
+                    <p>
+                      <strong>Rekomendasi Bundling (Market Basket):</strong> Pasangan <em>Belfoods Sosis</em> dan <em>Jofrans Nugget</em> menghasilkan Lift Score tertinggi sebesar <strong>4,3×</strong>, menjadikannya kandidat emas untuk program diskon paket bundling komplementer.
+                    </p>
+                  </div>
+                </section>
+              </div>
+            )}
+          </>
+        )}
+
+        <footer className={styles.footer}>
+          <span>6.778 transaksi tercatat</span>
+          <span>•</span>
+          <span>Total Rp 4,53 Miliar</span>
+          <span>•</span>
+          <span>Periode: April – September 2020</span>
+        </footer>
+      </main>
+    </div>
   );
 }

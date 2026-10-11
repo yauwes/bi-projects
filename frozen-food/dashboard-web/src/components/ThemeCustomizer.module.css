@@ -1,0 +1,137 @@
+.wrapper {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+}
+
+.themeToggleBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 12px;
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  box-shadow: 0 1px 2px oklch(0% 0 0 / 0.04);
+}
+
+.themeToggleBtn:hover {
+  background: var(--surface-muted);
+  border-color: var(--border-strong);
+}
+
+.sunIcon {
+  color: #f59e0b;
+}
+
+.themeLabel {
+  font-size: 12px;
+}
+
+.paletteWrapper {
+  position: relative;
+}
+
+.paletteBtn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 6px 10px;
+  border-radius: var(--radius-control);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  color: var(--foreground);
+  cursor: pointer;
+  transition: all var(--duration-fast) var(--ease-standard);
+  box-shadow: 0 1px 2px oklch(0% 0 0 / 0.04);
+}
+
+.paletteBtn:hover,
+.paletteBtnActive {
+  background: var(--surface-muted);
+  border-color: var(--border-strong);
+}
+
+.activeDot {
+  width: 9px;
+  height: 9px;
+  border-radius: var(--radius-pill);
+}
+
+.popover {
+  position: absolute;
+  top: calc(100% + 8px);
+  right: 0;
+  z-index: 50;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-panel);
+  padding: 12px;
+  box-shadow: 0 10px 25px -5px oklch(0% 0 0 / 0.15);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 170px;
+  animation: popoverFadeIn 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+@keyframes popoverFadeIn {
+  from { opacity: 0; transform: translateY(-4px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.popoverTitle {
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-muted);
+  margin-bottom: 2px;
+}
+
+.accentGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.accentChoice {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 6px 8px;
+  border-radius: var(--radius-control);
+  border: 1px solid transparent;
+  background: transparent;
+  cursor: pointer;
+  text-align: left;
+  transition: background var(--duration-fast);
+}
+
+.accentChoice:hover {
+  background: var(--surface-muted);
+}
+
+.accentChoiceActive {
+  background: var(--surface-muted);
+  border-color: var(--border-strong);
+}
+
+.colorPill {
+  width: 14px;
+  height: 14px;
+  border-radius: var(--radius-pill);
+  flex-shrink: 0;
+}
+
+.choiceLabel {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--foreground);
+}
