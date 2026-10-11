@@ -1,54 +1,37 @@
-/* Layout Shell with Left Sidebar */
-.shell {
-  display: flex;
-  min-height: 100vh;
+/* Dashboard memenuhi lebar layar: tidak ada max-width, hanya gutter tipis. */
+.page {
   width: 100%;
-  background: var(--background);
+  padding: 16px clamp(12px, 1.5vw, 24px) 40px;
+  display: grid;
+  gap: 16px;
 }
+.page > * { min-width: 0; }
 
-.mainArea {
-  flex: 1;
+.brand {
   display: flex;
-  flex-direction: column;
-  min-width: 0;
-  height: 100vh;
-  overflow-y: auto;
-  background: #f6f8fb;
-}
-
-:global([data-theme="dark"]) .mainArea {
-  background: #0f172a;
-}
-
-.contentContainer {
-  padding: 18px 24px 48px;
-  display: flex;
-  flex-direction: column;
-  gap: 18px;
-  min-width: 0;
-}
-
-.filterTray {
-  background: var(--surface);
-  border-bottom: 1px solid var(--border-subtle);
-  padding: 12px 24px;
-  display: flex;
-  flex-wrap: wrap;
   align-items: center;
-  justify-content: flex-end;
-  gap: 12px;
-  animation: slideDown 0.18s ease;
+  gap: 10px;
 }
 
-@keyframes slideDown {
-  from {
-    opacity: 0;
-    transform: translateY(-6px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
+.logo {
+  font-size: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 36px;
+  height: 36px;
+  background: var(--surface-muted);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-control);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--font-display);
+  font-size: var(--text-xl);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--foreground);
 }
 
 /* Judul di kiri, filter tingkat halaman di kanan atas; bar ini menempel saat halaman digulir. */
@@ -253,12 +236,12 @@
   margin-top: 8px;
 }
 
-@media (max-width: 960px) {
-  .shell { flex-direction: column; }
-  .mainArea { padding: 14px 16px 36px; }
+@media (max-width: 900px) {
   .top { position: static; }
   .filters { justify-content: flex-start; margin-left: 0; }
   .span4, .span5, .span6, .span7, .span8 { grid-column: span 12; }
+  .pair { grid-template-columns: minmax(0, 1fr) 72px; }
+  .pairTrack { grid-column: 1 / -1; grid-row: 2; }
 }
 
 @media (max-width: 480px) {

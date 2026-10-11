@@ -68,42 +68,39 @@ Evaluasi reliabilitas teknis dataset dari 6 workbook Excel (`april 2020.xlsx` s.
 
 ## 🎨 Fokus Antarmuka UI/UX Dashboard Monitoring
 
-Halaman web dashboard berfokus murni pada **pengalaman visual monitoring eksekutif yang bersih, elegan, dan interaktif**:
+Halaman web dashboard berfokus murni pada **pengalaman visual monitoring eksekutif yang bersih, elegan, dan interaktif (Arc UI Design System)**:
 
-1. **Header & Kontrol Interaktif Ringkas:**
-   - **DateRangePicker:** Fleksibilitas memilih rentang tanggal kustom atau preset periode.
-   - **ChipGroup Bulan:** Filter cepat per bulan (April – September).
-   - **Tombol Reset:** Mengembalikan semua filter ke posisi semula dalam satu klik.
-   - **Transparansi Dataset & Nama Asli:** Dashboard menggunakan seluruh data transaksi asli dan identitas pelanggan asli (*Pak Sutarmuji, Mas Rohmat, Toko Cita Rasa Baru*, dll.) secara langsung tanpa pengaburan nama.
-2. **6 Kartu KPI Eksekutif Utama (Top Metrics):**
-   - **Total Revenue:** Rp 4,53 Miliar (+12.5% vs Apr)
-   - **Total Orders:** 6.778 Transaksi (+8.2% vs Apr)
-   - **Customers:** 229 Toko & Mitra Aktif (+6.7% vs Apr)
-   - **Avg. Order Value:** Rp 668.387 per nota (+3.1% vs Apr)
-   - **Volume (Dus):** 19.820 Dus (+4.3% vs Apr)
-   - **Active Products:** 297 SKU (+7.8% vs Apr)
-3. **Navigasi Sidebar Bersih & Header Pintar (InsightHub Theme):**
-   - **Sidebar Navigasi:** Mengadopsi arsitektur sidebar putih bersih modern (`#ffffff`) dengan logo gradien `InsightHub (Frozen Food BI)`, menu tab aktif lavender (`Overview`, `Analytics`, `Sales`, `Customers`, `Products`, `Marketing`, `Goals (3D)`, `Reports`), serta tombol `Download report` di bagian bawah.
-   - **Top Header Bar:** Menampilkan breadcrumb halaman aktif, search bar dinamis (`Search anything...`), tombol pemilih tanggal interaktif (`📅 1 Apr – 30 Sep 2020`), switch mode tema (Light/Dark), bel notifikasi, dan profil avatar pengguna (*Owner Bisnis*).
-4. **Tata Letak Bento Grid 3 Kolom (Sesuai Referensi UI/UX):**
-   - **Kolom Kiri (Peta & Transaksi):**
-     - **Global Overview:** Visualisasi bola dunia 3D relief interaktif dengan pin lokasi jaringan logistik cold storage dan pelanggan borongan utama (*Pak Sutarmuji*, *Mas Rohmat*, *Toko Cita Rasa Baru*, *Graha Sandeni*, dll.) lengkap dengan animasi denyut (*ripple pulse*).
-     - **Revenue Overview:** Grafik batang ungu vertikal bulanan (Apr – Sep) dengan total pemasukan dan pertumbuhan.
-     - **Recent Orders:** Tabel transaksi terverifikasi dengan Order ID, nama pembeli asli, produk, nominal, dan badge status (`Completed` hijau / `Processing` oranye).
-   - **Kolom Tengah (Tren & Kategori):**
-     - **Sales Trend:** Grafik kurva area ungu halus dengan gradien dan penanda puncak mengambang di bulan Agustus (`Rp 883,3 Jt`).
-     - **Traffic Source (Kategori Produk):** Grafik donat multi-warna dengan total pesanan di bagian tengah (`6.778 Nota`) dan persentase kontribusi per kategori produk.
-   - **Kolom Kanan (Produk & Aktivitas):**
-     - **Top Products:** Daftar peringkat 1 s.d. 5 produk terlaris lengkap dengan thumbnail kemasan, kategori, omzet, dan persentase pertumbuhan hijau.
-     - **Device Breakdown (Tipe Kemasan):** Diagram cincin pembagian satuan pesanan: Dus (58.6%), Pack (34.1%), Bal (7.3%).
-     - **Activity Feed:** Catatan timeline transaksi terbaru, konfirmasi pelunasan, pendaftaran toko baru, dan armada cold chain.
-5. **Dashboard 3 Dimensi Target Penjualan (`Target3DDashboard` / Tab Goals):**
-   - **Data 3 Sumbu:** Menggabungkan dimensi **Waktu (Bulan)** pada sumbu X, **Kategori Produk** pada sumbu Y, dan **% Pencapaian Target** pada elevasi sumbu Z.
-   - **Representasi Visual Intuitif:** Visualisasi matriks balok 3D isometrik dengan kode warna kinerja (🟢 *Tembus Target ≥100%*, 🟡 *Hampir Capai 85-99%*, 🔴 *Masih Kurang <85%*).
-   - **Kontrol Perspektif Multi-Sudut:** Beralih mulus antara *Tampilan Balok 3D*, *Tabel Warna (Heatmap)*, dan *Performa Kategori*.
-   - **Simulator Target Interaktif:** Slider target dinamis (Rp 500 Jt – Rp 1,1 Miliar/bulan) untuk mengevaluasi apakah hasil penjualan toko mampu mengejar target.
-6. **Bahasa Ramah Pemilik Bisnis (Non-Teknis):**
-   - Seluruh teks dan istilah statistik/data science telah disederhanakan ke bahasa operasional toko yang mudah dipahami pemilik bisnis: *Lift Score* menjadi *Kekuatan Pasangan / Beli Barengan*, *Single-Buyer Concentration* menjadi *Ketergantungan pada 1 Pembeli Terbesar*, *Outlier* menjadi *Pesanan Borongan Partai Besar*, dan *Kohort* menjadi *Langganan Baru vs Langganan Setia*.
+1. **Header & Kontrol Interaktif Cepat (Sticky Top Bar):**
+   - **Logo & Judul:** `❄️ Frozen Food BI Monitoring` dengan navigasi yang menempel di bagian atas saat halaman digulir.
+   - **DateRangePicker:** Fleksibilitas memilih rentang tanggal kustom atau preset periode (Seluruh periode, Q2, Q3, 30 hari terakhir).
+   - **ChipGroup Bulan:** Filter instan per bulan (April – September 2020).
+   - **Tombol Reset:** Mengembalikan seluruh filter ke default dalam satu klik.
+   - **Transparansi Dataset & Nama Asli:** Dashboard menggunakan seluruh 6.778 baris data transaksi asli dan nama pelanggan asli (*Pak Sutarmuji*, *Mas Rohmat*, *Toko Cita Rasa Baru*, dll.) secara langsung tanpa pengaburan.
+2. **5 Kartu KPI Eksekutif Utama (Animated Counter & Id-ID Locale):**
+   - **Total Omzet:** Rp 4,53 Miliar (lengkap dengan badge tren pertumbuhan MoM).
+   - **Rata-rata Bulanan:** Rp 755 Juta (dengan penanda puncak penjualan tertinggi di bulan Agustus).
+   - **Total Transaksi:** 6.778 Transaksi tercatat (6.720 baris reguler).
+   - **Pelanggan Aktif:** 229 Pembeli/Toko (Top 10 menyumbang 53% omzet).
+   - **Produk Aktif:** 250 SKU aktif (Top 40 menyumbang 80% omzet).
+3. **Perspektif Monitoring Interaktif (Segmented Control):**
+   - **Semua Visualisasi:** Menampilkan seluruh grafik deskriptif dan diagnostik secara terpadu.
+   - **📊 Monitoring Deskriptif:** Tren harian, 10 pelanggan terbesar, 10 produk terlaris, agregat metrik bulanan/harian, pola hari kerja, dan siklus fase tanggal.
+   - **🔍 Diagnostik & Anomali:** Mengupas akar penyebab perubahan bisnis, dekomposisi lonjakan pesanan borongan Agustus, ribbon chart kohort pelanggan, single-buyer concentration, dan graf relasi keranjang belanja.
+4. **Analisis Diagnostik & Anomali Mendalam:**
+   - **Dekomposisi Kenaikan Agustus:** Kartu visual yang membongkar bahwa rekor omzet Agustus didorong oleh 3 pesanan raksasa (200 dus & 150 dus) dari Pak Sutarmuji & Mas Rohmat senilai Rp 172,15 Jt (19,5% omzet Agustus).
+   - **Distribusi Kuantitas Pesanan (DUS):** Histogram pembagian ukuran pesanan (median 3 dus vs outlier ekstrem >100 dus).
+   - **Ribbon Chart Kohort Pelanggan:** Diagram pita berlapis membandingkan kontribusi pendapatan dari pelanggan baru vs pelanggan setia yang berulang belanja.
+   - **Konsentrasi Single Buyer:** Mengidentifikasi produk-produk yang penjualannya bergantung lebih dari 50% pada satu pelanggan saja.
+   - **Keragaman Produk per Pelanggan:** Menganalisis median belanja berdasarkan variasi SKU yang dibeli.
+5. **Graf Jaringan Asosiasi Produk Interaktif (Market Basket Network Graph):**
+   - **Model Graf Jaringan Berbasis Fisika:** Node produk melayang interaktif dengan tautan tebal berdasarkan frekuensi dibeli bersamaan pada nota yang sama.
+   - **Deteksi Otomatis Paket Bundling (Lift Score ≥ 2.0×):** Menyorot pasangan barang dengan sinergi pembelian tinggi lintas merek maupun satu merek.
+   - **Filter Kekuatan Relasi & Kontrol Interaktif:** Slider fleksibel untuk menyaring ambang kekuatan pasangan barang, tombol zoom in/out, fit to screen, serta kartu wawasan mengambang saat node/garis dipilih.
+   - **Tabel Rekomendasi Aksi Bisnis:** Tabel detail yang dapat disembunyikan/dibuka, menyajikan confidence A&rarr;B, persentase pelanggan, dan saran strategi promo toko.
+6. **Sistem Tooltip Kontekstual Pintar (`InfoHint`):**
+   - Ikon peringatan interaktif (`!`) pada judul setiap kartu visualisasi yang menampilkan temuan penting ringkas saat diarahkan kursor tanpa mengganggu tata letak visual dashboard.
+7. **Bahasa Ramah Pemilik Bisnis:**
+   - Seluruh istilah teknis disajikan dengan bahasa Indonesia yang komunikatif dan langsung dapat dipahami oleh pengambil keputusan dan pemilik toko.
 
 ---
 
