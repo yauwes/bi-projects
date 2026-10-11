@@ -1,4 +1,4 @@
-import { AlertTriangle, CircleAlert, Mic } from "lucide-react";
+import { AlertTriangle, CircleAlert } from "lucide-react";
 import { useMemo, useState } from "react";
 import { Alert } from "@/components/arc/alert/alert";
 import { AnimatedCounter } from "@/components/arc/animated-counter/animated-counter";
@@ -13,9 +13,6 @@ import SegmentedControl from "@/components/arc/segmented-control/segmented-contr
 import { Tooltip } from "@/components/arc/tooltip/tooltip";
 import { RibbonChart } from "./components/RibbonChart";
 import { DiagnosticDecompositionCard } from "./components/DiagnosticCharts";
-import { ExecutiveFindings } from "./components/ExecutiveFindings";
-import { DataQualityAudit } from "./components/DataQualityAudit";
-import { PresentationModal } from "./components/PresentationModal";
 import { analyze, BULAN, calendar, filterRows, firstMonths, type Analysis, type Dict, type Row, type TopRow } from "./analytics";
 import raw from "./data.json";
 import { int, jt, one, pct, rp } from "./format";
@@ -214,13 +211,11 @@ function Kpi({ label, value, decimals = 0, suffix, context, change }: KpiProps) 
   );
 }
 
-type ViewMode = "semua" | "temuan" | "deskriptif" | "diagnostik" | "kualitas";
+type ViewMode = "semua" | "deskriptif" | "diagnostik";
 const viewOptions = [
-  { value: "semua", label: "🌐 Semua Visualisasi" },
-  { value: "temuan", label: "⭐ Temuan & Presentasi" },
-  { value: "deskriptif", label: "📊 Descriptive Analytics" },
-  { value: "diagnostik", label: "🔍 Diagnostic Analytics" },
-  { value: "kualitas", label: "📋 Audit Kualitas Data (EDA)" },
+  { value: "semua", label: "Semua Visualisasi" },
+  { value: "deskriptif", label: "📊 Monitoring Deskriptif" },
+  { value: "diagnostik", label: "🔍 Diagnostik & Anomali" },
 ];
 
 export function App() {
@@ -231,7 +226,6 @@ export function App() {
   const [useMaskedNames, setUseMaskedNames] = useState(false);
   const [viewMode, setViewMode] = useState<ViewMode>("semua");
   const [excludeOutliers, setExcludeOutliers] = useState(false);
-  const [showPresentationModal, setShowPresentationModal] = useState(false);
 
   const activeDict = useMemo(() => {
     if (useMaskedNames && DICT.pelangganAnon?.length) {
@@ -369,14 +363,6 @@ export function App() {
           >
             {useMaskedNames ? "👤 Disamarkan" : "👤 Nama Asli"}
           </Button>
-          <Button
-            variant="primary"
-            size="sm"
-            onClick={() => setShowPresentationModal(true)}
-            title="Buka naskah presentasi perwakilan kelompok siap pakai"
-          >
-            🎙️ Naskah Presentasi
-          </Button>
         </div>
       </header>
 
@@ -421,19 +407,6 @@ export function App() {
           )}
 
           <div className={styles.grid}>
-            {/* Ringkasan Temuan Eksekutif & Presentasi */}
-            {(viewMode === "semua" || viewMode === "temuan") && (
-              <div className={styles.span12}>
-                <ExecutiveFindings
-                  analysis={a}
-                  isMasked={useMaskedNames}
-                  excludeOutliers={excludeOutliers}
-                  onToggleOutliers={() => setExcludeOutliers(v => !v)}
-                  onOpenPresentation={() => setShowPresentationModal(true)}
-                />
-              </div>
-            )}
-
             {/* Visualisasi Diagnostik: Dekomposisi Lonjakan & Distribusi Kuantitas Outlier */}
             {(viewMode === "semua" || viewMode === "diagnostik") && (
               <>
@@ -612,16 +585,6 @@ export function App() {
               </>
             )}
 
-            {/* Audit Kualitas Data & EDA */}
-            {(viewMode === "semua" || viewMode === "kualitas") && (
-              <div className={styles.span12}>
-                <DataQualityAudit
-                  analysis={a}
-                  dict={activeDict}
-                  kualitas={KUALITAS}
-                />
-              </div>
-            )}
           </div>
         </>
       )}
@@ -633,12 +596,6 @@ export function App() {
         <span>•</span>
         <span>Periode: April – September 2020</span>
       </footer>
-
-      <PresentationModal
-        isOpen={showPresentationModal}
-        onClose={() => setShowPresentationModal(false)}
-        isMasked={useMaskedNames}
-      />
     </main>
   );
 }
