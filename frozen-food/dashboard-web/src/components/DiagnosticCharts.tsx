@@ -1,6 +1,6 @@
 import React from "react";
 import type { Analysis } from "../analytics";
-import { jt } from "../format";
+import { jt, rp } from "../format";
 import styles from "./DiagnosticCharts.module.css";
 
 interface DiagnosticChartsProps {
@@ -21,107 +21,101 @@ export function DiagnosticDecompositionCard({ analysis, isMasked }: DiagnosticCh
   const buyerRohmat = isMasked ? "Pelanggan 004" : "Mas Rohmat";
 
   return (
-    <div className={styles.decompCard}>
-      <div className={styles.cardHead}>
-        <h3 style={{ margin: 0, fontSize: "var(--text-base)", fontWeight: 600, color: "var(--foreground)" }}>
-          Dekomposisi Lonjakan Agustus: Omzet Resmi vs Anomali 3 Transaksi Outlier Jumbo
-        </h3>
+    <article className={styles.decompCard}>
+      <header className={styles.cardHead}>
+        <div className={styles.titleGroup}>
+          <h3 className={styles.title}>Dekomposisi Kenaikan Agustus</h3>
+          <p className={styles.subtitle}>Omzet resmi vs kontribusi 3 transaksi outlier jumbo</p>
+        </div>
         <span className={styles.badgeDiag}>Diagnostik</span>
-      </div>
+      </header>
 
-      <div className={styles.decompBars}>
-        <div className={styles.decompBarItem}>
-          <div className={styles.decompBarLabel}>
-            <span>1. Total Omzet Agustus Tercatat</span>
-            <strong>100%</strong>
+      {/* 3 Metric Mini-Cards */}
+      <div className={styles.kpiRow}>
+        <div className={styles.kpiItem}>
+          <div className={styles.kpiLabel}>
+            <span>Omzet Dilaporkan</span>
+            <span>100%</span>
           </div>
-          <div className={styles.decompBarTrack}>
-            <div className={styles.decompBarFillMain} style={{ width: "100%" }} />
+          <span className={styles.kpiValue}>Rp {jt(augOmzetJt)} Jt</span>
+          <div className={styles.kpiTrack}>
+            <div className={styles.kpiFillMain} style={{ width: "100%" }} />
           </div>
-          <span className={styles.decompBarValue}>Rp {jt(augOmzetJt)} Jt</span>
-          <span className={styles.decompBarSub}>+8,9% dari Juli (Puncak Rekor)</span>
+          <span className={styles.kpiSub}>+8,9% MoM (Puncak 2020)</span>
         </div>
 
-        <div className={styles.decompBarItem}>
-          <div className={styles.decompBarLabel}>
-            <span>2. Nilai 3 Transaksi Jumbo (Outlier)</span>
-            <strong style={{ color: "var(--danger)" }}>19,5%</strong>
+        <div className={styles.kpiItem}>
+          <div className={styles.kpiLabel}>
+            <span>3 Order Jumbo</span>
+            <span style={{ color: "var(--danger)" }}>19,5%</span>
           </div>
-          <div className={styles.decompBarTrack}>
-            <div className={styles.decompBarFillOutlier} style={{ width: "19.5%" }} />
+          <span className={styles.kpiValue} style={{ color: "var(--danger)" }}>Rp 172,15 Jt</span>
+          <div className={styles.kpiTrack}>
+            <div className={styles.kpiFillOutlier} style={{ width: "19.5%" }} />
           </div>
-          <span className={styles.decompBarValue} style={{ color: "var(--danger)" }}>Rp 172,15 Jt</span>
-          <span className={styles.decompBarSub}>Hanya 3 baris dari 1.068 baris</span>
+          <span className={styles.kpiSub}>Hanya 3 dari 1.068 baris</span>
         </div>
 
-        <div className={styles.decompBarItem}>
-          <div className={styles.decompBarLabel}>
-            <span>3. Omzet Riil Tanpa 3 Transaksi Jumbo</span>
-            <strong style={{ color: "var(--success)" }}>80,5%</strong>
+        <div className={styles.kpiItem}>
+          <div className={styles.kpiLabel}>
+            <span>Omzet Tanpa Outlier</span>
+            <span style={{ color: "var(--success)" }}>80,5%</span>
           </div>
-          <div className={styles.decompBarTrack}>
-            <div className={styles.decompBarFillNormal} style={{ width: "80.5%" }} />
+          <span className={styles.kpiValue}>Rp {jt(withoutTop3Jt)} Jt</span>
+          <div className={styles.kpiTrack}>
+            <div className={styles.kpiFillBaseline} style={{ width: "80.5%" }} />
           </div>
-          <span className={styles.decompBarValue}>Rp {jt(withoutTop3Jt)} Jt</span>
-          <span className={styles.decompBarSub} style={{ color: "var(--danger)" }}>
-            {diffJulPct}% di bawah omzet Juli (Rp {jt(julOmzetJt)} Jt)
+          <span className={styles.kpiSub} style={{ color: "var(--danger)" }}>
+            {diffJulPct}% di bawah Juli (Rp {jt(julOmzetJt)} Jt)
           </span>
         </div>
       </div>
 
-      <div className={styles.outlierTableWrapper}>
-        <table className={styles.outlierTable}>
+      {/* Clean Outlier Data Table */}
+      <div className={styles.tableContainer}>
+        <table className={styles.table}>
           <thead>
             <tr>
               <th>Tanggal</th>
               <th>Pembeli</th>
               <th>Produk</th>
               <th>Kuantitas</th>
-              <th>Median Normal</th>
-              <th>Rasio vs Median</th>
-              <th>Total Nilai (Rp)</th>
-              <th>Porsi Omzet Agt</th>
+              <th>Nilai</th>
+              <th>Porsi Agt</th>
+              <th>Deviasi</th>
             </tr>
           </thead>
           <tbody>
             <tr>
-              <td><strong>03/08/2020</strong></td>
+              <td>03/08/2020</td>
               <td><strong>{buyerSutarmuji}</strong></td>
-              <td>MIN-001 (Minaku Otak Otak 500 gr × 20 Pack)</td>
-              <td><span className={styles.outlierBadge}>200 DUS</span></td>
-              <td>3 DUS</td>
-              <td><strong>67× Median</strong></td>
-              <td><strong>Rp 63.200.000</strong></td>
+              <td>MIN-001 (Minaku Otak Otak)</td>
+              <td><strong>200 DUS</strong></td>
+              <td>Rp 63.200.000</td>
               <td>7,2%</td>
+              <td><span className={styles.badgeOutlier}>67× Median</span></td>
             </tr>
             <tr>
-              <td><strong>13/08/2020</strong></td>
+              <td>13/08/2020</td>
               <td><strong>{buyerSutarmuji}</strong></td>
-              <td>MIN-001 (Minaku Otak Otak 500 gr × 20 Pack)</td>
-              <td><span className={styles.outlierBadge}>200 DUS</span></td>
-              <td>3 DUS</td>
-              <td><strong>67× Median</strong></td>
-              <td><strong>Rp 63.200.000</strong></td>
+              <td>MIN-001 (Minaku Otak Otak)</td>
+              <td><strong>200 DUS</strong></td>
+              <td>Rp 63.200.000</td>
               <td>7,2%</td>
+              <td><span className={styles.badgeOutlier}>67× Median</span></td>
             </tr>
             <tr>
-              <td><strong>03/08/2020</strong></td>
+              <td>03/08/2020</td>
               <td><strong>{buyerRohmat}</strong></td>
-              <td>MIN-001 (Minaku Otak Otak 500 gr × 20 Pack)</td>
-              <td><span className={styles.outlierBadge}>150 DUS</span></td>
-              <td>3 DUS</td>
-              <td><strong>50× Median</strong></td>
-              <td><strong>Rp 45.750.000</strong></td>
+              <td>MIN-001 (Minaku Otak Otak)</td>
+              <td><strong>150 DUS</strong></td>
+              <td>Rp 45.750.000</td>
               <td>5,2%</td>
+              <td><span className={styles.badgeOutlier}>50× Median</span></td>
             </tr>
           </tbody>
         </table>
       </div>
-
-      <p className={styles.note}>
-        💡 <strong>Diagnosa Data:</strong> Median pesanan produk MIN-001 satuan DUS adalah 3 DUS. Pesanan 150–200 DUS adalah outlier ekstrem (50×–67× median). 
-        Tanpa 3 baris ini, penjualan Agustus sebenarnya turun 12,3% dari Juli; lonjakan Agustus berasal dari anomali 2 akun grosir, bukan ekspansi pasar ritel.
-      </p>
-    </div>
+    </article>
   );
 }
