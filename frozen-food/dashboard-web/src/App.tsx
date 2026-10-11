@@ -327,27 +327,46 @@ export function App() {
             <p className={styles.subtitle}>Dashboard Intelijen Bisnis & Analisis Transaksi Penjualan</p>
           </div>
         </div>
-        <div className={styles.headerBadge}>
-          <span>Dataset Asli · April – September 2020</span>
-        </div>
       </header>
 
-      {/* Section Khusus Filter (Kecil, Rapi & Ringkas) */}
-      <section className={styles.filterSection} aria-label="Filter data transaksi">
-        <div className={styles.filterHead}>
-          <div className={styles.filterTitle}>
-            <Filter size={15} className={styles.filterIcon} aria-hidden="true" />
-            <strong>Filter Data:</strong>
-            <span className={styles.filterScope}>{scopeText}</span>
+      {/* Section Filter Satu Baris */}
+      <section className={styles.filterBar} aria-label="Filter data transaksi">
+        <div className={styles.filterLead}>
+          <Filter size={15} className={styles.filterIcon} aria-hidden="true" />
+          <span className={styles.filterLabel}>Filter:</span>
+        </div>
+
+        <div className={styles.pickerWrapper}>
+          <DateRangePicker
+            label="Rentang tanggal"
+            value={range}
+            onChange={setRange}
+            minDate={MIN}
+            maxDate={MAX}
+            weekStartsOn={1}
+            locale="id-ID"
+            presets={presets}
+          />
+        </div>
+
+        <div className={styles.filterDivider} aria-hidden="true" />
+
+        <div className={styles.chipsWrapper}>
+          <ChipGroup
+            label="Pilih Bulan"
+            options={monthOptions}
+            value={chips}
+            onValueChange={setChips}
+          />
+        </div>
+
+        {active && (
+          <div className={styles.resetWrapper}>
+            <Button variant="secondary" size="sm" onClick={reset}>
+              Reset
+            </Button>
           </div>
-          {active && (
-            <Button variant="secondary" size="sm" onClick={reset}>Atur Ulang Filter</Button>
-          )}
-        </div>
-        <div className={styles.filterBody}>
-          <DateRangePicker label="Rentang tanggal" value={range} onChange={setRange} minDate={MIN} maxDate={MAX} weekStartsOn={1} locale="id-ID" presets={presets} />
-          <ChipGroup label="Pilih Bulan" options={monthOptions} value={chips} onValueChange={setChips} />
-        </div>
+        )}
       </section>
 
       {a.n === 0 ? (
