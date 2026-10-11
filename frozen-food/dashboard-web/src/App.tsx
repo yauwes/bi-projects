@@ -12,7 +12,7 @@ import { LineChart, type LineChartDatum } from "@/components/arc/line-chart/line
 import SegmentedControl from "@/components/arc/segmented-control/segmented-control";
 import { Tooltip } from "@/components/arc/tooltip/tooltip";
 import { RibbonChart } from "./components/RibbonChart";
-import { ExecutiveInsights } from "./components/ExecutiveInsights";
+import { DiagnosticDecompositionCard } from "./components/DiagnosticCharts";
 import { analyze, BULAN, calendar, filterRows, firstMonths, type Analysis, type Dict, type Row, type TopRow } from "./analytics";
 import raw from "./data.json";
 import { int, jt, one, pct, rp } from "./format";
@@ -211,12 +211,20 @@ function Kpi({ label, value, decimals = 0, suffix, context, change }: KpiProps) 
   );
 }
 
+type ViewMode = "semua" | "deskriptif" | "diagnostik";
+const viewOptions = [
+  { value: "semua", label: "Semua Visualisasi" },
+  { value: "deskriptif", label: "📊 Monitoring Deskriptif" },
+  { value: "diagnostik", label: "🔍 Diagnostik & Anomali" },
+];
+
 export function App() {
   const [range, setRange] = useState<DateRange>(FULL);
   const [chips, setChips] = useState<string[]>([]);
   const [win, setWin] = useState<Record<DailyKey, Win>>({ omzet: "bulan", baris: "bulan", pelanggan: "bulan" });
   const [span, setSpan] = useState<SpanKey>("all");
   const [useMaskedNames, setUseMaskedNames] = useState(false);
+  const [viewMode, setViewMode] = useState<ViewMode>("semua");
 
   const activeDict = useMemo(() => {
     if (useMaskedNames && DICT.pelangganAnon?.length) {
@@ -317,6 +325,14 @@ export function App() {
   const pasanganMax = Math.max(1, ...pasangan.map(x => x.n));
   const ragamBars = useMemo(() => a.ragam.map(x => ({ key: x.key, label: `${x.label}: ${int(x.n)} pelanggan, median ${one(x.medianJt)} jt`, axisLabel: x.key, value: x.medianJt })), [a]);
   const prodBars = useMemo(() => topBars(a.topProd, 1), [a]);
+  const qtyDistBars = useMemo(() => {
+    return a.qtyBins.dus.map(b => ({
+      key: b.label,
+      label: `${b.label} DUS: ${int(b.baris)} transaksi`,
+      axisLabel: b.label,
+      value: b.baris,
+    }));
+  }, [a]);
 
   return (
     <main className={styles.page}>
@@ -345,17 +361,6 @@ export function App() {
         </section>
       ) : (
         <>
-          <ExecutiveInsights
-            analysis={a}
-            dict={activeDict}
-            isMasked={useMaskedNames}
-            onFilterMonth={m => {
-              setChips([String(m)]);
-              setRange(FULL);
-            }}
-            onResetFilter={reset}
-          />
-
           <section className={styles.kpis} aria-label="Angka utama">
             <Kpi label="Total omzet" value={a.totalJt >= 1000 ? a.totalJt / 1000 : a.totalJt} decimals={a.totalJt >= 1000 ? 2 : 1}
               suffix={a.totalJt >= 1000 ? " miliar" : " jt"}
@@ -367,119 +372,205 @@ export function App() {
             <Kpi label="Jumlah produk terjual" value={a.products} context={`${a.pareto.produk80} produk sudah menyumbang 80% omzet`} />
           </section>
 
+          <div className={styles.viewModeBar} role="region" aria-label="Mode Monitoring">
+            <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+              <span style={{ fontWeight: 600, fontSize: "var(--text-sm)", color: "var(--foreground)" }}>
+                Monitoring Kecerdasan Bisnis:
+              </span>
+              <span className={styles.scope}>Pilih perspektif visualisasi</span>
+            </div>
+            <SegmentedControl
+              label="Fokus Monitoring"
+              options={viewOptions}
+              value={viewMode}
+              onValueChange={v => setViewMode(v as ViewMode)}
+            />
+          </div>
+
           <div className={styles.grid}>
-            <section className={`${styles.card} ${styles.span6}`} aria-label="Pelanggan teratas">
-              <div className={styles.cardHead}><CardTitle hint={hints.topPelanggan}>{a.topCust.length} pelanggan dengan pembelian terbesar, {scopeText}</CardTitle></div>
-              <BarChart data={custBars} label="Omzet" period={`Nilai pembelian per pelanggan, juta rupiah. Bersama-sama mereka = ${pct(a.pareto.top10Pct)} dari seluruh omzet.`} unit="jt"
-                averageLabel="Rata-rata per pelanggan" valueLabel="Pembelian" categoryLabel="Pelanggan" height={260} showAverage={false} formatValue={v => int(v)} />
-            </section>
+            {/* Visualisasi Diagnostik: Dekomposisi Lonjakan & Distribusi Kuantitas Outlier */}
+            {(viewMode === "semua" || viewMode === "diagnostik") && (
+              <>
+                <div className={styles.span7}>
+                  <DiagnosticDecompositionCard analysis={a} isMasked={useMaskedNames} />
+                </div>
 
-            <section className={`${styles.card} ${styles.span6}`} aria-label="Produk teratas">
-              <div className={styles.cardHead}><CardTitle hint={hints.topProduk}>{a.topProd.length} produk dengan penjualan terbesar, {scopeText}</CardTitle></div>
-              <BarChart data={prodBars} label="Omzet" period={`Nilai penjualan per produk, juta rupiah. Bersama-sama mereka = ${pct(a.topProd.reduce((t, x) => t + x.porsi, 0))} dari seluruh omzet.`} unit="jt"
-                averageLabel="Rata-rata per produk" valueLabel="Penjualan" categoryLabel="Produk" height={260} showAverage={false} formatValue={v => int(v)} />
-            </section>
-
-            {(Object.keys(dailyMeta) as DailyKey[]).map(k => {
-              const b = dailyBars(k);
-              const meta = dailyMeta[k];
-              return (
-                <section key={k} className={`${styles.card} ${styles.span4}`} aria-label={meta.title}>
-                  <div className={`${styles.cardHead} ${styles.headStack}`}>
-                    <CardTitle hint={k === "omzet" ? hints.omzet : k === "baris" ? hints.baris : undefined}>{dailyHeading(k, win[k])}</CardTitle>
-                    <div className={styles.control}>
-                      <span className={styles.scope}>Hanya grafik ini</span>
-                      <SegmentedControl label={`Rentang ${meta.label}`} options={windowOptions} value={win[k]}
-                        onValueChange={v => setWin(w => ({ ...w, [k]: v as Win }))} />
-                    </div>
+                <section className={`${styles.card} ${styles.span5}`} aria-label="Distribusi Kuantitas Pesanan">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.baris}>Distribusi Kuantitas (Satuan DUS) & Deteksi Outlier</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
                   </div>
-                  <BarChart data={b.data} label={meta.label} period={b.period} unit={meta.unit} averageLabel={b.avgLabel} valueLabel={meta.label}
-                    categoryLabel="Tanggal" height={200} formatValue={v => int(v)} />
+                  <BarChart
+                    data={qtyDistBars}
+                    label="Transaksi"
+                    period="Frekuensi pesanan per kuantitas DUS. Median = 3 DUS. Kategori >100 DUS adalah pesanan borongan ekstrem (150–200 DUS)."
+                    unit="transaksi"
+                    averageLabel="Rata-rata pesanan"
+                    valueLabel="Transaksi"
+                    categoryLabel="Kuantitas DUS"
+                    height={260}
+                    showAverage={false}
+                    formatValue={v => int(v)}
+                  />
                 </section>
-              );
-            })}
-
-            {kohort.data.length > 0 && (
-              <section className={`${styles.card} ${styles.span8}`} aria-label="Pelanggan baru dan lama">
-                <div className={styles.cardHead}><CardTitle hint={hints.kohort}>Omzet dari pelanggan lama dan pelanggan baru per bulan (juta rupiah)</CardTitle></div>
-                <p className={styles.note}>Pelanggan baru = pertama kali belanja di bulan itu. April tidak ditampilkan karena bulan pertama data, jadi semua pelanggannya terhitung baru.</p>
-                <RibbonChart data={kohort.data} series={[{ key: "lama", label: "Pelanggan lama" }, { key: "baru", label: "Pelanggan baru" }]}
-                  colors={KOHORT_COLORS} monthTotals={kohort.totals} mode="tumpuk" ranked={false} label="Omzet pelanggan lama dan baru" unit="jt" height={260} formatValue={v => int(v)} />
-              </section>
+              </>
             )}
 
-            <section className={`${styles.card} ${kohort.data.length ? styles.span4 : styles.span12}`} aria-label="Belanja per pelanggan">
-              <div className={styles.cardHead}><CardTitle hint={hints.belanja}>Belanja rata-rata per pelanggan per bulan (juta rupiah)</CardTitle></div>
-              <BarChart data={belanjaBars} label="Belanja per pelanggan" period="Omzet bulan itu dibagi jumlah pelanggan yang berbelanja" unit="jt" averageLabel="Rata-rata bulanan"
-                valueLabel="Per pelanggan" categoryLabel="Bulan" height={240} formatValue={v => one(v)} />
-            </section>
+            {/* Visualisasi Deskriptif: Pelanggan & Produk Teratas */}
+            {(viewMode === "semua" || viewMode === "deskriptif") && (
+              <>
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Pelanggan teratas">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.topPelanggan}>{a.topCust.length} pelanggan dengan pembelian terbesar, {scopeText}</CardTitle>
+                    <span className={styles.badgeDesc}>Deskriptif</span>
+                  </div>
+                  <BarChart data={custBars} label="Omzet" period={`Nilai pembelian per pelanggan, juta rupiah. Bersama-sama mereka = ${pct(a.pareto.top10Pct)} dari seluruh omzet.`} unit="jt"
+                    averageLabel="Rata-rata per pelanggan" valueLabel="Pembelian" categoryLabel="Pelanggan" height={260} showAverage={false} formatValue={v => int(v)} />
+                </section>
 
-            <section className={`${styles.card} ${styles.span12}`} aria-label="Omzet harian">
-              <div className={styles.cardHead}>
-                <CardTitle hint={hints.harian}>{span === "all" ? "Omzet harian, seluruh periode (juta rupiah)" : `Omzet harian: ${span} hari terakhir dibanding ${span} hari sebelumnya (juta rupiah)`}</CardTitle>
-                <div className={styles.control}>
-                  <span className={styles.scope}>Hanya grafik ini</span>
-                  <SegmentedControl label="Rentang" options={spanOptions} value={span} onValueChange={v => setSpan(v as SpanKey)} />
-                </div>
-              </div>
-              <div className={styles.headline}>
-                <span className={styles.headlineLabel}>
-                  {span === "all"
-                    ? "Rata-rata omzet per hari, seluruh periode"
-                    : `Rata-rata omzet per hari, ${span} hari terakhir (sampai ${dateText(daily.data[daily.data.length - 1]?.key ?? "")} 2020)`}
-                </span>
-                <span className={styles.headlineValue}>{rp(daily.days ? daily.total / daily.days : 0)} per hari</span>
-                <span className={styles.headlineSub}>
-                  Total {int(daily.days)} hari: {rp(daily.total)} (hari tutup ikut dihitung)
-                  {daily.change !== null && (
-                    <span className={daily.change >= 0 ? styles.up : styles.down}> · {signed(daily.change)} dibanding {span} hari sebelumnya</span>
-                  )}
-                </span>
-              </div>
-              <LineChart label="Omzet harian" data={daily.data} unit="jt" height={240} categoryLabel="Tanggal"
-                series={daily.series} formatValue={v => one(v)} formatTick={v => int(v)} />
-            </section>
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Produk teratas">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.topProduk}>{a.topProd.length} produk dengan penjualan terbesar, {scopeText}</CardTitle>
+                    <span className={styles.badgeDesc}>Deskriptif</span>
+                  </div>
+                  <BarChart data={prodBars} label="Omzet" period={`Nilai penjualan per produk, juta rupiah. Bersama-sama mereka = ${pct(a.topProd.reduce((t, x) => t + x.porsi, 0))} dari seluruh omzet.`} unit="jt"
+                    averageLabel="Rata-rata per produk" valueLabel="Penjualan" categoryLabel="Produk" height={260} showAverage={false} formatValue={v => int(v)} />
+                </section>
 
-            <section className={`${styles.card} ${styles.span6}`} aria-label="Pola hari">
-              <div className={styles.cardHead}><CardTitle hint={hints.hari}>Omzet menurut hari dalam seminggu (juta rupiah)</CardTitle></div>
-              <BarChart data={weekdayData} label="Omzet" period="Senin sampai Sabtu, dijumlahkan dari bulan terpilih. Hari Minggu toko tutup." unit="jt" averageLabel="Rata-rata per hari"
-                valueLabel="Omzet" categoryLabel="Hari" height={220} showAverage={false} formatValue={v => int(v)} />
-            </section>
+                {(Object.keys(dailyMeta) as DailyKey[]).map(k => {
+                  const b = dailyBars(k);
+                  const meta = dailyMeta[k];
+                  return (
+                    <section key={k} className={`${styles.card} ${styles.span4}`} aria-label={meta.title}>
+                      <div className={`${styles.cardHead} ${styles.headStack}`}>
+                        <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", width: "100%" }}>
+                          <CardTitle hint={k === "omzet" ? hints.omzet : k === "baris" ? hints.baris : undefined}>{dailyHeading(k, win[k])}</CardTitle>
+                          <span className={styles.badgeDesc}>Deskriptif</span>
+                        </div>
+                        <div className={styles.control}>
+                          <span className={styles.scope}>Hanya grafik ini</span>
+                          <SegmentedControl label={`Rentang ${meta.label}`} options={windowOptions} value={win[k]}
+                            onValueChange={v => setWin(w => ({ ...w, [k]: v as Win }))} />
+                        </div>
+                      </div>
+                      <BarChart data={b.data} label={meta.label} period={b.period} unit={meta.unit} averageLabel={b.avgLabel} valueLabel={meta.label}
+                        categoryLabel="Tanggal" height={200} formatValue={v => int(v)} />
+                    </section>
+                  );
+                })}
 
-            <section className={`${styles.card} ${styles.span6}`} aria-label="Fase bulan">
-              <div className={styles.cardHead}><CardTitle hint={hints.fase}>Omzet menurut bagian bulan (juta rupiah)</CardTitle></div>
-              <BarChart data={faseData} label="Omzet" period="Awal = tanggal 1-10, Tengah = 11-20, Akhir = 21-31, dijumlahkan dari bulan terpilih." unit="jt" averageLabel="Rata-rata per bagian"
-                valueLabel="Omzet" categoryLabel="Bagian bulan" height={220} showAverage={false} formatValue={v => int(v)} />
-            </section>
-
-            <section className={`${styles.card} ${styles.span6}`} aria-label="Ketergantungan produk">
-              <div className={styles.cardHead}><CardTitle hint={hints.bergantung}>Berapa persen penjualan 10 produk terbesar yang dibeli satu pembeli saja</CardTitle></div>
-              <BarChart data={bergantungBars} label="Porsi pembeli terbesar" period="Persen dari penjualan produk itu. Arahkan kursor untuk nama pembelinya." unit="%"
-                averageLabel="Rata-rata" valueLabel="Dari satu pembeli" categoryLabel="Produk" height={240} showAverage={false} formatValue={v => int(v)} />
-            </section>
-
-            <section className={`${styles.card} ${styles.span6}`} aria-label="Ragam produk per pelanggan">
-              <div className={styles.cardHead}><CardTitle hint={hints.ragam}>Belanja pelanggan menurut banyaknya jenis produk yang dibeli (juta rupiah)</CardTitle></div>
-              <BarChart data={ragamBars} label="Median belanja" period="Median total belanja per pelanggan dalam tiap kelompok. Arahkan kursor untuk jumlah pelanggannya." unit="jt"
-                averageLabel="Rata-rata" valueLabel="Median belanja" categoryLabel="Jenis produk" height={240} showAverage={false} formatValue={v => one(v)} />
-            </section>
-
-            <section className={`${styles.card} ${styles.span12}`} aria-label="Pasangan produk">
-              <div className={styles.cardHead}><CardTitle hint={hints.pasangan}>Pasangan produk yang paling sering dibeli dalam satu nota, {scopeText}</CardTitle></div>
-              <p className={styles.note}>Nota = satu pelanggan di satu hari (berkas tidak punya nomor nota). "Kali kebetulan" membandingkan dengan seberapa sering dua produk itu terbeli bersama bila dipilih acak.</p>
-              <ol className={styles.pairs}>
-                {pasangan.map(x => (
-                  <li key={x.id} className={styles.pair}>
-                    <span className={styles.pairName}>
-                      {x.a} + {x.b}
-                      <span className={styles.pairMeta}>{int(x.pelanggan)} pelanggan, {one(x.lift)} kali lebih sering dari kebetulan</span>
+                <section className={`${styles.card} ${styles.span12}`} aria-label="Omzet harian">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.harian}>{span === "all" ? "Omzet harian, seluruh periode (juta rupiah)" : `Omzet harian: ${span} hari terakhir dibanding ${span} hari sebelumnya (juta rupiah)`}</CardTitle>
+                    <div style={{ display: "flex", alignItems: "center", gap: "10px" }}>
+                      <span className={styles.badgeDesc}>Deskriptif</span>
+                      <div className={styles.control}>
+                        <span className={styles.scope}>Hanya grafik ini</span>
+                        <SegmentedControl label="Rentang" options={spanOptions} value={span} onValueChange={v => setSpan(v as SpanKey)} />
+                      </div>
+                    </div>
+                  </div>
+                  <div className={styles.headline}>
+                    <span className={styles.headlineLabel}>
+                      {span === "all"
+                        ? "Rata-rata omzet per hari, seluruh periode"
+                        : `Rata-rata omzet per hari, ${span} hari terakhir (sampai ${dateText(daily.data[daily.data.length - 1]?.key ?? "")} 2020)`}
                     </span>
-                    <span className={styles.pairTrack} aria-hidden="true"><span className={styles.pairFill} style={{ width: `${(x.n / pasanganMax) * 100}%` }} /></span>
-                    <span className={styles.pairValue}>{int(x.n)} nota</span>
-                  </li>
-                ))}
-              </ol>
-            </section>
+                    <span className={styles.headlineValue}>{rp(daily.days ? daily.total / daily.days : 0)} per hari</span>
+                    <span className={styles.headlineSub}>
+                      Total {int(daily.days)} hari: {rp(daily.total)} (hari tutup ikut dihitung)
+                      {daily.change !== null && (
+                        <span className={daily.change >= 0 ? styles.up : styles.down}> · {signed(daily.change)} dibanding {span} hari sebelumnya</span>
+                      )}
+                    </span>
+                  </div>
+                  <LineChart label="Omzet harian" data={daily.data} unit="jt" height={240} categoryLabel="Tanggal"
+                    series={daily.series} formatValue={v => one(v)} formatTick={v => int(v)} />
+                </section>
+
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Pola hari">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.hari}>Omzet menurut hari dalam seminggu (juta rupiah)</CardTitle>
+                    <span className={styles.badgeDesc}>Deskriptif</span>
+                  </div>
+                  <BarChart data={weekdayData} label="Omzet" period="Senin sampai Sabtu, dijumlahkan dari bulan terpilih. Hari Minggu toko tutup." unit="jt" averageLabel="Rata-rata per hari"
+                    valueLabel="Omzet" categoryLabel="Hari" height={220} showAverage={false} formatValue={v => int(v)} />
+                </section>
+
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Fase bulan">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.fase}>Omzet menurut bagian bulan (juta rupiah)</CardTitle>
+                    <span className={styles.badgeDesc}>Deskriptif</span>
+                  </div>
+                  <BarChart data={faseData} label="Omzet" period="Awal = tanggal 1-10, Tengah = 11-20, Akhir = 21-31, dijumlahkan dari bulan terpilih." unit="jt" averageLabel="Rata-rata per bagian"
+                    valueLabel="Omzet" categoryLabel="Bagian bulan" height={220} showAverage={false} formatValue={v => int(v)} />
+                </section>
+              </>
+            )}
+
+            {/* Visualisasi Diagnostik: Kohort & Belanja per Pelanggan */}
+            {(viewMode === "semua" || viewMode === "diagnostik") && (
+              <>
+                {kohort.data.length > 0 && (
+                  <section className={`${styles.card} ${styles.span8}`} aria-label="Pelanggan baru dan lama">
+                    <div className={styles.cardHead}>
+                      <CardTitle hint={hints.kohort}>Omzet dari pelanggan lama dan baru per bulan (juta rupiah)</CardTitle>
+                      <span className={styles.badgeDiag}>Diagnostik</span>
+                    </div>
+                    <p className={styles.note}>Pelanggan baru = pertama kali belanja di bulan itu. April tidak ditampilkan karena bulan pertama data.</p>
+                    <RibbonChart data={kohort.data} series={[{ key: "lama", label: "Pelanggan lama" }, { key: "baru", label: "Pelanggan baru" }]}
+                      colors={KOHORT_COLORS} monthTotals={kohort.totals} mode="tumpuk" ranked={false} label="Omzet pelanggan lama dan baru" unit="jt" height={260} formatValue={v => int(v)} />
+                  </section>
+                )}
+
+                <section className={`${styles.card} ${kohort.data.length ? styles.span4 : styles.span12}`} aria-label="Belanja per pelanggan">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.belanja}>Belanja rata-rata per pelanggan per bulan (juta rupiah)</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
+                  </div>
+                  <BarChart data={belanjaBars} label="Belanja per pelanggan" period="Omzet bulan itu dibagi jumlah pelanggan yang berbelanja" unit="jt" averageLabel="Rata-rata bulanan"
+                    valueLabel="Per pelanggan" categoryLabel="Bulan" height={240} formatValue={v => one(v)} />
+                </section>
+
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Ketergantungan produk">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.bergantung}>Berapa persen penjualan 10 produk terbesar yang dibeli satu pembeli saja</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
+                  </div>
+                  <BarChart data={bergantungBars} label="Porsi pembeli terbesar" period="Persen dari penjualan produk itu. Arahkan kursor untuk nama pembelinya." unit="%"
+                    averageLabel="Rata-rata" valueLabel="Dari satu pembeli" categoryLabel="Produk" height={240} showAverage={false} formatValue={v => int(v)} />
+                </section>
+
+                <section className={`${styles.card} ${styles.span6}`} aria-label="Ragam produk per pelanggan">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.ragam}>Belanja pelanggan menurut banyaknya jenis produk yang dibeli (juta rupiah)</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
+                  </div>
+                  <BarChart data={ragamBars} label="Median belanja" period="Median total belanja per pelanggan dalam tiap kelompok. Arahkan kursor untuk jumlah pelanggannya." unit="jt"
+                    averageLabel="Rata-rata" valueLabel="Median belanja" categoryLabel="Jenis produk" height={240} showAverage={false} formatValue={v => one(v)} />
+                </section>
+
+                <section className={`${styles.card} ${styles.span12}`} aria-label="Pasangan produk">
+                  <div className={styles.cardHead}>
+                    <CardTitle hint={hints.pasangan}>Pasangan produk yang paling sering dibeli dalam satu nota, {scopeText}</CardTitle>
+                    <span className={styles.badgeDiag}>Diagnostik</span>
+                  </div>
+                  <p className={styles.note}>Nota = satu pelanggan di satu hari (berkas tidak punya nomor nota). "Kali kebetulan" membandingkan seberapa sering dua produk itu terbeli bersama bila dipilih acak.</p>
+                  <ol className={styles.pairs}>
+                    {pasangan.map(x => (
+                      <li key={x.id} className={styles.pair}>
+                        <span className={styles.pairName}>
+                          {x.a} + {x.b}
+                          <span className={styles.pairMeta}>{int(x.pelanggan)} pelanggan, {one(x.lift)} kali lebih sering dari kebetulan</span>
+                        </span>
+                        <span className={styles.pairTrack} aria-hidden="true"><span className={styles.pairFill} style={{ width: `${(x.n / pasanganMax) * 100}%` }} /></span>
+                        <span className={styles.pairValue}>{int(x.n)} nota</span>
+                      </li>
+                    ))}
+                  </ol>
+                </section>
+              </>
+            )}
           </div>
         </>
       )}
