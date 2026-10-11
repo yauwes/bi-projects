@@ -25,6 +25,18 @@
   border-radius: var(--radius-control);
 }
 
+.brandText {
+  display: flex;
+  flex-direction: column;
+}
+
+.subtitle {
+  margin: 2px 0 0;
+  font-size: var(--text-xs);
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
 .title {
   margin: 0;
   font-family: var(--font-display);
@@ -34,7 +46,7 @@
   color: var(--foreground);
 }
 
-/* Judul di kiri, filter tingkat halaman di kanan atas; bar ini menempel saat halaman digulir. */
+/* Judul di kiri, status dataset di kanan; bar ini menempel saat halaman digulir. */
 .top {
   position: sticky;
   top: 0;
@@ -51,13 +63,17 @@
   backdrop-filter: blur(8px);
 }
 
-.filters {
-  display: flex;
-  flex-wrap: wrap;
+.headerBadge {
+  display: inline-flex;
   align-items: center;
-  justify-content: flex-end;
-  gap: 10px 14px;
-  margin-left: auto;
+  padding: 5px 14px;
+  border-radius: var(--radius-pill);
+  font-size: var(--text-xs);
+  font-weight: 600;
+  color: var(--text-secondary);
+  background: var(--surface);
+  border: 1px solid var(--border);
+  box-shadow: 0 1px 2px oklch(0% 0 0 / 0.03);
 }
 
 /* KPIs */
@@ -106,27 +122,55 @@
   font-weight: 500;
 }
 
-/* View Mode Selector Bar */
-.viewModeBar {
+/* Section Khusus Filter (Kecil, Rapi, & Elegan) */
+.filterSection {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  padding: 12px 18px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-surface);
+  box-shadow: 0 1px 3px oklch(0% 0 0 / 0.03);
+}
+
+.filterHead {
   display: flex;
   flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
-  gap: 12px;
-  padding: 10px 18px;
-  background: var(--surface);
-  border-radius: var(--radius-surface);
-  border: 1px solid var(--border);
-  box-shadow: 0 1px 3px oklch(0% 0 0 / 0.03);
+  gap: 10px;
 }
 
-.viewModeLabel {
+.filterTitle {
   display: flex;
   align-items: center;
   gap: 8px;
-  font-weight: 600;
-  font-size: var(--text-sm);
+  font-size: var(--text-xs);
+  color: var(--text-secondary);
+}
+
+.filterTitle strong {
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
   color: var(--foreground);
+}
+
+.filterIcon {
+  color: var(--accent);
+}
+
+.filterScope {
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+.filterBody {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px 16px;
 }
 
 /* Grid & Cards */
@@ -238,7 +282,7 @@
 
 @media (max-width: 900px) {
   .top { position: static; }
-  .filters { justify-content: flex-start; margin-left: 0; }
+  .filterBody { flex-direction: column; align-items: stretch; }
   .span4, .span5, .span6, .span7, .span8 { grid-column: span 12; }
   .pair { grid-template-columns: minmax(0, 1fr) 72px; }
   .pairTrack { grid-column: 1 / -1; grid-row: 2; }

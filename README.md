@@ -70,37 +70,39 @@ Evaluasi reliabilitas teknis dataset dari 6 workbook Excel (`april 2020.xlsx` s.
 
 Halaman web dashboard berfokus murni pada **pengalaman visual monitoring eksekutif yang bersih, elegan, dan interaktif (Arc UI Design System)**:
 
-1. **Header & Kontrol Interaktif Cepat (Sticky Top Bar):**
-   - **Logo & Judul:** `❄️ Frozen Food BI Monitoring` dengan navigasi yang menempel di bagian atas saat halaman digulir.
+1. **Header Bersih & Elegan (Sticky Top Bar):**
+   - **Logo & Judul:** `❄️ Frozen Food BI Monitoring` dengan subjudul analitik dan penanda status dataset asli (*April – September 2020*).
+   - Tampilan header kini lebih bersih dan tidak dipadati tombol navigasi mode monitoring terpisah.
+2. **Section Khusus Filter (Kecil, Rapi & Ringkas):**
+   - **Panel Filter Khusus:** Ditempatkan dalam section ramping tersendiri tepat di bawah header.
    - **DateRangePicker:** Fleksibilitas memilih rentang tanggal kustom atau preset periode (Seluruh periode, Q2, Q3, 30 hari terakhir).
-   - **ChipGroup Bulan:** Filter instan per bulan (April – September 2020).
-   - **Tombol Reset:** Mengembalikan seluruh filter ke default dalam satu klik.
-   - **Transparansi Dataset & Nama Asli:** Dashboard menggunakan seluruh 6.778 baris data transaksi asli dan nama pelanggan asli (*Pak Sutarmuji*, *Mas Rohmat*, *Toko Cita Rasa Baru*, dll.) secara langsung tanpa pengaburan.
-2. **5 Kartu KPI Eksekutif Utama (Animated Counter & Id-ID Locale):**
+   - **ChipGroup Bulan:** Tombol pill filter cepat per bulan (April – September 2020).
+   - **Tombol Reset Filter:** Otomatis muncul saat ada filter aktif untuk mengembalikan semua visualisasi ke kondisi default dalam satu klik.
+3. **5 Kartu KPI Eksekutif Utama (Animated Counter & Id-ID Locale):**
    - **Total Omzet:** Rp 4,53 Miliar (lengkap dengan badge tren pertumbuhan MoM).
    - **Rata-rata Bulanan:** Rp 755 Juta (dengan penanda puncak penjualan tertinggi di bulan Agustus).
    - **Total Transaksi:** 6.778 Transaksi tercatat (6.720 baris reguler).
    - **Pelanggan Aktif:** 229 Pembeli/Toko (Top 10 menyumbang 53% omzet).
    - **Produk Aktif:** 250 SKU aktif (Top 40 menyumbang 80% omzet).
-3. **Perspektif Monitoring Interaktif (Segmented Control):**
-   - **Semua Visualisasi:** Menampilkan seluruh grafik deskriptif dan diagnostik secara terpadu.
-   - **📊 Monitoring Deskriptif:** Tren harian, 10 pelanggan terbesar, 10 produk terlaris, agregat metrik bulanan/harian, pola hari kerja, dan siklus fase tanggal.
-   - **🔍 Diagnostik & Anomali:** Mengupas akar penyebab perubahan bisnis, dekomposisi lonjakan pesanan borongan Agustus, ribbon chart kohort pelanggan, single-buyer concentration, dan graf relasi keranjang belanja.
-4. **Analisis Diagnostik & Anomali Mendalam:**
+4. **Tata Letak All-in-One Terpadu:**
+   - Seluruh visualisasi disajikan secara utuh dan mengalir (*all-in-one flow*) tanpa perlu berpindah tab atau mode tampilan.
+   - Pemilik bisnis dapat langsung melihat korelasi antara angka ringkasan eksekutif, anomali pesanan borongan, tren harian, hingga peluang bundling produk dalam satu halaman yang komprehensif.
+5. **Analisis Diagnostik & Anomali Mendalam:**
    - **Dekomposisi Kenaikan Agustus:** Kartu visual yang membongkar bahwa rekor omzet Agustus didorong oleh 3 pesanan raksasa (200 dus & 150 dus) dari Pak Sutarmuji & Mas Rohmat senilai Rp 172,15 Jt (19,5% omzet Agustus).
    - **Distribusi Kuantitas Pesanan (DUS):** Histogram pembagian ukuran pesanan (median 3 dus vs outlier ekstrem >100 dus).
    - **Ribbon Chart Kohort Pelanggan:** Diagram pita berlapis membandingkan kontribusi pendapatan dari pelanggan baru vs pelanggan setia yang berulang belanja.
    - **Konsentrasi Single Buyer:** Mengidentifikasi produk-produk yang penjualannya bergantung lebih dari 50% pada satu pelanggan saja.
    - **Keragaman Produk per Pelanggan:** Menganalisis median belanja berdasarkan variasi SKU yang dibeli.
-5. **Graf Jaringan Asosiasi Produk Interaktif (Market Basket Network Graph):**
+6. **Graf Jaringan Asosiasi Produk Interaktif (Market Basket Network Graph):**
    - **Model Graf Jaringan Berbasis Fisika:** Node produk melayang interaktif dengan tautan tebal berdasarkan frekuensi dibeli bersamaan pada nota yang sama.
    - **Deteksi Otomatis Paket Bundling (Lift Score ≥ 2.0×):** Menyorot pasangan barang dengan sinergi pembelian tinggi lintas merek maupun satu merek.
    - **Filter Kekuatan Relasi & Kontrol Interaktif:** Slider fleksibel untuk menyaring ambang kekuatan pasangan barang, tombol zoom in/out, fit to screen, serta kartu wawasan mengambang saat node/garis dipilih.
    - **Tabel Rekomendasi Aksi Bisnis:** Tabel detail yang dapat disembunyikan/dibuka, menyajikan confidence A&rarr;B, persentase pelanggan, dan saran strategi promo toko.
-6. **Sistem Tooltip Kontekstual Pintar (`InfoHint`):**
-   - Ikon peringatan interaktif (`!`) pada judul setiap kartu visualisasi yang menampilkan temuan penting ringkas saat diarahkan kursor tanpa mengganggu tata letak visual dashboard.
-7. **Bahasa Ramah Pemilik Bisnis:**
+7. **Visualisasi Deskriptif Komprehensif:**
+   - Peringkat 10 Pelanggan Terbesar & 10 Produk Terlaris, Tren Omzet Harian (LineChart dengan rata-rata 7 hari), Breakdown Metrik Bulanan/Harian, Pola Hari Kerja, dan Siklus Tanggal (Awal/Tengah/Akhir bulan).
+8. **Bahasa Ramah Pemilik Bisnis & Tooltip Kontekstual Pintar (`InfoHint`):**
    - Seluruh istilah teknis disajikan dengan bahasa Indonesia yang komunikatif dan langsung dapat dipahami oleh pengambil keputusan dan pemilik toko.
+   - Ikon peringatan interaktif (`!`) pada judul setiap kartu visualisasi menampilkan intisari temuan penting saat diarahkan kursor.
 
 ---
 
