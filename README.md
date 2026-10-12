@@ -1,9 +1,9 @@
-# BI Projects: Frozen Food Sales Analytics & Monitoring Dashboard
+# Frozen Food BI: Executive Monitoring & Sales Analytics Dashboard
 
 Dashboard Business Intelligence interaktif modern yang berfokus penuh pada **visualisasi monitoring data transaksi penjualan Frozen Food** periode **April – September 2020** (6.778 baris transaksi senilai **Rp 4,53 Miliar**).
 
-🌐 **Demo Live di GitHub Pages:** [https://yauwes.github.io/bi-projects/](https://yauwes.github.io/bi-projects/)  
-Repository Fork: [https://github.com/yauwes/bi-projects](https://github.com/yauwes/bi-projects) (Forked from [farhanwew/bi-projects](https://github.com/farhanwew/bi-projects))
+🌐 **Demo Live di GitHub Pages:** [https://yauwes.github.io/frozen-food-bi/](https://yauwes.github.io/frozen-food-bi/)  
+Repository: [https://github.com/yauwes/frozen-food-bi](https://github.com/yauwes/frozen-food-bi)
 
 ---
 
