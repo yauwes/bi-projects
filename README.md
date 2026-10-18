@@ -3,7 +3,9 @@
 Dashboard Business Intelligence interaktif modern yang berfokus penuh pada **visualisasi monitoring data transaksi penjualan Frozen Food** periode **April – September 2020** (6.778 baris transaksi senilai **Rp 4,53 Miliar**).
 
 🌐 **Demo Live di GitHub Pages:** [https://yauwes.github.io/frozen-food-bi/](https://yauwes.github.io/frozen-food-bi/)  
-Repository: [https://github.com/yauwes/frozen-food-bi](https://github.com/yauwes/frozen-food-bi)
+- 📖 **Storytelling Executive Dashboard (`index.html`):** [https://yauwes.github.io/frozen-food-bi/](https://yauwes.github.io/frozen-food-bi/)
+- 🔍 **Interactive Drill-Down Explorer:** [https://yauwes.github.io/frozen-food-bi/drilldown/](https://yauwes.github.io/frozen-food-bi/drilldown/)  
+📁 **Repository:** [https://github.com/yauwes/frozen-food-bi](https://github.com/yauwes/frozen-food-bi)
 
 ---
 
