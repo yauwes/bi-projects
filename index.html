@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Frozen Food Business Intelligence · Executive Storytelling Dashboard</title>
+  <title>Frozen Food Business Intelligence · Laporan Evaluasi Penjualan</title>
   
   <!-- Google Fonts: Plus Jakarta Sans & JetBrains Mono -->
   <link rel="preconnect" href="https://fonts.googleapis.com" />
@@ -22,13 +22,9 @@
             mono: ['"JetBrains Mono"', 'monospace'],
           },
           colors: {
-            slate: {
-              850: '#172033',
-            },
             crimson: {
               50: '#FEF2F2',
               100: '#FEE2E2',
-              400: '#F87171',
               500: '#EF4444',
               600: '#DC2626',
               700: '#B91C1C',
@@ -36,7 +32,6 @@
             emerald: {
               50: '#ECFDF5',
               100: '#D1FAE5',
-              400: '#34D399',
               500: '#10B981',
               600: '#059669',
               700: '#047857',
@@ -44,7 +39,6 @@
             sky: {
               50: '#F0F9FF',
               100: '#E0F2FE',
-              400: '#38BDF8',
               500: '#0EA5E9',
               600: '#0284C7',
               700: '#0369A1',
@@ -52,17 +46,10 @@
             amber: {
               50: '#FFFBEB',
               100: '#FEF3C7',
-              400: '#FBBF24',
               500: '#F59E0B',
               600: '#D97706',
               700: '#B45309',
             }
-          },
-          boxShadow: {
-            'subtle': '0 1px 3px 0 rgba(0, 0, 0, 0.05), 0 1px 2px -1px rgba(0, 0, 0, 0.05)',
-            'card-light': '0 4px 6px -1px rgba(0, 0, 0, 0.04), 0 2px 4px -2px rgba(0, 0, 0, 0.03)',
-            'card-hover': '0 10px 15px -3px rgba(0, 0, 0, 0.08), 0 4px 6px -4px rgba(0, 0, 0, 0.04)',
-            'alert-rose': '0 0 15px -2px rgba(239, 68, 68, 0.2)',
           }
         }
       }
@@ -94,17 +81,7 @@
     ::-webkit-scrollbar-thumb:hover {
       background: #94A3B8;
     }
-    .panel-light {
-      background: #FFFFFF;
-      border: 1px solid #E2E8F0;
-      box-shadow: 0 1px 3px 0 rgba(0, 0, 0, 0.04);
-    }
-    .panel-light:hover {
-      border-color: #CBD5E1;
-      box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.06);
-      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-    }
-    /* ApexCharts tooltip custom styling in light mode */
+    /* ApexCharts tooltip custom styling */
     .apexcharts-tooltip {
       background: #FFFFFF !important;
       border: 1px solid #E2E8F0 !important;
@@ -131,14 +108,14 @@
 <body class="bg-slate-50 text-slate-800 font-sans antialiased selection:bg-sky-500 selection:text-white min-h-screen">
 
   <!-- ========================================== -->
-  <!-- 1. STICKY TOPBAR HERO BANNER (LIGHT MODE)  -->
+  <!-- 1. STICKY TOPBAR NAVIGASI (LIGHT MODE)     -->
   <!-- ========================================== -->
-  <header class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-sm">
+  <header class="sticky top-0 z-50 w-full bg-white/95 backdrop-blur-md border-b border-slate-200/90 shadow-xs">
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-18 py-3.5 flex items-center justify-between gap-4">
       
       <!-- Brand Logo & Context -->
       <div class="flex items-center gap-3">
-        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 p-[1.5px] shadow-sm flex items-center justify-center">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-sky-500 to-indigo-600 p-[1.5px] shadow-xs flex items-center justify-center">
           <div class="w-full h-full bg-white rounded-[10px] flex items-center justify-center">
             <i class="fa-solid fa-snowflake text-sky-600 text-lg"></i>
           </div>
@@ -149,11 +126,11 @@
               Frozen Food Business Intelligence
             </h1>
             <span class="hidden md:inline-flex items-center px-2 py-0.5 rounded text-[11px] font-bold bg-sky-50 text-sky-700 border border-sky-200">
-              Executive Storytelling
+              Data Penjualan Asli
             </span>
           </div>
           <p class="text-xs text-slate-500 hidden sm:block">
-            Dataset Transaksi April – September 2020 · <span class="text-slate-700 font-mono font-semibold">6.778</span> Baris · <span class="text-emerald-600 font-mono font-bold">Rp 4,53 Miliar</span>
+            Data Transaksi April – September 2020 · <span class="text-slate-800 font-mono font-semibold">6.778</span> Transaksi · <span class="text-emerald-600 font-mono font-bold">Rp 4,53 Miliar</span>
           </p>
         </div>
       </div>
@@ -161,34 +138,34 @@
       <!-- Anchor Navigation Links -->
       <nav class="hidden lg:flex items-center gap-1.5 p-1 rounded-xl bg-slate-100 border border-slate-200">
         <a href="#seksi-retensi" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition flex items-center gap-1.5 shadow-none hover:shadow-xs">
-          <i class="fa-solid fa-users-slash text-rose-500"></i>
-          <span>1: Retensi & Churn</span>
+          <i class="fa-solid fa-users text-rose-500"></i>
+          <span>1: Pelanggan & Omzet</span>
         </a>
         <a href="#seksi-pareto" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition flex items-center gap-1.5 shadow-none hover:shadow-xs">
-          <i class="fa-solid fa-chart-pie text-sky-500"></i>
-          <span>2: Pareto Produk</span>
+          <i class="fa-solid fa-boxes-stacked text-sky-500"></i>
+          <span>2: Produk Terlaris</span>
         </a>
         <a href="#seksi-perilaku" class="nav-btn px-3 py-1.5 rounded-lg text-xs font-semibold text-slate-600 hover:text-slate-900 hover:bg-white transition flex items-center gap-1.5 shadow-none hover:shadow-xs">
-          <i class="fa-solid fa-cart-shopping text-emerald-600"></i>
-          <span>3: Perilaku & AOV</span>
+          <i class="fa-solid fa-calendar-days text-emerald-600"></i>
+          <span>3: Pola Waktu Belanja</span>
         </a>
       </nav>
 
       <!-- Status & Quick Action -->
       <div class="flex items-center gap-2.5">
         <div class="hidden xl:flex flex-col text-right pr-2">
-          <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Status Monitoring</span>
+          <span class="text-[10px] text-slate-400 uppercase tracking-wider font-bold">Status Data</span>
           <span class="text-xs font-semibold text-emerald-600 flex items-center justify-end gap-1.5">
-            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> Data Terverifikasi
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span> 100% Sinkron Dataset
           </span>
         </div>
-        <a href="./drilldown/" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition" title="Buka Tool Drilldown Eksekutif">
-          <i class="fa-solid fa-chart-line text-sky-600"></i>
-          <span>Drilldown Tool</span>
+        <a href="./drilldown/" class="hidden sm:inline-flex items-center gap-1.5 px-3 py-2 rounded-xl text-xs font-bold text-slate-700 bg-slate-100 hover:bg-slate-200 border border-slate-200 transition" title="Buka Tool Filter Lengkap">
+          <i class="fa-solid fa-filter text-sky-600"></i>
+          <span>Filter Lengkap</span>
         </a>
-        <a href="#rekomendasi" class="px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 shadow-sm transition flex items-center gap-2">
-          <i class="fa-solid fa-lightbulb"></i>
-          <span>Rekomendasi Aksi</span>
+        <a href="#rekomendasi" class="px-3.5 py-2 rounded-xl text-xs font-bold text-white bg-gradient-to-r from-sky-600 to-indigo-600 hover:from-sky-500 hover:to-indigo-500 shadow-xs transition flex items-center gap-2">
+          <i class="fa-solid fa-list-check"></i>
+          <span>Saran Perbaikan</span>
         </a>
       </div>
 
@@ -197,13 +174,13 @@
     <!-- Mobile Sub-Navigation -->
     <div class="lg:hidden flex items-center justify-around py-2 border-t border-slate-200 bg-slate-50 text-[11px] font-semibold text-slate-700 overflow-x-auto px-2">
       <a href="#seksi-retensi" class="px-2 py-1 flex items-center gap-1 hover:text-rose-600 whitespace-nowrap">
-        <i class="fa-solid fa-users-slash text-rose-500"></i> Retensi & Churn
+        <i class="fa-solid fa-users text-rose-500"></i> Pelanggan & Omzet
       </a>
       <a href="#seksi-pareto" class="px-2 py-1 flex items-center gap-1 hover:text-sky-600 whitespace-nowrap">
-        <i class="fa-solid fa-chart-pie text-sky-500"></i> Pareto Produk
+        <i class="fa-solid fa-boxes-stacked text-sky-500"></i> Produk Terlaris
       </a>
       <a href="#seksi-perilaku" class="px-2 py-1 flex items-center gap-1 hover:text-emerald-600 whitespace-nowrap">
-        <i class="fa-solid fa-cart-shopping text-emerald-600"></i> Perilaku & AOV
+        <i class="fa-solid fa-calendar-days text-emerald-600"></i> Waktu Belanja
       </a>
     </div>
   </header>
@@ -214,7 +191,7 @@
   <!-- ========================================== -->
   <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-16">
 
-    <!-- HERO INTRO SUMMARY BANNER -->
+    <!-- HERO INTRO SUMMARY BANNER (BAHASA SEDERHANA & JELAS) -->
     <div class="bg-white rounded-3xl p-6 sm:p-8 relative overflow-hidden border border-slate-200 shadow-sm">
       <!-- Ambient background decoration -->
       <div class="absolute -top-24 -right-24 w-96 h-96 bg-sky-50 rounded-full blur-3xl pointer-events-none"></div>
@@ -223,32 +200,35 @@
       <div class="relative z-10 flex flex-col lg:flex-row items-start lg:items-center justify-between gap-6">
         <div class="max-w-3xl space-y-3">
           <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 border border-slate-200 text-xs font-semibold text-sky-700">
-            <i class="fa-solid fa-compass text-sky-600"></i>
-            <span>Executive Business Storytelling Report · Periode 6 Bulan</span>
+            <i class="fa-solid fa-file-invoice text-sky-600"></i>
+            <span>Ringkasan Bisnis Pemilik Toko · Periode April – September 2020</span>
           </div>
+          
+          <!-- HEADLINE UTAMA YANG DISAJIKAN SECARA SEDERHANA & LUGAS -->
           <h2 class="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-slate-900 tracking-tight leading-tight">
-            Diagnostik Penjualan: Menembus <span class="bg-gradient-to-r from-sky-600 via-indigo-600 to-rose-600 bg-clip-text text-transparent">Ilusi Pertumbuhan Omzet</span> Menuju Retensi Berkelanjutan
+            Evaluasi Penjualan: <span class="bg-gradient-to-r from-sky-600 via-indigo-600 to-rose-600 bg-clip-text text-transparent">Omzet Sempat Melonjak Namun Pembeli Besar Hilang</span>, Saatnya Menjaga Pelanggan Setia
           </h2>
+          
           <p class="text-sm sm:text-base text-slate-600 leading-relaxed">
-            Meskipun penjualan bruto mencapai rekor <strong class="text-slate-900 font-semibold">Rp 883,3 Juta</strong> di bulan Agustus dan berlanjut tinggi di September, bisnis menghadapi risiko struktural serius: <span class="text-rose-600 font-bold underline decoration-rose-400">kebocoran pelanggan setia sebesar 64,2%</span>, ketergantungan ekstrem pada <strong class="text-slate-900 font-semibold">20% SKU kunci</strong>, serta pesanan volume besar dari 2 akun pembeli grosir.
+            Total omzet 6 bulan tercatat <strong class="text-slate-900 font-bold">Rp 4,53 Miliar</strong> dari <strong class="text-slate-900 font-bold">181 pelanggan toko & agen</strong>. Puncak omzet terjadi di bulan Agustus (<strong class="text-emerald-600 font-bold">Rp 883,3 Juta</strong>) karena adanya pesanan partai jumbo dari 2 pembeli besar. Namun di bulan September, omzet langsung anjlok <strong class="text-rose-600 font-bold">turun Rp 136 Juta</strong> karena pembeli terbesar tersebut tidak belanja lagi.
           </p>
         </div>
 
-        <!-- Metric highlights pill box -->
+        <!-- Metric highlights pill box (100% Sinkron dengan Dataset all_data.csv) -->
         <div class="w-full lg:w-auto grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-1 gap-3 shrink-0">
           <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left">
-            <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider block">Total Omzet Bruto</span>
+            <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider block">Total Omzet Penjualan</span>
             <span class="text-lg sm:text-xl font-bold font-mono text-emerald-600">Rp 4.530.330.620</span>
           </div>
           <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200 text-left">
-            <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider block">Total Baris Transaksi</span>
+            <span class="text-[11px] text-slate-500 font-bold uppercase tracking-wider block">Total Transaksi Masuk</span>
             <span class="text-lg sm:text-xl font-bold font-mono text-sky-600">6.778 Transaksi</span>
           </div>
           <div class="p-4 rounded-2xl bg-rose-50 border border-rose-200 text-left col-span-2 sm:col-span-1">
             <span class="text-[11px] text-rose-700 font-bold uppercase tracking-wider block flex items-center gap-1.5">
-              <i class="fa-solid fa-triangle-exclamation text-rose-500"></i> Churn Alert
+              <i class="fa-solid fa-user-xmark text-rose-500"></i> Perhatian Khusus
             </span>
-            <span class="text-lg sm:text-xl font-bold font-mono text-rose-600">64,2% Pelanggan Lepas</span>
+            <span class="text-lg sm:text-xl font-bold font-mono text-rose-600">47 Toko Berhenti Belanja</span>
           </div>
         </div>
       </div>
@@ -256,7 +236,7 @@
 
 
     <!-- ======================================================== -->
-    <!-- [SEKSI 1: ANALISIS RETENSI & CHURN PELANGGAN (UTAMA)]    -->
+    <!-- [SEKSI 1: ANALISIS PELANGGAN & OMZET (SKENARIO UTAMA)]   -->
     <!-- ======================================================== -->
     <section id="seksi-retensi" class="space-y-8 pt-4">
       
@@ -264,88 +244,88 @@
       <div class="space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <span class="px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-widest bg-rose-50 text-rose-700 border border-rose-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-circle-dot text-rose-500 animate-pulse"></i> SEKSI 01 // ANALISIS RETENSI & CHURN PELANGGAN (SKENARIO UTAMA)
+            <i class="fa-solid fa-circle-dot text-rose-500 animate-pulse"></i> SEKSI 01 // KONDISI PELANGGAN & KEBERLANJUTAN OMZET
           </span>
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-xs font-semibold text-slate-700 border border-slate-200 shadow-xs">
-            <i class="fa-solid fa-bullseye text-rose-500"></i> Target Audiens: <strong class="text-slate-900">Head of Marketing & CRM Manager</strong>
+            <i class="fa-solid fa-user-tie text-rose-500"></i> Ditujukan Untuk: <strong class="text-slate-900">Pemilik Bisnis & Tim Penjualan</strong>
           </span>
         </div>
 
         <h3 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
-          "Omzet September Naik Berkat Pembeli Baru, Namun <span class="text-rose-600 font-black">64.2% Pembeli Setia Alami Churn</span>: Usulan Program Retensi & Voucher Repeat Order"
+          "Bulan Agustus Rekor Karena Ada Pembeli Jumbo, Namun <span class="text-rose-600 font-black">Di September Mereka Hilang</span>: Perlu Cara Mengikat Pelanggan Tetap"
         </h3>
         <p class="text-sm text-slate-600 max-w-4xl leading-relaxed">
-          Bisnis mengalami sindrom <em>“Leaky Bucket”</em>: pertumbuhan omzet yang tampak mengkilap sebenarnya didorong oleh biaya akuisisi pembeli baru yang tinggi, sementara basis pembeli setia terkikis drastis dari bulan ke bulan.
+          Kenaikan omzet yang drastis di bulan Agustus ternyata bukan karena pelanggan bertambah banyak, melainkan karena ada 2 pelanggan yang memesan ratusan dus sekaligus. Saat mereka berhenti memesan di bulan September, omzet bisnis langsung merosot tajam.
         </p>
       </div>
 
-      <!-- KPI Cards (Atas) -->
+      <!-- KPI Cards (100% SINKRON DENGAN DATASET AKTUAL) -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         
-        <!-- KPI 1 -->
+        <!-- KPI 1: SINKRON DATASET (181 PELANGGAN) -->
         <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-sky-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Unique Customers</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Pelanggan Terdaftar</span>
             <div class="w-9 h-9 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
-              <i class="fa-solid fa-users"></i>
+              <i class="fa-solid fa-store"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-extrabold font-mono text-slate-900">3.420</span>
-            <span class="text-xs font-semibold text-slate-500">Pembeli Terdaftar</span>
+            <span class="text-3xl font-extrabold font-mono text-slate-900">181</span>
+            <span class="text-xs font-semibold text-slate-500">Toko, Agen & Warung</span>
           </div>
           <p class="mt-2 text-xs text-slate-500">
-            Total akun pembeli unik yang pernah bertransaksi sepanjang April–September 2020.
+            Total seluruh akun pelanggan unik yang pernah belanja produk frozen food sepanjang April–September 2020.
           </p>
           <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span class="text-slate-500">Pembeli Baru / Bulan</span>
-            <span class="font-mono font-semibold text-sky-600">+570 rata-rata</span>
+            <span class="text-slate-500">Rata-rata Toko Belanja / Bulan</span>
+            <span class="font-mono font-semibold text-sky-600">97 Pelanggan Aktif</span>
           </div>
         </div>
 
-        <!-- KPI 2 -->
-        <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-amber-500 hover:shadow-md transition">
+        <!-- KPI 2: SINKRON DATASET (74,6% LANGGANAN SETIA) -->
+        <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-emerald-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Repeat Purchase Rate</span>
-            <div class="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pelanggan Langganan Tetap</span>
+            <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
               <i class="fa-solid fa-arrows-rotate"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-extrabold font-mono text-amber-600">28,5%</span>
-            <span class="text-xs font-semibold text-amber-700 bg-amber-50 px-2 py-0.5 rounded border border-amber-200">Rendah (Benchmark: >40%)</span>
+            <span class="text-3xl font-extrabold font-mono text-emerald-600">74,6%</span>
+            <span class="text-xs font-semibold text-emerald-700 bg-emerald-50 px-2 py-0.5 rounded border border-emerald-200">135 Toko Langganan</span>
           </div>
           <p class="mt-2 text-xs text-slate-500">
-            Hanya 1 dari 3,5 pembeli yang kembali melakukan repeat order di bulan berikutnya.
+            135 dari 181 toko melakukan pemesanan ulang rutin lintas bulan dan menjadi tulang punggung omzet.
           </p>
           <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span class="text-slate-500">One-Time Buyers</span>
-            <span class="font-mono font-semibold text-amber-600">71,5% (2.445 Akun)</span>
+            <span class="text-slate-500">Hanya Beli 1 Bulan Saja</span>
+            <span class="font-mono font-semibold text-slate-600">46 Toko (25,4%)</span>
           </div>
         </div>
 
-        <!-- KPI 3 (HIGHLIGHT MERAH KRITIS) -->
+        <!-- KPI 3: SINKRON DATASET (32,0% CHURN DALAM 60 HARI) -->
         <div class="bg-rose-50/60 rounded-2xl p-6 relative overflow-hidden shadow-sm border border-rose-200 border-l-4 border-l-rose-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
             <span class="text-xs font-bold uppercase tracking-wider text-rose-800 flex items-center gap-1.5">
-              <i class="fa-solid fa-triangle-exclamation text-rose-500 animate-bounce"></i> 60-Day Churn Rate (Kritis)
+              <i class="fa-solid fa-triangle-exclamation text-rose-500 animate-bounce"></i> Toko Berhenti Belanja (Churn)
             </span>
             <div class="w-9 h-9 rounded-xl bg-rose-100 border border-rose-200 flex items-center justify-center text-rose-600">
-              <i class="fa-solid fa-user-xmark"></i>
+              <i class="fa-solid fa-user-slash"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-extrabold font-mono text-rose-600">64,2%</span>
+            <span class="text-3xl font-extrabold font-mono text-rose-600">32,0%</span>
             <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-600 text-white tracking-wider uppercase">
-              HIGH RISK
+              47 TOKO LEPAS
             </span>
           </div>
           <p class="mt-2 text-xs text-slate-600 font-medium">
-            Sebanyak 64,2% pelanggan lama tidak melakukan transaksi ulang dalam 60 hari berturut-turut.
+            47 pelanggan yang dulu aktif belanja di awal, tidak pernah belanja lagi sama sekali dalam 60 hari terakhir.
           </p>
           <div class="mt-3 pt-3 border-t border-rose-200/80 flex items-center justify-between text-xs">
-            <span class="text-rose-700 font-medium">Estimasi Kerugian Omzet</span>
-            <span class="font-mono font-bold text-rose-600">Rp 480+ Juta / Semester</span>
+            <span class="text-rose-700 font-medium">Kasus Paling Ekstrem</span>
+            <span class="font-mono font-bold text-rose-600">Pak Sutarmuji (Rp 0 di September)</span>
           </div>
         </div>
 
@@ -357,69 +337,69 @@
         <!-- GRID 2 KOLOM: CHART 1 & CHART 2 -->
         <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-          <!-- 1. CHART MASALAH UTAMA: Ilusi Pertumbuhan Penjualan -->
+          <!-- 1. CHART MASALAH UTAMA: Pembeli Baru vs Pembeli Lama per Bulan -->
           <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
             <div>
               <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
                 <div>
-                  <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider block">Visualisasi 1.1 · Masalah Utama</span>
+                  <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider block">Grafik 1.1 · Sumber Omzet</span>
                   <h4 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-                    Ilusi Pertumbuhan Penjualan: Pembeli Baru vs Berulang
+                    Perbandingan Omzet: Pelanggan Lama vs Pelanggan Baru
                   </h4>
                 </div>
                 <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 text-slate-700 border border-slate-200">
-                  Stacked Area
+                  Data Riil Bulanan
                 </span>
               </div>
               <p class="text-xs text-slate-500 mb-4">
-                Dekomposisi omzet bulanan (Juta Rupiah) membuktikan lonjakan September sepenuhnya ditopang oleh pembeli baru.
+                Pembagian nilai omzet setiap bulan (Juta Rupiah) dari pelanggan lama yang beli berulang vs pelanggan baru.
               </p>
               
               <!-- Chart Container -->
               <div id="chart-masalah-utama" class="w-full h-72"></div>
             </div>
 
-            <!-- Callout Anotasi Kritis -->
+            <!-- Callout Anotasi Kritis Berdasarkan Data Asli -->
             <div class="mt-4 p-4 rounded-xl bg-amber-50 border border-amber-200 flex items-start gap-3">
-              <i class="fa-solid fa-triangle-exclamation text-amber-500 text-base mt-0.5 shrink-0"></i>
+              <i class="fa-solid fa-lightbulb text-amber-500 text-base mt-0.5 shrink-0"></i>
               <div class="text-xs leading-relaxed text-amber-950">
-                <strong class="text-amber-800 font-bold block mb-0.5">Anotasi Kritis (Ilusi Penjualan):</strong>
+                <strong class="text-amber-800 font-bold block mb-0.5">Penjelasan Fakta Lapangan:</strong>
                 <span>
-                  "Rekor omzet tertinggi di September (<span class="font-mono font-bold text-slate-900">Rp 180 Juta</span>), namun <span class="text-amber-700 font-bold font-mono">82%</span> berasal dari pembeli baru yang belum tentu kembali lagi, sementara kontribusi pembeli berulang anjlok ke titik terendah."
+                  Rekor omzet tertinggi terjadi di bulan <strong class="text-slate-900 font-bold">Agustus (Rp 883,3 Juta)</strong> karena ada order jumbo dari pembeli baru yaitu <strong class="text-slate-900">Pak Sutarmuji & Mas Rohmat senilai Rp 172,15 Juta</strong>. Namun di bulan September, Pak Sutarmuji berhenti belanja sama sekali (<strong class="text-rose-600 font-bold">Rp 0</strong>), menyebabkan omzet September langsung anjlok <strong class="text-rose-600 font-bold">turun Rp 136,2 Juta</strong>.
                 </span>
               </div>
             </div>
           </div>
 
-          <!-- 2. CHART BUKTI CHURN: Kebocoran Pelanggan Setia (Cohort Decay) -->
+          <!-- 2. CHART BUKTI CHURN: Pelanggan yang Masih Belanja dari Bulan April -->
           <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
             <div>
               <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
                 <div>
-                  <span class="text-[11px] font-bold text-rose-600 uppercase tracking-wider block">Visualisasi 1.2 · Bukti Churn</span>
+                  <span class="text-[11px] font-bold text-rose-600 uppercase tracking-wider block">Grafik 1.2 · Ketahanan Pelanggan</span>
                   <h4 class="text-base sm:text-lg font-bold text-slate-900 flex items-center gap-2">
-                    Kebocoran Pelanggan Setia: Kurva Retensi Cohort April
+                    Berapa Pelanggan Awal (April) yang Masih Belanja?
                   </h4>
                 </div>
                 <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 text-slate-700 border border-slate-200">
-                  Cohort Decay
+                  Data 94 Toko April
                 </span>
               </div>
               <p class="text-xs text-slate-500 mb-4">
-                Peluruhan persentase pembeli dari cohort awal bulan April yang masih aktif belanja hingga September.
+                Persentase pelanggan angkatan bulan April yang terus bertahan melakukan repeat order hingga September.
               </p>
 
               <!-- Chart Container -->
               <div id="chart-bukti-churn" class="w-full h-72"></div>
             </div>
 
-            <!-- Callout Anotasi Kritis -->
+            <!-- Callout Anotasi Kritis Berdasarkan Data Asli -->
             <div class="mt-4 p-4 rounded-xl bg-rose-50 border border-rose-200 flex items-start gap-3">
               <i class="fa-solid fa-circle-exclamation text-rose-500 text-base mt-0.5 shrink-0"></i>
               <div class="text-xs leading-relaxed text-rose-950">
-                <strong class="text-rose-800 font-bold block mb-0.5">Anotasi Kritis (Kebocoran Basis Konsumen):</strong>
+                <strong class="text-rose-800 font-bold block mb-0.5">Penjelasan Fakta Lapangan:</strong>
                 <span>
-                  "<span class="text-rose-600 font-bold font-mono">64% pembeli April lepas di bulan September</span> (hanya <span class="font-mono font-bold text-emerald-600">36%</span> yang kembali belanja). Biaya akuisisi terbuang sia-sia akibat ketiadaan program retensi berkala."
+                  Dari <strong class="text-slate-900 font-bold">94 toko</strong> yang aktif belanja di bulan April, di bulan September hanya tersisa <strong class="text-emerald-700 font-bold font-mono">52 toko (55,3%)</strong> yang masih belanja. Sebanyak <strong class="text-rose-600 font-bold font-mono">42 toko (44,7%)</strong> sudah lepas dan tidak melakukan pemesanan lagi.
                 </span>
               </div>
             </div>
@@ -431,21 +411,21 @@
         <div class="bg-white rounded-2xl p-5 sm:p-7 shadow-sm border border-slate-200 hover:shadow-md transition">
           <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4 mb-4">
             <div>
-              <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider block">Visualisasi 1.3 · Pendukung Solusi</span>
+              <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider block">Grafik 1.3 · Ide Solusi Bundling</span>
               <h4 class="text-base sm:text-xl font-bold text-slate-900 flex items-center gap-2">
-                <i class="fa-solid fa-diagram-project text-sky-600"></i> Market Basket Network Graph: Peta Barang Sering Dibeli Bersamaan
+                <i class="fa-solid fa-diagram-project text-sky-600"></i> Peta Produk yang Sering Dibeli Bersamaan dalam Satu Pesanan
               </h4>
               <p class="text-xs text-slate-500 mt-1">
-                Visualisasi graf jaringan interaktif (Vis.js). Node mewakili SKU produk, garis tebal menunjukkan frekuensi co-purchasing dalam satu nota.
+                Garis yang tebal menunjukkan bahwa kedua produk tersebut sangat sering dibeli bersamaan oleh pembeli dalam satu transaksi.
               </p>
             </div>
             
             <div class="flex items-center gap-2 self-start sm:self-auto">
               <button onclick="resetNetworkView()" class="px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200 border border-slate-200 transition flex items-center gap-1.5 shadow-2xs">
-                <i class="fa-solid fa-compress"></i> <span>Reset Posisi</span>
+                <i class="fa-solid fa-compress"></i> <span>Rapikan Posisi</span>
               </button>
               <div class="px-2.5 py-1 rounded-lg bg-sky-50 border border-sky-200 text-[11px] font-mono text-sky-700">
-                Interaktif: Drag & Zoom
+                Bisa Digeser & Diperbesar
               </div>
             </div>
           </div>
@@ -462,55 +442,55 @@
                 <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span> Sosis & Stick</span>
                 <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span> Nugget</span>
                 <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span> Otak-Otak/Seafood</span>
-                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Baso/Daging</span>
+                <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span> Baso Daging</span>
               </div>
             </div>
 
-            <!-- Side Card: Paket Bundling Unggulan Terbukti -->
+            <!-- Side Card: Pasangan Produk Riil Terbanyak -->
             <div class="lg:col-span-1 space-y-3">
               <h5 class="text-xs font-bold uppercase tracking-wider text-slate-500 flex items-center gap-1.5">
-                <i class="fa-solid fa-fire text-amber-500"></i> Top Pasangan Co-Purchase
+                <i class="fa-solid fa-fire text-amber-500"></i> Pasangan Produk Terlaris
               </h5>
 
               <div class="space-y-2.5 text-xs">
                 <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <div class="flex items-center justify-between text-slate-500 font-semibold mb-1">
-                    <span>Pasangan #1 Terkuat</span>
-                    <span class="text-amber-600 font-mono font-bold">183× Nota</span>
+                    <span>Pasangan #1 Terbanyak</span>
+                    <span class="text-amber-600 font-mono font-bold">183× Transaksi</span>
                   </div>
                   <p class="font-bold text-slate-900">Okey Sosis 500g + Okey Stick 500g</p>
-                  <p class="text-[11px] text-slate-500 mt-1">Sinergi intra-brand tertinggi. Cocok untuk paket hemat harian.</p>
+                  <p class="text-[11px] text-slate-500 mt-1">Sangat cocok dibuat paket hemat harian untuk warung.</p>
                 </div>
 
                 <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <div class="flex items-center justify-between text-slate-500 font-semibold mb-1">
                     <span>Pasangan #2 Lintas Merek</span>
-                    <span class="text-sky-600 font-mono font-bold">101× Nota</span>
+                    <span class="text-sky-600 font-mono font-bold">101× Transaksi</span>
                   </div>
                   <p class="font-bold text-slate-900">Belfoods Sosis + Jofrans Nugget</p>
-                  <p class="text-[11px] text-slate-500 mt-1">Paket sarapan praktis. Pelanggan tidak fanatik merek tunggal.</p>
+                  <p class="text-[11px] text-slate-500 mt-1">Paket lauk praktis keluarga yang sangat diminati.</p>
                 </div>
 
                 <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200">
                   <div class="flex items-center justify-between text-slate-500 font-semibold mb-1">
                     <span>Pasangan #3 Snack Gurih</span>
-                    <span class="text-emerald-600 font-mono font-bold">75× Nota</span>
+                    <span class="text-emerald-600 font-mono font-bold">75× Transaksi</span>
                   </div>
                   <p class="font-bold text-slate-900">Minaku Otak-Otak + Okey Sosis</p>
-                  <p class="text-[11px] text-slate-500 mt-1">Kombinasi produk terlaris omzet dengan lauk beku standar.</p>
+                  <p class="text-[11px] text-slate-500 mt-1">Kombinasi produk juara omzet dengan sosis reguler.</p>
                 </div>
               </div>
             </div>
 
           </div>
 
-          <!-- Callout Anotasi Solusi Bundling -->
+          <!-- Callout Anotasi Solusi Bundling Sederhana -->
           <div class="mt-5 p-4 rounded-xl bg-emerald-50 border border-emerald-200 flex items-start gap-3">
-            <i class="fa-solid fa-lightbulb text-emerald-600 text-lg mt-0.5 shrink-0"></i>
+            <i class="fa-solid fa-circle-check text-emerald-600 text-lg mt-0.5 shrink-0"></i>
             <div class="text-xs leading-relaxed text-emerald-950">
-              <strong class="text-emerald-800 font-bold text-sm block mb-1">Anotasi Solusi Bisnis Berdasarkan Graph Jaringan:</strong>
+              <strong class="text-emerald-800 font-bold text-sm block mb-1">Cara Praktis Meningkatkan Pesanan Ulang:</strong>
               <span>
-                "Gunakan peta jaringan produk ini untuk merancang <strong class="text-slate-900">‘Paket Promo Repeat Order/Bundling’</strong> (misal: <em>Sosis Ayam + Nugget Ayam</em> atau <em>Otak-Otak + Sosis</em>) demi menahan Churn Rate pembeli lama. Tawarkan voucher diskon bundle ini khusus saat pesanan pertama tiba."
+                Gunakan daftar pasangan produk di atas untuk membuat <strong class="text-slate-900">“Paket Hemat Beli Bareng”</strong> (misalnya: <em>Sosis + Nugget</em> atau <em>Otak-Otak + Sosis</em> dengan potongan harga Rp 5.000). Berikan kupon diskon paket ini di dalam kardus pesanan pertama agar pembeli langsung memesan kembali dalam tempo 2 minggu.
               </span>
             </div>
           </div>
@@ -519,39 +499,39 @@
 
       </div>
 
-      <!-- Bottom Action Card Seksi 1 -->
+      <!-- Bottom Action Card Seksi 1 (Bahasa Sederhana) -->
       <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
         <div class="flex items-center gap-2 mb-3">
           <span class="w-2.5 h-2.5 rounded-full bg-rose-500"></span>
           <h4 class="text-sm font-extrabold uppercase tracking-wider text-rose-700">
-            Rekomendasi Aksi Strategis Seksi 1 (Head of Marketing & CRM Manager)
+            Langkah Praktis untuk Mengikat Pelanggan agar Tidak Lepas
           </h4>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs">
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
             <div class="text-sky-700 font-bold mb-1 flex items-center gap-1.5">
-              <i class="fa-solid fa-mobile-screen-button text-sky-600"></i> 1. Program Win-Back CRM Terautomasi
+              <i class="fa-brands fa-whatsapp text-emerald-600 text-sm"></i> 1. Hubungi Toko yang Sudah 3 Minggu Belum Pesan
             </div>
             <p class="text-slate-600 leading-relaxed">
-              Kirimkan pengingat otomatis via WhatsApp Business pada Hari ke-21 dan Hari ke-45 pasca transaksi bagi pembeli yang belum re-order dengan penawaran gratis ongkir.
+              Buat daftar toko yang sudah lebih dari 20 hari tidak belanja. Hubungi secara ramah melalui WhatsApp dan tawarkan promo gratis ongkir atau produk terlaris baru.
             </p>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
             <div class="text-amber-700 font-bold mb-1 flex items-center gap-1.5">
-              <i class="fa-solid fa-ticket text-amber-600"></i> 2. Sisipan Kupon Fisik di Setiap Dus
+              <i class="fa-solid fa-ticket text-amber-600"></i> 2. Selipkan Kupon Diskon di Dalam Kardus
             </div>
             <p class="text-slate-600 leading-relaxed">
-              Sertakan kartu voucher diskon 10% untuk pesanan berikutnya (berlaku 14 hari) di dalam kemasan/dus pengiriman untuk memicu kebiasaan repeat purchase cepat.
+              Masukkan kertas voucher diskon Rp 20.000 untuk pesanan berikutnya yang berlaku 14 hari ke depan di setiap pengiriman barang agar mereka cepat pesan lagi.
             </p>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200">
             <div class="text-emerald-700 font-bold mb-1 flex items-center gap-1.5">
-              <i class="fa-solid fa-money-bill-transfer text-emerald-600"></i> 3. Realokasi 15% Budget Akuisisi
+              <i class="fa-solid fa-handshake text-emerald-600"></i> 3. Beri Perhatian Khusus ke Pembeli Besar
             </div>
             <p class="text-slate-600 leading-relaxed">
-              Alihkan 15% anggaran iklan akuisisi pelanggan baru ke program loyalitas dan cashback repeat order. Retensi pelanggan terbukti 3x lebih hemat dibanding CAC akuisisi baru.
+              Jangan biarkan pembeli partai besar seperti Pak Sutarmuji atau Mas Rohmat hilang tanpa kabar. Berikan harga grosir bertingkat agar mereka setia dan tidak pindah ke kompetitor.
             </p>
           </div>
         </div>
@@ -561,7 +541,7 @@
 
 
     <!-- ======================================================== -->
-    <!-- [SEKSI 2: RASIONALISASI PORTOFOLIO & ATURAN PARETO (80/20)] -->
+    <!-- [SEKSI 2: PRODUK TERLARIS & EFISIENSI FREEZER (PARETO)] -->
     <!-- ======================================================== -->
     <section id="seksi-pareto" class="space-y-8 pt-6 border-t border-slate-200">
       
@@ -569,81 +549,81 @@
       <div class="space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <span class="px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-widest bg-sky-50 text-sky-700 border border-sky-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-chart-pie text-sky-600"></i> SEKSI 02 // RASIONALISASI PORTOFOLIO & ATURAN PARETO (80/20)
+            <i class="fa-solid fa-boxes-stacked text-sky-600"></i> SEKSI 02 // PRODUK PALING LARIS VS PRODUK KURANG LAKU
           </span>
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-xs font-semibold text-slate-700 border border-slate-200 shadow-xs">
-            <i class="fa-solid fa-bullseye text-sky-600"></i> Target Audiens: <strong class="text-slate-900">Head of Sales & Product Manager</strong>
+            <i class="fa-solid fa-boxes-packing text-sky-600"></i> Ditujukan Untuk: <strong class="text-slate-900">Manajer Gudang & Penjualan</strong>
           </span>
         </div>
 
         <h3 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
-          "80% Omzet Hanya Disumbang oleh <span class="text-sky-600 font-black">20% Hero Products</span>: Usulan Eliminasi SKU Slow-Moving & Alokasi Stok Nugget/Dimsum"
+          "80% Omzet Toko Hanya Berasal dari <span class="text-sky-600 font-black">40 Produk Terlaris</span>: Kurangi Barang yang Susah Laku Supaya Freezer Lebih Lega"
         </h3>
         <p class="text-sm text-slate-600 max-w-4xl leading-relaxed">
-          Kapasitas freezer cold-storage memiliki batas fisik dan biaya listrik per meter kubik yang tinggi. Analisis Pareto membuktikan sebagian besar SKU justru menjadi beban modal kerja mati (dead stock).
+          Ruang di dalam freezer cold storage terbatas dan listriknya memakan biaya besar. Data membuktikan sebagian besar jenis produk hampir tidak pernah laku dan hanya menahan uang modal.
         </p>
       </div>
 
-      <!-- KPI Cards (Atas) -->
+      <!-- KPI Cards (100% SINKRON DATASET AKTUAL) -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         
         <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-indigo-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Varian SKU Aktif</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Jumlah Jenis Produk (SKU)</span>
             <div class="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600">
-              <i class="fa-solid fa-boxes-stacked"></i>
+              <i class="fa-solid fa-layer-group"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
             <span class="text-3xl font-extrabold font-mono text-slate-900">297</span>
-            <span class="text-xs font-semibold text-slate-500">SKU di Database</span>
+            <span class="text-xs font-semibold text-slate-500">Macam Produk di Database</span>
           </div>
           <p class="mt-2 text-xs text-slate-500">
-            Terdiri dari 10 kategori olahan beku dari berbagai merek produsen.
+            Mulai dari sosis, nugget, otak-otak, kentang beku, es krim, keju, hingga bumbu frozen.
           </p>
           <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span class="text-slate-500">Beban Cold Storage</span>
-            <span class="font-mono font-semibold text-indigo-700">Terlalu terfragmentasi</span>
+            <span class="text-slate-500">Kapasitas Penyimpanan</span>
+            <span class="font-mono font-semibold text-indigo-700">Terlalu banyak varian</span>
           </div>
         </div>
 
         <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-sky-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Top Hero Product Contribution</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Omzet dari 40 Produk Juara</span>
             <div class="w-9 h-9 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
-              <i class="fa-solid fa-crown"></i>
+              <i class="fa-solid fa-trophy"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
             <span class="text-3xl font-extrabold font-mono text-sky-600">80,2%</span>
-            <span class="text-xs font-semibold text-slate-600 font-mono">Disumbang 40 SKU</span>
+            <span class="text-xs font-semibold text-slate-600 font-mono">Rp 3,63 Miliar</span>
           </div>
           <p class="mt-2 text-xs text-slate-500">
-            Hanya 40 SKU (13,5% varian) yang menghasilkan 80% omzet bruto bisnis (Rp 3,63 Miliar).
+            Hanya 40 produk (13,5% dari total produk) yang menyumbang lebih dari 80% seluruh pemasukan bisnis.
           </p>
           <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span class="text-slate-500">Top SKU Tunggal</span>
-            <span class="font-mono font-semibold text-sky-600">Minaku Otak-Otak (21,4%)</span>
+            <span class="text-slate-500">Produk Nomor 1 Terlaris</span>
+            <span class="font-mono font-semibold text-sky-600">Minaku Otak-Otak (Rp 967,7 Jt)</span>
           </div>
         </div>
 
         <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-amber-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Slow-Moving SKU Ratio</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Produk yang Kurang Laku</span>
             <div class="w-9 h-9 rounded-xl bg-amber-50 border border-amber-200 flex items-center justify-center text-amber-600">
-              <i class="fa-solid fa-hourglass-half"></i>
+              <i class="fa-solid fa-box-open"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-extrabold font-mono text-amber-600">68,4%</span>
-            <span class="text-xs font-semibold text-amber-700 font-mono">203 SKU Ekor Panjang</span>
+            <span class="text-3xl font-extrabold font-mono text-amber-600">203</span>
+            <span class="text-xs font-semibold text-amber-700 font-mono">Produk Lambat Laku</span>
           </div>
           <p class="mt-2 text-xs text-slate-500">
-            203 SKU lambat laku menyumbang kurang dari 0,2% omzet per SKU, menyita kapasitas freezer.
+            Lebih dari 200 produk penjualannya sangat sedikit (di bawah Rp 5 juta dalam 6 bulan), menyita tempat di freezer.
           </p>
           <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span class="text-slate-500">Saran Tindakan</span>
-            <span class="font-mono font-semibold text-amber-600">Eliminasi / Delisting Bertahap</span>
+            <span class="text-slate-500">Saran Pemilik</span>
+            <span class="font-mono font-semibold text-amber-600">Cuci gudang & jangan restock</span>
           </div>
         </div>
 
@@ -652,91 +632,91 @@
       <!-- VISUAL UTAMA (2 KOLOM) -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <!-- 1. GRAFIK PARETO (COMBO BAR & LINE CHART) -->
+        <!-- 1. GRAFIK PARETO (COMBO BAR & LINE CHART - SINKRON DATASET) -->
         <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
           <div>
             <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
               <div>
-                <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider block">Visualisasi 2.1 · Kurva Pareto</span>
+                <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider block">Grafik 2.1 · Urutan Produk</span>
                 <h4 class="text-base sm:text-lg font-bold text-slate-900">
-                  Grafik Pareto: Kontribusi Omzet & Garis Kumulatif 80%
+                  Daftar Produk Paling Banyak Menghasilkan Uang
                 </h4>
               </div>
               <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 text-slate-700 border border-slate-200">
-                Combo Bar + Line
+                Omzet & Persentase
               </span>
             </div>
             <p class="text-xs text-slate-500 mb-4">
-              Batang menunjukkan omzet (Juta Rp) per SKU teratas, garis oranye menunjukkan persentase kumulatif dengan batas garis putus-putus 80%.
+              Batang biru menunjukkan omzet penjualan (Juta Rupiah), garis oranye menunjukkan persentase kumulatif (garis merah batas 80%).
             </p>
 
             <div id="chart-pareto" class="w-full h-80"></div>
           </div>
 
           <div class="mt-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 flex items-center justify-between">
-            <span><i class="fa-solid fa-circle-info text-sky-600 mr-1.5"></i> <strong>Hero SKU:</strong> 12 produk pertama sudah mencakup <strong>>61%</strong> total omzet.</span>
-            <span class="font-mono text-amber-700 font-bold">Threshold 80% tercapai di SKU #40</span>
+            <span><i class="fa-solid fa-circle-info text-sky-600 mr-1.5"></i> <strong>11 Produk Teratas</strong> sudah menyumbang <strong>55,2%</strong> total omzet.</span>
+            <span class="font-mono text-amber-700 font-bold">Batas 80% tercapai di Produk ke-40</span>
           </div>
         </div>
 
-        <!-- 2. GRAFIK MATRIKS KATEGORI PRODUK -->
+        <!-- 2. GRAFIK KATEGORI PRODUK (DONUT - SINKRON DATASET) -->
         <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
           <div>
             <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
               <div>
-                <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider block">Visualisasi 2.2 · Komposisi Portofolio</span>
+                <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider block">Grafik 2.2 · Jenis Makanan</span>
                 <h4 class="text-base sm:text-lg font-bold text-slate-900">
-                  Matriks Kategori: Distribusi Penjualan Portofolio
+                  Porsi Penjualan Berdasarkan Kategori Makanan
                 </h4>
               </div>
               <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 text-slate-700 border border-slate-200">
-                Donut Breakdown
+                Porsi Kategori
               </span>
             </div>
             <p class="text-xs text-slate-500 mb-4">
-              Porsi nilai omzet bruto per kategori olahan beku. Otak-Otak/Seafood & Sosis mendominasi separuh pendapatan.
+              Pembagian nilai omzet dari masing-masing kategori produk beku yang dijual toko.
             </p>
 
             <div id="chart-kategori" class="w-full h-80 flex items-center justify-center"></div>
           </div>
 
           <div class="mt-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 flex items-center justify-between">
-            <span><i class="fa-solid fa-trophy text-amber-500 mr-1.5"></i> <strong>Kategori Terbesar:</strong> Otak-Otak & Seafood (<strong class="text-slate-900">Rp 1,39 Miliar / 30,7%</strong>)</span>
-            <span class="font-mono text-emerald-700 font-bold">Margin Tinggi: Nugget & Dimsum</span>
+            <span><i class="fa-solid fa-crown text-amber-500 mr-1.5"></i> <strong>Kategori Terbesar:</strong> Otak-Otak & Seafood (<strong class="text-slate-900">Rp 1,39 Miliar / 30,7%</strong>)</span>
+            <span class="font-mono text-emerald-700 font-bold">Kedua: Sosis (Rp 624,5 Jt)</span>
           </div>
         </div>
 
       </div>
 
-      <!-- Bottom Action Box Seksi 2 -->
+      <!-- Bottom Action Box Seksi 2 (Bahasa Sederhana) -->
       <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
         <div class="flex items-center gap-2 mb-3">
           <span class="w-2.5 h-2.5 rounded-full bg-sky-500"></span>
           <h4 class="text-sm font-extrabold uppercase tracking-wider text-sky-800">
-            Rekomendasi Aksi Rasionalisasi Portofolio (Head of Sales & Product Manager)
+            Saran Pengaturan Stok & Ruang Freezer
           </h4>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
             <div class="w-8 h-8 rounded-lg bg-rose-100 border border-rose-200 flex items-center justify-center text-rose-600 shrink-0 mt-0.5">
-              <i class="fa-solid fa-trash-can"></i>
+              <i class="fa-solid fa-tags"></i>
             </div>
             <div>
-              <strong class="text-slate-900 text-sm block mb-1">Delisting / Cuci Gudang 60 SKU Paling Lambat</strong>
+              <strong class="text-slate-900 text-sm block mb-1">Promo Cuci Gudang untuk Produk yang Jarang Terjual</strong>
               <p class="text-slate-600 leading-relaxed">
-                Segera adakan promo cuci gudang untuk menghabiskan 60 SKU yang tidak pernah terjual lebih dari 5 kali dalam 3 bulan terakhir. Tindakan ini memangkas beban biaya listrik freezer hingga 12% dan mencegah kerugian *frostbite/expired*.
+                Jual murah sekitar 60 jenis produk yang dalam 3 bulan terakhir hampir tidak pernah dicari orang. Menghabiskan stok ini akan menghemat tagihan listrik freezer dan mencegah makanan kedaluwarsa.
               </p>
             </div>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
             <div class="w-8 h-8 rounded-lg bg-sky-100 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0 mt-0.5">
-              <i class="fa-solid fa-snowflake"></i>
+              <i class="fa-solid fa-cubes"></i>
             </div>
             <div>
-              <strong class="text-slate-900 text-sm block mb-1">Alokasi Prioritas Space Freezer untuk Hero Products (Nugget & Dimsum)</strong>
+              <strong class="text-slate-900 text-sm block mb-1">Perbanyak Stok untuk Produk yang Cepat Laku (Sosis & Nugget)</strong>
               <p class="text-slate-600 leading-relaxed">
-                Alihkan kapasitas penyimpanan yang kosong kepada stok varian Nugget, Sosis, dan Dimsum yang memiliki *turnover* cepat (2-4 hari) untuk menghindari kondisi kehabisan stok (*out-of-stock*) saat lonjakan pesanan grosir.
+                Gunakan ruang freezer yang kosong untuk menambah stok produk laris (seperti Minaku Otak-Otak, Okey Sosis, dan Jofrans Nugget) supaya saat pelanggan pesan dalam jumlah banyak, barang selalu siap dan tidak kehabisan stok.
               </p>
             </div>
           </div>
@@ -747,7 +727,7 @@
 
 
     <!-- ======================================================== -->
-    <!-- [SEKSI 3: POLA FREKUENSI & TREN PERILAKU PEMBELIAN]      -->
+    <!-- [SEKSI 3: POLA WAKTU BELANJA & NILAI BELANJA TOKO]       -->
     <!-- ======================================================== -->
     <section id="seksi-perilaku" class="space-y-8 pt-6 border-t border-slate-200">
       
@@ -755,79 +735,79 @@
       <div class="space-y-3">
         <div class="flex flex-wrap items-center justify-between gap-3">
           <span class="px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-widest bg-emerald-50 text-emerald-700 border border-emerald-200 flex items-center gap-1.5">
-            <i class="fa-solid fa-calendar-check text-emerald-600"></i> SEKSI 03 // POLA FREKUENSI & TREN PERILAKU PEMBELIAN BULANAN
+            <i class="fa-solid fa-calendar-check text-emerald-600"></i> SEKSI 03 // WAKTU TRANSAKSI PALING RAMAI & BESARAN BELANJA
           </span>
           <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-white text-xs font-semibold text-slate-700 border border-slate-200 shadow-xs">
-            <i class="fa-solid fa-bullseye text-emerald-600"></i> Target Audiens: <strong class="text-slate-900">Marketing Director & Finance Manager</strong>
+            <i class="fa-solid fa-coins text-emerald-600"></i> Ditujukan Untuk: <strong class="text-slate-900">Manajer Pemasaran & Kasir</strong>
           </span>
         </div>
 
         <h3 class="text-xl sm:text-2xl lg:text-3xl font-extrabold text-slate-900 tracking-tight leading-snug">
-          "Lonjakan Transaksi Terjadi di <span class="text-emerald-600 font-black">Akhir Bulan & Momen Promo</span>: Usulan Penyesuaian Timing Iklan Digital & Paket Bundling"
+          "Penjualan Paling Ramai Menjelang <span class="text-emerald-600 font-black">Akhir Bulan (Masa Gajian) & Hari Sabtu</span>: Saat Terbaik Kirim Promo"
         </h3>
         <p class="text-sm text-slate-600 max-w-4xl leading-relaxed">
-          Pola belanja konsumen frozen food sangat dipengaruhi oleh siklus tanggal gajian (*payday surge*) dan ritme mingguan persiapan stok akhir pekan bagi pedagang dan keluarga.
+          Kebiasaan belanja pelanggan sangat teratur: toko dan warung paling banyak kulakan menjelang akhir bulan dan akhir pekan untuk persiapan jualan ke masyarakat.
         </p>
       </div>
 
-      <!-- KPI Cards (Atas) -->
+      <!-- KPI Cards (100% SINKRON DATASET AKTUAL) -->
       <div class="grid grid-cols-1 md:grid-cols-3 gap-5">
         
         <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-emerald-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Average Order Value (AOV)</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Rata-rata Belanja per Baris</span>
             <div class="w-9 h-9 rounded-xl bg-emerald-50 border border-emerald-200 flex items-center justify-center text-emerald-600">
               <i class="fa-solid fa-receipt"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-extrabold font-mono text-emerald-600">Rp 668.500</span>
+            <span class="text-3xl font-extrabold font-mono text-emerald-600">Rp 668.388</span>
           </div>
           <p class="mt-2 text-xs text-slate-500">
-            Rata-rata nilai belanja per baris transaksi di seluruh periode (termasuk grosir dus & retail).
+            Rata-rata nilai rupiah setiap baris barang yang terjual di toko (dari total 6.778 transaksi).
           </p>
           <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span class="text-slate-500">Median Pembelian</span>
-            <span class="font-mono font-semibold text-emerald-600">Rp 240.000 (3 DUS)</span>
+            <span class="text-slate-500">Rata-rata per Nota Belanja</span>
+            <span class="font-mono font-semibold text-emerald-600">Rp 3,02 Juta / Nota</span>
           </div>
         </div>
 
         <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-sky-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Peak Sales Volume Month</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Bulan Penjualan Tertinggi</span>
             <div class="w-9 h-9 rounded-xl bg-sky-50 border border-sky-200 flex items-center justify-center text-sky-600">
-              <i class="fa-solid fa-calendar-check"></i>
+              <i class="fa-solid fa-calendar-star"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
             <span class="text-3xl font-extrabold font-mono text-slate-900">Agustus 2020</span>
           </div>
           <p class="mt-2 text-xs text-slate-500">
-            Rekor omzet bulanan tertinggi: <strong class="text-sky-700 font-mono">Rp 883,31 Juta</strong> (+8,9% MoM).
+            Mencapai omzet tertinggi <strong class="text-sky-700 font-mono font-bold">Rp 883,31 Juta</strong> sebelum turun ke Rp 747,1 Juta di September.
           </p>
           <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span class="text-slate-500">Catatan Diagnostik</span>
-            <span class="font-mono font-semibold text-amber-600">Didorong 3 order jumbo</span>
+            <span class="text-slate-500">Faktor Pemicu Rekor</span>
+            <span class="font-mono font-semibold text-amber-600">Pesanan 550 Dus Minaku</span>
           </div>
         </div>
 
         <div class="bg-white rounded-2xl p-6 relative overflow-hidden shadow-sm border border-slate-200 border-l-4 border-l-indigo-500 hover:shadow-md transition">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Monthly Repeat Frequency</span>
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Porsi Omzet Akhir Bulan</span>
             <div class="w-9 h-9 rounded-xl bg-indigo-50 border border-indigo-200 flex items-center justify-center text-indigo-600">
-              <i class="fa-solid fa-clock-rotate-left"></i>
+              <i class="fa-solid fa-chart-line"></i>
             </div>
           </div>
           <div class="mt-4 flex items-baseline gap-2">
-            <span class="text-3xl font-extrabold font-mono text-indigo-600">2,8×</span>
-            <span class="text-xs font-semibold text-slate-500">/ Bulan</span>
+            <span class="text-3xl font-extrabold font-mono text-indigo-600">37,8%</span>
+            <span class="text-xs font-semibold text-slate-500">Rp 1,71 Miliar</span>
           </div>
           <p class="mt-2 text-xs text-slate-500">
-            Frekuensi pemesanan rata-rata bagi pelanggan aktif yang masuk dalam kategori repeat buyer.
+            Lebih dari sepertiga omzet toko terjadi pada tanggal 21 sampai 31 di setiap bulannya.
           </p>
           <div class="mt-3 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
-            <span class="text-slate-500">Siklus Repeat Order</span>
-            <span class="font-mono font-semibold text-indigo-600">Setiap 10-12 hari</span>
+            <span class="text-slate-500">Hari Operasional Paling Ramai</span>
+            <span class="font-mono font-semibold text-indigo-600">Sabtu & Senin</span>
           </div>
         </div>
 
@@ -836,22 +816,22 @@
       <!-- VISUAL UTAMA (2 KOLOM) -->
       <div class="grid grid-cols-1 lg:grid-cols-2 gap-6">
 
-        <!-- 1. GRAFIK DISTRIBUSI BELANJA: FASE BULAN & HARI KERJA -->
+        <!-- 1. GRAFIK DISTRIBUSI WAKTU (FASE TANGGAL - SINKRON DATASET) -->
         <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
           <div>
             <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
               <div>
-                <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider block">Visualisasi 3.1 · Ritme Temporal</span>
+                <span class="text-[11px] font-bold text-sky-600 uppercase tracking-wider block">Grafik 3.1 · Siklus Tanggal</span>
                 <h4 class="text-base sm:text-lg font-bold text-slate-900">
-                  Distribusi Belanja: Siklus Tanggal & Pola Hari
+                  Omzet Berdasarkan Bagian Tanggal dalam Sebulan
                 </h4>
               </div>
               <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 text-slate-700 border border-slate-200">
-                Grouped Phase Bar
+                Data 6 Bulan
               </span>
             </div>
             <p class="text-xs text-slate-500 mb-4">
-              Perbandingan omzet kumulatif pada fase awal bulan (1-10), tengah bulan (11-20), dan akhir bulan/payday (21-31).
+              Total uang masuk pada awal bulan (1-10), tengah bulan (11-20), dan akhir bulan (21-31).
             </p>
 
             <div id="chart-distribusi" class="w-full h-80"></div>
@@ -859,31 +839,31 @@
 
           <div class="mt-3 p-3.5 rounded-xl bg-slate-50 border border-slate-200 text-xs text-slate-700 space-y-1">
             <div class="flex items-center justify-between font-semibold">
-              <span><i class="fa-solid fa-money-bill-wave text-emerald-600 mr-1.5"></i> <strong>Payday Surge:</strong> Tanggal 21–31 menyerap omzet terbesar</span>
-              <span class="font-mono text-emerald-700 font-bold">Rp 1.730 Juta (38,2%)</span>
+              <span><i class="fa-solid fa-money-bill-wave text-emerald-600 mr-1.5"></i> <strong>Paling Ramai:</strong> Tanggal 21–31 (Masa Gajian)</span>
+              <span class="font-mono text-emerald-700 font-bold">Rp 1.713,9 Juta (37,8%)</span>
             </div>
             <p class="text-[11px] text-slate-500">
-              Hari Sabtu (Rp 890 Jt) dan Senin (Rp 867 Jt) merupakan hari tersibuk toko, Minggu libur operasional.
+              Hari Sabtu (Rp 890 Jt) dan Senin (Rp 867 Jt) mencatat transaksi tertinggi karena toko mengisi stok dagangan.
             </p>
           </div>
         </div>
 
-        <!-- 2. GRAFIK PERBANDINGAN AOV: PEMBELI BARU VS PEMBELI BERULANG -->
+        <!-- 2. GRAFIK PERBANDINGAN NILAI BELANJA: PELANGGAN SETIA VS PEMBELI SEKALI (SINKRON DATASET) -->
         <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-slate-200 flex flex-col justify-between hover:shadow-md transition">
           <div>
             <div class="flex items-center justify-between gap-2 border-b border-slate-100 pb-3 mb-4">
               <div>
-                <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider block">Visualisasi 3.2 · Validasi Keranjang</span>
+                <span class="text-[11px] font-bold text-emerald-600 uppercase tracking-wider block">Grafik 3.2 · Manfaat Pelanggan Tetap</span>
                 <h4 class="text-base sm:text-lg font-bold text-slate-900">
-                  Perbandingan Nilai Belanja (AOV): Baru vs Berulang
+                  Perbandingan Nilai Belanja: Toko Langganan vs Toko Baru
                 </h4>
               </div>
               <span class="px-2.5 py-1 rounded-md text-[11px] font-mono bg-slate-100 text-slate-700 border border-slate-200">
-                Horizontal Bar
+                Rata-rata Belanja
               </span>
             </div>
             <p class="text-xs text-slate-500 mb-4">
-              Membuktikan secara kuantitatif bahwa pembeli setia belanja <strong>2.4× lipat lebih besar</strong> dibanding pembeli baru coba-coba.
+              Membuktikan secara nyata bahwa toko langganan setia berbelanja <strong>5× lipat lebih banyak</strong> dibanding yang hanya coba-coba sekali.
             </p>
 
             <div id="chart-aov" class="w-full h-80"></div>
@@ -892,22 +872,22 @@
           <div class="mt-3 p-3.5 rounded-xl bg-emerald-50 border border-emerald-200 text-xs text-emerald-950">
             <div class="flex items-center gap-2 mb-1">
               <i class="fa-solid fa-circle-check text-emerald-600"></i>
-              <strong class="text-emerald-800 font-semibold">Temuan Nilai Keranjang:</strong>
+              <strong class="text-emerald-800 font-semibold">Kesimpulan Nyata:</strong>
             </div>
             <p class="text-[11px] text-slate-600">
-              Pembeli berulang mencatat rata-rata belanja <strong class="text-slate-900 font-mono">Rp 215.000</strong> per nota retail dibandingkan pembeli baru yang hanya <strong class="text-slate-900 font-mono">Rp 90.000</strong>. Menjaga pelanggan lama jauh lebih menguntungkan secara unit ekonomi.
+              Satu toko yang setia berlangganan rata-rata menyumbang belanja <strong class="text-slate-900 font-mono font-bold">Rp 31,3 Juta</strong> selama 6 bulan, sedangkan toko yang cuma belanja sekali hanya <strong class="text-slate-900 font-mono font-bold">Rp 6,3 Juta</strong>. Merawat 1 toko langganan sama nilainya dengan mencari 5 toko baru.
             </p>
           </div>
         </div>
 
       </div>
 
-      <!-- Bottom Action Box Seksi 3 -->
+      <!-- Bottom Action Box Seksi 3 (Bahasa Sederhana) -->
       <div class="p-6 rounded-2xl bg-white border border-slate-200 shadow-sm">
         <div class="flex items-center gap-2 mb-3">
           <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
           <h4 class="text-sm font-extrabold uppercase tracking-wider text-emerald-800">
-            Rekomendasi Aksi Timing Promo & Nilai Keranjang (Marketing Director & Finance Manager)
+            Saran Waktu Promosi & Penjualan
           </h4>
         </div>
         <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
@@ -916,21 +896,21 @@
               <i class="fa-solid fa-bullhorn"></i>
             </div>
             <div>
-              <strong class="text-slate-900 text-sm block mb-1">Sinkronisasi Jadwal Iklan Digital di Periode Payday (Tgl 25–30)</strong>
+              <strong class="text-slate-900 text-sm block mb-1">Kirim Penawaran & Promo di Tanggal 25 Sampai 30</strong>
               <p class="text-slate-600 leading-relaxed">
-                Pusatkan 60% anggaran iklan bulanan pada rentang tanggal 25 hingga 30. Transaksi di fase ini menyerap 38,2% omzet total karena konsumen dan mitra warung memiliki likuiditas gaji penuh untuk re-stock.
+                Jadwalkan pesan siaran WhatsApp atau postingan promosi di tanggal 25–30. Di waktu inilah pembeli memiliki dana gajian dan toko-toko sedang berbelanja paling banyak (menyerap 37,8% omzet).
               </p>
             </div>
           </div>
 
           <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 flex items-start gap-3">
             <div class="w-8 h-8 rounded-lg bg-sky-100 border border-sky-200 flex items-center justify-center text-sky-600 shrink-0 mt-0.5">
-              <i class="fa-solid fa-basket-shopping"></i>
+              <i class="fa-solid fa-truck"></i>
             </div>
             <div>
-              <strong class="text-slate-900 text-sm block mb-1">Threshold Minimum Order & Paket Bundling Keluarga Hemat</strong>
+              <strong class="text-slate-900 text-sm block mb-1">Beri Gratis Ongkir dengan Batas Minimal Belanja Rp 1,5 Juta</strong>
               <p class="text-slate-600 leading-relaxed">
-                Terapkan promo *“Beli 3 Hemat Rp 15.000”* atau gratis ongkir dengan nilai minimum transaksi Rp 150.000. Strategi ini akan mendongkrak AOV pembeli baru dari Rp 90.000 mendekati level pembeli setia (Rp 215.000).
+                Supaya toko-toko memesan lebih banyak barang dalam sekali kirim, berikan fasilitas gratis ongkir bila pesanan mereka mencapai Rp 1.500.000. Ini akan menghemat biaya pengiriman armada toko kita.
               </p>
             </div>
           </div>
@@ -941,25 +921,25 @@
 
 
     <!-- ======================================================== -->
-    <!-- RINGKASAN EKSEKUTIF & MATRIKS AKSI PRIORITAS           -->
+    <!-- RINGKASAN SARAN PERBAIKAN UNTUK PEMILIK BISNIS           -->
     <!-- ======================================================== -->
     <section id="rekomendasi" class="bg-white rounded-3xl p-6 sm:p-8 border border-slate-200 shadow-sm space-y-6">
       <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
         <div>
           <span class="px-3 py-1 rounded-lg text-xs font-bold uppercase tracking-widest bg-indigo-50 text-indigo-700 border border-indigo-200">
-            Roadmap Eksekusi Bisnis
+            Daftar Tindakan Prioritas
           </span>
           <h3 class="text-xl sm:text-2xl font-extrabold text-slate-900 mt-2">
-            Matriks Rekomendasi Program & Proyeksi Dampak Bisnis
+            Rencana Perbaikan Praktis untuk Penjualan ke Depan
           </h3>
           <p class="text-xs text-slate-500 mt-1">
-            Langkah taktis yang siap dipresentasikan kepada C-Level & Board of Directors untuk kuartal berikutnya.
+            Langkah-langkah yang bisa langsung dikerjakan oleh tim toko mulai minggu ini.
           </p>
         </div>
 
         <div class="text-right">
-          <span class="text-xs text-slate-500 block">Proyeksi Peningkatan Omzet</span>
-          <span class="text-2xl font-extrabold font-mono text-emerald-600">+22,5% Net Growth</span>
+          <span class="text-xs text-slate-500 block">Potensi Pertumbuhan Omzet</span>
+          <span class="text-2xl font-extrabold font-mono text-emerald-600">+15% s.d +25%</span>
         </div>
       </div>
 
@@ -967,60 +947,60 @@
         <table class="w-full text-left text-xs border-collapse">
           <thead>
             <tr class="border-b border-slate-200 text-slate-600 font-bold uppercase tracking-wider bg-slate-50">
-              <th class="py-3.5 px-4">Pilar Program</th>
-              <th class="py-3.5 px-4">Penanggung Jawab</th>
-              <th class="py-3.5 px-4">Prioritas</th>
-              <th class="py-3.5 px-4">Aksi Konkret</th>
-              <th class="py-3.5 px-4 text-right">Target Output (KPI)</th>
+              <th class="py-3.5 px-4">Tugas Utama</th>
+              <th class="py-3.5 px-4">Siapa yang Mengerjakan</th>
+              <th class="py-3.5 px-4">Tingkat Penting</th>
+              <th class="py-3.5 px-4">Apa yang Harus Dilakukan</th>
+              <th class="py-3.5 px-4 text-right">Hasil yang Diharapkan</th>
             </tr>
           </thead>
           <tbody class="divide-y divide-slate-100 text-slate-700">
             <tr class="hover:bg-slate-50/80 transition">
               <td class="py-3.5 px-4 font-bold text-rose-600 flex items-center gap-2">
-                <i class="fa-solid fa-users-viewfinder"></i> Retensi & Anti-Churn
+                <i class="fa-solid fa-user-check"></i> Jaga Pelanggan Lama
               </td>
-              <td class="py-3.5 px-4 font-medium">Head of Marketing & CRM</td>
+              <td class="py-3.5 px-4 font-medium">Bagian Penjualan / Sales</td>
               <td class="py-3.5 px-4">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">P1 (Kritis)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-rose-50 text-rose-700 border border-rose-200">Sangat Penting</span>
               </td>
-              <td class="py-3.5 px-4">WhatsApp win-back terautomasi H-21 & kupon fisik 10% di setiap dus pengiriman.</td>
-              <td class="py-3.5 px-4 text-right font-mono font-bold text-emerald-600">Turunkan Churn ke &lt;45%</td>
+              <td class="py-3.5 px-4">Hubungi kembali 47 toko yang sudah berhenti belanja dan masukkan kupon diskon di kardus pengiriman.</td>
+              <td class="py-3.5 px-4 text-right font-mono font-bold text-emerald-600">Pelanggan aktif naik >120 toko</td>
             </tr>
 
             <tr class="hover:bg-slate-50/80 transition">
               <td class="py-3.5 px-4 font-bold text-sky-600 flex items-center gap-2">
-                <i class="fa-solid fa-boxes-packing"></i> Rasionalisasi SKU
+                <i class="fa-solid fa-boxes-packing"></i> Bereskan Isi Freezer
               </td>
-              <td class="py-3.5 px-4 font-medium">Product & Inventory Manager</td>
+              <td class="py-3.5 px-4 font-medium">Bagian Gudang / Stok</td>
               <td class="py-3.5 px-4">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200">P1 (Tinggi)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-sky-50 text-sky-700 border border-sky-200">Penting</span>
               </td>
-              <td class="py-3.5 px-4">Delisting 60 SKU paling lambat laku dan fokuskan freezer ke Hero SKU (Nugget & Sosis).</td>
-              <td class="py-3.5 px-4 text-right font-mono font-bold text-emerald-600">Hemat Listrik Freezer 12%</td>
+              <td class="py-3.5 px-4">Jual murah produk yang tidak laku dan perbanyak ruang untuk 40 produk paling laris (Otak-otak & Sosis).</td>
+              <td class="py-3.5 px-4 text-right font-mono font-bold text-emerald-600">Stok laris tidak pernah habis</td>
             </tr>
 
             <tr class="hover:bg-slate-50/80 transition">
               <td class="py-3.5 px-4 font-bold text-emerald-600 flex items-center gap-2">
-                <i class="fa-solid fa-layer-group"></i> Bundling & AOV Booster
+                <i class="fa-solid fa-layer-group"></i> Paket Hemat Beli Bareng
               </td>
-              <td class="py-3.5 px-4 font-medium">Head of Sales & Marketing</td>
+              <td class="py-3.5 px-4 font-medium">Kasir & Pemasaran</td>
               <td class="py-3.5 px-4">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">P2 (Sedang)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-amber-50 text-amber-700 border border-amber-200">Rutin</span>
               </td>
-              <td class="py-3.5 px-4">Paket hemat Sosis + Nugget berdasarkan Market Basket Network Graph.</td>
-              <td class="py-3.5 px-4 text-right font-mono font-bold text-emerald-600">Kerek AOV Baru ke Rp 150rb</td>
+              <td class="py-3.5 px-4">Buat paket bundling Sosis Okey + Nugget Jofrans dengan potongan harga menarik.</td>
+              <td class="py-3.5 px-4 text-right font-mono font-bold text-emerald-600">Nilai belanja per nota naik</td>
             </tr>
 
             <tr class="hover:bg-slate-50/80 transition">
               <td class="py-3.5 px-4 font-bold text-indigo-600 flex items-center gap-2">
-                <i class="fa-solid fa-calendar-days"></i> Payday Campaign Timing
+                <i class="fa-solid fa-calendar-days"></i> Promo Waktu Gajian
               </td>
-              <td class="py-3.5 px-4 font-medium">Digital Marketing & Finance</td>
+              <td class="py-3.5 px-4 font-medium">Admin WhatsApp & Iklan</td>
               <td class="py-3.5 px-4">
-                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">P2 (Rutin)</span>
+                <span class="px-2 py-0.5 rounded text-[10px] font-bold bg-slate-100 text-slate-700 border border-slate-200">Jadwal Tetap</span>
               </td>
-              <td class="py-3.5 px-4">Konsentrasikan 60% budget ads di tanggal 25–30 untuk menyambut lonjakan belanja 38,2%.</td>
-              <td class="py-3.5 px-4 text-right font-mono font-bold text-emerald-600">ROAS Naik 1,8× Lipat</td>
+              <td class="py-3.5 px-4">Kirim pesan promo setiap tanggal 25–30 saat warung-warung memiliki uang untuk kulakan stok.</td>
+              <td class="py-3.5 px-4 text-right font-mono font-bold text-emerald-600">Pesanan akhir bulan maksimal</td>
             </tr>
           </tbody>
         </table>
@@ -1042,15 +1022,15 @@
         </div>
         <div>
           <span class="font-bold text-slate-800 block">Frozen Food Business Intelligence Dashboard</span>
-          <span class="text-[11px] text-slate-500">Desain Single-Page Application interaktif berbasis data penjualan riil April–September 2020.</span>
+          <span class="text-[11px] text-slate-500">Analisis data 100% riil dari 6.778 transaksi penjualan frozen food periode April – September 2020.</span>
         </div>
       </div>
 
       <div class="flex flex-wrap items-center gap-4 text-slate-600">
-        <a href="#seksi-retensi" class="hover:text-slate-900 transition">Seksi 1: Retensi & Churn</a>
-        <a href="#seksi-pareto" class="hover:text-slate-900 transition">Seksi 2: Pareto Produk</a>
-        <a href="#seksi-perilaku" class="hover:text-slate-900 transition">Seksi 3: Perilaku & AOV</a>
-        <a href="#rekomendasi" class="hover:text-slate-900 transition">Rekomendasi Aksi</a>
+        <a href="#seksi-retensi" class="hover:text-slate-900 transition">Seksi 1: Pelanggan & Omzet</a>
+        <a href="#seksi-pareto" class="hover:text-slate-900 transition">Seksi 2: Produk Terlaris</a>
+        <a href="#seksi-perilaku" class="hover:text-slate-900 transition">Seksi 3: Waktu Belanja</a>
+        <a href="#rekomendasi" class="hover:text-slate-900 transition">Saran Perbaikan</a>
       </div>
 
       <div class="flex items-center gap-3">
@@ -1065,7 +1045,7 @@
 
 
   <!-- ======================================================== -->
-  <!-- JAVASCRIPT: EMBEDDED DATA & INTERACTIVE CHARTS LOGIC    -->
+  <!-- JAVASCRIPT: DATA 100% RIIL DARI DATASET ALL_DATA.CSV     -->
   <!-- ======================================================== -->
   <script>
     document.addEventListener("DOMContentLoaded", function () {
@@ -1079,18 +1059,25 @@
     });
 
     // ----------------------------------------------------
-    // 1. CHART MASALAH UTAMA: Pembeli Baru vs Berulang (Stacked Area)
+    // 1. GRAFIK OMZET BULANAN: Pelanggan Baru vs Pelanggan Lama (Data Riil all_data.csv)
     // ----------------------------------------------------
     function initMasalahUtamaChart() {
+      // Data riil per bulan:
+      // April: Baru 609.6 Jt | Lama 0 Jt (Total 609.6 Jt)
+      // Mei: Baru 68.0 Jt | Lama 638.7 Jt (Total 706.7 Jt)
+      // Juni: Baru 50.1 Jt | Lama 722.1 Jt (Total 772.2 Jt)
+      // Juli: Baru 29.4 Jt | Lama 781.9 Jt (Total 811.4 Jt)
+      // Agustus: Baru 241.7 Jt (Pak Sutarmuji & order baru) | Lama 641.6 Jt (Total 883.3 Jt - REKOR!)
+      // September: Baru 96.6 Jt | Lama 650.5 Jt (Total 747.1 Jt - Turun Rp 136 Jt karena Pak Sutarmuji Rp 0)
       const options = {
         series: [
           {
-            name: "Omzet Pembeli Baru (New)",
-            data: [110, 85, 78, 72, 65, 148] // Juta Rp (Sep: 148 Jt = 82% dari 180 Jt)
+            name: "Pelanggan Baru",
+            data: [609.6, 68.0, 50.1, 29.4, 241.7, 96.6]
           },
           {
-            name: "Omzet Pembeli Berulang (Repeat)",
-            data: [45, 68, 82, 95, 112, 32] // Juta Rp (Sep: anjlok ke 32 Jt = 18%)
+            name: "Pelanggan Lama (Langganan)",
+            data: [0, 638.7, 722.1, 781.9, 641.6, 650.5]
           }
         ],
         chart: {
@@ -1133,7 +1120,7 @@
           title: { text: "Omzet (Juta Rp)", style: { color: "#64748B", fontSize: "11px", fontWeight: 600 } },
           labels: {
             style: { colors: "#64748B", fontFamily: '"JetBrains Mono"' },
-            formatter: (v) => "Rp " + v + " Jt"
+            formatter: (v) => "Rp " + Math.round(v) + " Jt"
           }
         },
         grid: {
@@ -1142,13 +1129,33 @@
         },
         tooltip: {
           theme: "light",
-          y: { formatter: (v) => "Rp " + v.toLocaleString("id-ID") + " Juta" }
+          y: { formatter: (v) => "Rp " + v.toFixed(1) + " Juta" }
         },
         annotations: {
           points: [
             {
+              x: "Agustus",
+              y: 883.3,
+              marker: {
+                size: 7,
+                fillColor: "#059669",
+                strokeColor: "#FFFFFF",
+                strokeWidth: 2
+              },
+              label: {
+                borderColor: "#059669",
+                style: {
+                  color: "#FFFFFF",
+                  background: "#059669",
+                  fontSize: "11px",
+                  fontWeight: 700
+                },
+                text: "Puncak Rekor Rp 883,3 Jt"
+              }
+            },
+            {
               x: "September",
-              y: 180,
+              y: 747.1,
               marker: {
                 size: 7,
                 fillColor: "#DC2626",
@@ -1163,7 +1170,7 @@
                   fontSize: "11px",
                   fontWeight: 700
                 },
-                text: "Rekor Rp 180 Jt (82% Pembeli Baru)"
+                text: "Turun Rp 136 Jt (Pak Sutarmuji Rp 0)"
               }
             }
           ]
@@ -1176,14 +1183,20 @@
 
 
     // ----------------------------------------------------
-    // 2. CHART BUKTI CHURN: Kurva Retensi Cohort April (Line & Points)
+    // 2. GRAFIK KETAHANAN PELANGGAN APRIL (Data Riil all_data.csv: 94 Toko April)
     // ----------------------------------------------------
     function initBuktiChurnChart() {
+      // April: 94 (100%)
+      // Mei: 67 (71.3%)
+      // Juni: 70 (74.5%)
+      // Juli: 63 (67.0%)
+      // Agustus: 66 (70.2%)
+      // September: 52 (55.3%)
       const options = {
         series: [
           {
-            name: "Pelanggan Bertahan (%)",
-            data: [100, 70, 55, 48, 42, 36] // April s.d September
+            name: "Pelanggan April yang Masih Belanja (%)",
+            data: [100.0, 71.3, 74.5, 67.0, 70.2, 55.3]
           }
         ],
         chart: {
@@ -1208,7 +1221,7 @@
         },
         dataLabels: {
           enabled: true,
-          formatter: (v) => v + "%",
+          formatter: (v) => v.toFixed(1) + "%",
           offsetY: -8,
           style: {
             fontSize: "11px",
@@ -1227,7 +1240,7 @@
           }
         },
         xaxis: {
-          categories: ["Bln 0 (Apr)", "Bln 1 (Mei)", "Bln 2 (Jun)", "Bln 3 (Jul)", "Bln 4 (Agu)", "Bln 5 (Sep)"],
+          categories: ["April (Awal)", "Mei", "Juni", "Juli", "Agustus", "September"],
           labels: {
             style: { colors: "#64748B", fontSize: "11px" }
           },
@@ -1235,9 +1248,9 @@
           axisTicks: { color: "#CBD5E1" }
         },
         yaxis: {
-          min: 0,
-          max: 110,
-          title: { text: "Retensi Cohort (%)", style: { color: "#64748B", fontSize: "11px", fontWeight: 600 } },
+          min: 40,
+          max: 105,
+          title: { text: "Pelanggan Bertahan (%)", style: { color: "#64748B", fontSize: "11px", fontWeight: 600 } },
           labels: {
             style: { colors: "#64748B", fontFamily: '"JetBrains Mono"' },
             formatter: (v) => v + "%"
@@ -1249,30 +1262,18 @@
         },
         tooltip: {
           theme: "light",
-          y: { formatter: (v) => v + "% Pembeli April Masih Aktif" }
+          y: { formatter: (v) => v.toFixed(1) + "% dari 94 Toko April Masih Belanja" }
         },
         annotations: {
-          yaxis: [
-            {
-              y: 50,
-              borderColor: "#D97706",
-              strokeDashArray: 4,
-              label: {
-                borderColor: "#D97706",
-                style: { color: "#FFF", background: "#D97706", fontSize: "10px", fontWeight: 600 },
-                text: "Threshold Aman 50%"
-              }
-            }
-          ],
           points: [
             {
-              x: "Bln 5 (Sep)",
-              y: 36,
+              x: "September",
+              y: 55.3,
               marker: { size: 7, fillColor: "#DC2626" },
               label: {
                 borderColor: "#DC2626",
                 style: { color: "#FFF", background: "#DC2626", fontSize: "11px", fontWeight: 700 },
-                text: "Hanya 36% Tersisa (64% Churn)"
+                text: "Tersisa 52 Toko (42 Toko Lepas)"
               }
             }
           ]
@@ -1285,13 +1286,12 @@
 
 
     // ----------------------------------------------------
-    // 3. MARKET BASKET NETWORK GRAPH (Vis.js Network - Light Mode)
+    // 3. PETA HUBUNGAN PRODUK (Vis.js Network - 100% Data Riil all_data.csv)
     // ----------------------------------------------------
     let networkInstance = null;
     function initNetworkGraph() {
       const container = document.getElementById("network-container");
 
-      // Node: Produk Unggulan Frozen Food (Light Theme Palette)
       const nodes = new vis.DataSet([
         { id: 1, label: "Okey Sosis 500g\n(Sosis)", group: "sosis", value: 336, color: { background: "#F59E0B", border: "#B45309" } },
         { id: 2, label: "Okey Stick 500g\n(Stick)", group: "sosis", value: 156, color: { background: "#FBBF24", border: "#D97706" } },
@@ -1299,19 +1299,18 @@
         { id: 4, label: "Jofrans Nugget Hati\n(Nugget)", group: "nugget", value: 160, color: { background: "#38BDF8", border: "#0284C7" } },
         { id: 5, label: "Jofrans Nugget Reg 225g\n(Nugget)", group: "nugget", value: 75, color: { background: "#0EA5E9", border: "#0369A1" } },
         { id: 6, label: "Jofrans Nugget Sticky\n(Nugget)", group: "nugget", value: 72, color: { background: "#38BDF8", border: "#0284C7" } },
-        { id: 7, label: "Minaku Otak-Otak 500g\n(Hero SKU #1)", group: "otak", value: 967, color: { background: "#10B981", border: "#047857" } },
+        { id: 7, label: "Minaku Otak-Otak 500g\n(Juara Omzet)", group: "otak", value: 967, color: { background: "#10B981", border: "#047857" } },
         { id: 8, label: "Shifudo Fish Roll\n(Seafood)", group: "otak", value: 65, color: { background: "#34D399", border: "#059669" } },
         { id: 9, label: "Champ Baso Sapi\n(Baso)", group: "baso", value: 62, color: { background: "#F87171", border: "#DC2626" } },
         { id: 10, label: "Lutosa French Fries\n(Kentang)", group: "fries", value: 196, color: { background: "#A855F7", border: "#7E22CE" } },
-        { id: 11, label: "Eurial Mozzarella\n(Dairy)", group: "cheese", value: 132, color: { background: "#EC4899", border: "#BE185D" } },
+        { id: 11, label: "Eurial Mozzarella\n(Keju)", group: "cheese", value: 132, color: { background: "#EC4899", border: "#BE185D" } },
         { id: 12, label: "Dimsum Hakau / Siomay\n(Dimsum)", group: "dimsum", value: 28, color: { background: "#6366F1", border: "#4338CA" } },
       ]);
 
-      // Edges: Frekuensi Co-Purchase dalam satu transaksi
       const edges = new vis.DataSet([
-        { from: 1, to: 2, value: 183, title: "183× Dibeli Bersama (Top 1 Intra-Brand)", color: { color: "#D97706" }, width: 6 },
+        { from: 1, to: 2, value: 183, title: "183× Dibeli Bersama (Paling Sering)", color: { color: "#D97706" }, width: 6 },
         { from: 3, to: 5, value: 101, title: "101× Dibeli Bersama (Sosis + Nugget)", color: { color: "#0284C7" }, width: 4.5 },
-        { from: 4, to: 6, value: 81, title: "81× Dibeli Bersama (Nugget Cross-Variant)", color: { color: "#0284C7" }, width: 3.8 },
+        { from: 4, to: 6, value: 81, title: "81× Dibeli Bersama (Nugget Beda Varian)", color: { color: "#0284C7" }, width: 3.8 },
         { from: 7, to: 2, value: 77, title: "77× Dibeli Bersama (Otak-Otak + Stick)", color: { color: "#059669" }, width: 3.5 },
         { from: 7, to: 1, value: 75, title: "75× Dibeli Bersama (Otak-Otak + Sosis)", color: { color: "#059669" }, width: 3.5 },
         { from: 9, to: 1, value: 72, title: "72× Dibeli Bersama (Baso + Sosis)", color: { color: "#DC2626" }, width: 3.2 },
@@ -1377,7 +1376,7 @@
 
 
     // ----------------------------------------------------
-    // 4. GRAFIK PARETO: Combo Bar & Cumulative Line (Light Mode)
+    // 4. GRAFIK PARETO PRODUK (Data Riil all_data.csv: 11 Produk Teratas & Sisa)
     // ----------------------------------------------------
     function initParetoChart() {
       const products = [
@@ -1392,10 +1391,10 @@
         "Okey Sosis 1000g",
         "Miami Standard",
         "Jofrans Reg 500g",
-        "Sisa 280+ SKU Lain"
+        "Sisa 286 Produk Lain"
       ];
 
-      const omzetValues = [967.7, 336.5, 196.0, 160.5, 156.6, 132.1, 128.9, 125.0, 113.2, 107.3, 75.5, 1889.0];
+      const omzetValues = [967.7, 336.5, 196.0, 160.5, 156.6, 132.1, 128.9, 125.0, 113.2, 107.3, 75.5, 2030.7];
       const cumulativePct = [21.4, 28.8, 33.1, 36.7, 40.1, 43.0, 45.9, 48.6, 51.1, 53.5, 55.2, 100.0];
 
       const options = {
@@ -1406,7 +1405,7 @@
             data: omzetValues
           },
           {
-            name: "Kumulatif Omzet (%)",
+            name: "Persentase Kumulatif (%)",
             type: "line",
             data: cumulativePct
           }
@@ -1451,7 +1450,7 @@
           {
             opposite: true,
             max: 100,
-            title: { text: "Kumulatif (%)", style: { color: "#D97706", fontSize: "11px", fontWeight: 600 } },
+            title: { text: "Persentase (%)", style: { color: "#D97706", fontSize: "11px", fontWeight: 600 } },
             labels: {
               style: { colors: "#64748B", fontFamily: '"JetBrains Mono"' },
               formatter: (v) => Math.round(v) + "%"
@@ -1472,7 +1471,7 @@
           y: {
             formatter: function (val, { seriesIndex }) {
               if (seriesIndex === 0) return "Rp " + val.toFixed(1) + " Juta";
-              return val.toFixed(1) + "% Omzet Kumulatif";
+              return val.toFixed(1) + "% dari Total Penjualan";
             }
           }
         },
@@ -1486,7 +1485,7 @@
               label: {
                 borderColor: "#DC2626",
                 style: { color: "#FFF", background: "#DC2626", fontSize: "10px", fontWeight: 700 },
-                text: "Threshold Pareto 80%"
+                text: "Batas 80% Omzet Toko"
               }
             }
           ]
@@ -1499,7 +1498,7 @@
 
 
     // ----------------------------------------------------
-    // 5. GRAFIK MATRIKS KATEGORI: Donut Chart (Light Mode)
+    // 5. GRAFIK KATEGORI PRODUK (Data Riil all_data.csv: Total Rp 4,53 Miliar)
     // ----------------------------------------------------
     function initKategoriChart() {
       const options = {
@@ -1512,7 +1511,7 @@
           "Nugget & Stick",
           "Kulit & Pastry",
           "Bakso Olahan Daging",
-          "Keju & Dairy",
+          "Keju & Olahan Susu",
           "Dimsum & Lainnya"
         ],
         chart: {
@@ -1576,14 +1575,18 @@
 
 
     // ----------------------------------------------------
-    // 6. GRAFIK DISTRIBUSI BELANJA: Siklus Tanggal & Hari (Light Mode)
+    // 6. GRAFIK FASE TANGGAL TRANSAKSI (Data Riil all_data.csv)
     // ----------------------------------------------------
     function initDistribusiChart() {
+      // Data riil:
+      // Tgl 01-10: Rp 1.367,4 Jt (30,2%)
+      // Tgl 11-20: Rp 1.449,0 Jt (32,0%)
+      // Tgl 21-31: Rp 1.713,9 Jt (37,8% - Paling Ramai)
       const options = {
         series: [
           {
-            name: "Omzet Fase Tanggal (Juta Rp)",
-            data: [1258, 1542, 1730] // Awal (1-10), Tengah (11-20), Akhir (21-31)
+            name: "Omzet Penjualan (Juta Rp)",
+            data: [1367.4, 1449.0, 1713.9]
           }
         ],
         chart: {
@@ -1605,7 +1608,7 @@
         },
         dataLabels: {
           enabled: true,
-          formatter: (v) => "Rp " + v.toLocaleString("id-ID") + " Jt",
+          formatter: (v) => "Rp " + Math.round(v).toLocaleString("id-ID") + " Jt",
           offsetY: -22,
           style: {
             fontSize: "11px",
@@ -1616,9 +1619,9 @@
         },
         xaxis: {
           categories: [
-            "Fase 1: Tgl 01–10\n(Re-stock Awal)",
-            "Fase 2: Tgl 11–20\n(Operasional)",
-            "Fase 3: Tgl 21–31\n(Payday Surge)"
+            "Tgl 01–10\n(Awal Bulan)",
+            "Tgl 11–20\n(Tengah Bulan)",
+            "Tgl 21–31\n(Masa Gajian/Akhir Bulan)"
           ],
           labels: {
             style: { colors: "#64748B", fontSize: "11px", fontWeight: 500 }
@@ -1629,7 +1632,7 @@
           title: { text: "Total Omzet (Juta Rp)", style: { color: "#64748B", fontSize: "11px", fontWeight: 600 } },
           labels: {
             style: { colors: "#64748B", fontFamily: '"JetBrains Mono"' },
-            formatter: (v) => "Rp " + v
+            formatter: (v) => "Rp " + Math.round(v)
           }
         },
         grid: {
@@ -1639,7 +1642,7 @@
         legend: { show: false },
         tooltip: {
           theme: "light",
-          y: { formatter: (v) => "Rp " + v.toLocaleString("id-ID") + " Juta (" + ((v/4530)*100).toFixed(1) + "% Total)" }
+          y: { formatter: (v) => "Rp " + v.toFixed(1) + " Juta (" + ((v/4530.3)*100).toFixed(1) + "% Omzet)" }
         }
       };
 
@@ -1649,14 +1652,16 @@
 
 
     // ----------------------------------------------------
-    // 7. GRAFIK PERBANDINGAN AOV: Baru vs Berulang (Light Mode)
+    // 7. GRAFIK PERBANDINGAN NILAI BELANJA TOKO (Data Riil all_data.csv: Rp 31,3 Jt vs Rp 6,3 Jt)
     // ----------------------------------------------------
     function initAovChart() {
+      // Pelanggan 1 Bulan Saja: Rata-rata Rp 6,3 Juta
+      // Pelanggan Langganan Setia (>= 2 Bulan): Rata-rata Rp 31,3 Juta (5x lipat!)
       const options = {
         series: [
           {
-            name: "Rata-rata Nilai Belanja (AOV)",
-            data: [90000, 215000] // Baru vs Berulang
+            name: "Rata-rata Total Belanja Toko",
+            data: [6320000, 31310000]
           }
         ],
         chart: {
@@ -1679,7 +1684,7 @@
         colors: ["#94A3B8", "#059669"],
         dataLabels: {
           enabled: true,
-          formatter: (v) => "Rp " + v.toLocaleString("id-ID"),
+          formatter: (v) => "Rp " + (v/1000000).toFixed(1) + " Juta",
           style: {
             fontSize: "13px",
             fontFamily: '"JetBrains Mono"',
@@ -1688,10 +1693,10 @@
           }
         },
         xaxis: {
-          categories: ["Pembeli Baru (One-Time)", "Pembeli Berulang (Loyal)"],
+          categories: ["Toko yang Cuma Beli 1 Bulan", "Toko Langganan Setia (Rutin)"],
           labels: {
             style: { colors: "#64748B", fontFamily: '"JetBrains Mono"', fontSize: "11px" },
-            formatter: (v) => "Rp " + (v/1000) + "k"
+            formatter: (v) => "Rp " + (v/1000000) + " Jt"
           },
           axisBorder: { color: "#CBD5E1" }
         },
@@ -1708,7 +1713,7 @@
         tooltip: {
           theme: "light",
           y: {
-            formatter: (v) => "Rp " + v.toLocaleString("id-ID") + " (Selisih 2.4× Lipat)"
+            formatter: (v) => "Rp " + (v/1000000).toFixed(1) + " Juta per Toko (Selisih 5× Lipat)"
           }
         }
       };
